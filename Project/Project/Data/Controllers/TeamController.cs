@@ -19,5 +19,16 @@ namespace Project.Data.Controllers
         {
             return View(await db.Teams.ToListAsync());
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(Team user)
+        {
+            db.Teams.Add(user);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
