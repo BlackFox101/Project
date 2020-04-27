@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Project.Data;
 using Project.Models;
 
-namespace Project.Controllers
+namespace Project.Data.Controllers
 {
-    public class HomeController : Controller
+    public class TeamController : Controller
     {
         private AppDBContext db;
-        public HomeController(AppDBContext context)
+        public TeamController(AppDBContext context)
         {
             db = context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            return View(await db.Teams.ToListAsync());
         }
     }
 }
