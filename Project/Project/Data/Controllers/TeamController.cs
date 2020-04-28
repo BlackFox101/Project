@@ -30,5 +30,34 @@ namespace Project.Data.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        [ActionName("Delete")]
+        public async Task<IActionResult> ConfirmDelete(int? id)
+        {
+            if (id != null)
+            {
+                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (user != null)
+                    return View(user);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id != null)
+            {
+                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (user != null)
+                {
+                    db.Teams.Remove(user);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            return NotFound();
+        }
     }
 }
