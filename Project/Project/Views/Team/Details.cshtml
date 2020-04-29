@@ -1,0 +1,30 @@
+﻿@using Project.Models
+@model Team
+
+@{
+    ViewBag.Title = "Команда " + @Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Команда @Model.Title</h4>
+    <hr />
+    <dl>
+        <dt>Название</dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>Игроки</dt>
+
+        <dd>
+            <ul>
+                @foreach (Person player in Model.Persons)
+                {
+                    <li>@player.Name (@player.Position)</li>
+
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>

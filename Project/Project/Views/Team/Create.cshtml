@@ -5,7 +5,7 @@
 <form asp-action="create" asp-controller="Team">
     <div class="form-group">
         <label asp-for="Title" class="control-label">Название команды:</label>
-        <input type="text" asp-for="Title" class="form-control" />
+        <input type="text" asp-for="Title" class="form-control" required />
     </div>
     <div class="form-group">
         <input type="submit" value="Отправить" class="btn btn-default" />
