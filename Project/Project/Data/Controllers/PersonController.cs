@@ -40,6 +40,9 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
+                var person = db.Persons
+                        .Include(c => c.Team)  // добавляем данные по пользователям
+                        .ToList();
                 Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
                 if (user != null)
                     return View(user);
@@ -50,6 +53,8 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
+                SelectList teams = new SelectList(db.Teams, "Id", "Title");
+                ViewBag.Teams = teams;
                 Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
                 if (user != null)
                     return View(user);
@@ -70,6 +75,9 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
+                var person = db.Persons
+                        .Include(c => c.Team)  // добавляем данные по пользователям
+                        .ToList();
                 Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
                 if (user != null)
                     return View(user);

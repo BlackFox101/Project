@@ -19,5 +19,9 @@ namespace Project.Controllers
         {
             db = context;
         }
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
