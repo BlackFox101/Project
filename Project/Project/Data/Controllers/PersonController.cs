@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project.Models;
 
@@ -17,10 +18,15 @@ namespace Project.Data.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            var person = db.Persons
+                        .Include(c => c.Team)  // добавляем данные по пользователям
+                        .ToList();
             return View(await db.Persons.ToListAsync());
         }
         public IActionResult Create()
         {
+            SelectList teams = new SelectList(db.Teams, "Id", "Title");
+            ViewBag.Teams = teams;
             return View();
         }
         [HttpPost]

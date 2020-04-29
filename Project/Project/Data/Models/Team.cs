@@ -9,6 +9,10 @@ namespace Project.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public List<Person> Persons { get; set; }
+        public ICollection<Person> Persons { get; set; }
+        public Team()
+        {
+            Persons = new List<Person>();
+        }
     }
 }

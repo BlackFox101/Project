@@ -43,7 +43,7 @@ namespace Project
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Team}/{action=Index}/{id?}");
+                    pattern: "{controller=Person}/{action=Index}/{id?}");
             });
         }
     }
