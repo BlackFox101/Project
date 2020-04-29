@@ -16,5 +16,12 @@ namespace Project.Data
         {
             Database.EnsureCreated();   // создаем базу данных при первом обращении
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Person>()
+                .HasOne(p => p.Team)
+                .WithMany(t => t.Persons)
+                .OnDelete(DeleteBehavior.SetNull);
+        }
     }
 }

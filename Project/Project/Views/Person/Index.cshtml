@@ -8,9 +8,9 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Position)</td>
-            <td>@Html.DisplayFor(modelItem => item.Team.Title)</td>
+            <td>@item.Name</td>
+            <td>@item.Position</td>
+            <td>@item.Team?.Title</td>
             <td>
                 <a asp-action="Details" asp-controller="Person" asp-route-id="@item.Id">Подробнее</a> |
                 <a asp-action="Edit" asp-controller="Person" asp-route-id="@item.Id">Изменить</a> |

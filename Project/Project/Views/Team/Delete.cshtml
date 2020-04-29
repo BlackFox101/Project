@@ -1,15 +1,15 @@
 ﻿@model Project.Models.Team
 @{
-    ViewBag.Title = "Удаление команды";
+    ViewBag.Title = "Удаление пользователя";
 }
 
 <div>
     <dl class="dl-horizontal">
         <dt>Команда</dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+        <dd> @Html.DisplayFor(model => model.Title)</dd>
+
     </dl>
+
     <div>
         <form asp-controller="Team" asp-action="Delete" method="post">
             <div class="form-group">
