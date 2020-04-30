@@ -2,17 +2,25 @@
 @{
     ViewBag.Title = Model.Name;
 }
-<h2>Пользователь @Model.Name</h2>
+<h2>Участник @Model.Name</h2>
 <div>
     <dl class="dl-horizontal">
-        <dt>Идентификатор</dt>
+        <dt>Имя</dt>
         <dd>@Model.Name</dd>
 
         <dt>Должность</dt>
         <dd>@Model.Position</dd>
 
         <dt>Команда</dt>
-        <dd>@Model.Team?.Title</dd>
+        @if (@Model.TeamId == null)
+        {
+            <dd>Отсутствует</dd>
+        }
+        else
+        {
+            <dd>@Model.Team?.Title</dd>
+        }
+
 
     </dl>
 </div>
