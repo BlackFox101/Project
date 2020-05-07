@@ -1,0 +1,81 @@
+﻿*, ::after, ::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+    border-bottom: 1px solid #dee2e6 !important;
+    background-color: #fff !important;
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    align-items: center;
+}
+
+a.navbar-brand {
+    color: rgba(0,0,0,.9);
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    display: inline-block;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    font-family: "Segoe UI";
+}
+
+.navbar-collapse {
+    flex-grow: 1;
+    align-items: center;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    display: inline-block;
+    flex-basis: auto;
+}
+
+a.nav-link {
+    display: block;
+    padding: 8px 8px 8px 0;
+    color: #343a40 !important;
+    font-size: 16px;
+    font-family: "Segoe UI";
+}
+
+ul.navbar-nav {
+    display: flex;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}

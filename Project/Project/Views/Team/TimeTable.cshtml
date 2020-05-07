@@ -1,0 +1,46 @@
+﻿@using Project.Models
+@model Team
+
+@{
+    ViewBag.Title = "Команда " + @Model.Title;
+}
+<div>
+    <h1>График дежурств</h1>
+    <ul  class="persons_Team">
+        @foreach (Person person in Model.Persons)
+        {
+            <li>@person.Name (@person.Position)</li>
+        }
+    </ul>
+    <div class="yearOpt">
+        <select id="yearSel" name="yearSel">
+        </select>
+        <select id="monthSel" name="monthSel">
+            <option selected="selected" value="0">Январь</option>
+            <option value="1">Февраль</option>
+            <option value="2">Март</option>
+            <option value="3">Апрель</option>
+            <option value="4">Май</option>
+            <option value="5">Июнь</option>
+            <option value="6">Июль</option>
+            <option value="7">Август</option>
+            <option value="8">Сентябрь</option>
+            <option value="9">Октябрь</option>
+            <option value="10">Ноябрь</option>
+            <option value="11">Декабрь</option>
+        </select>
+    </div>
+    <div style="clear:both;"></div>
+    <div id="graf">
+        <table class="table" id="table">
+            <tbody>
+                <tr id="days">
+                    <td rowspan="2"></td>
+                </tr>
+                <tr id="wd">
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="~/js/timeTable.js"></script>
+</div>

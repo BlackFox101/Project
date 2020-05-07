@@ -72,6 +72,19 @@ namespace Project.Data.Controllers
             }
             return NotFound();
         }
+        public async Task<IActionResult> TimeTable(int? id)
+        {
+            if (id != null)
+            {
+                var team = db.Teams
+                        .Include(c => c.Persons)  // добавляем данные по пользователям
+                        .ToList();
+                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (user != null)
+                    return View(user);
+            }
+            return NotFound();
+        }
     }
 }
 

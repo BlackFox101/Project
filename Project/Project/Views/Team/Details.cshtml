@@ -3,20 +3,19 @@
 
 @{
     ViewBag.Title = "Команда " + @Model.Title;
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<a asp-action="TimeTable" asp-controller="Team" asp-route-id="@Model.Id">График</a>
 <div>
     <hr />
     <dl>
         <dt>Название @Html.DisplayFor(model => model.Title)</dt>
-        <dt>Игроки</dt>
+        <dt>Участники</dt>
 
         <dd>
             <ul>
-                @foreach (Person player in Model.Persons)
+                @foreach (Person person in Model.Persons)
                 {
-                    <li>@player.Name (@player.Position)</li>
+                    <li>@person.Name (@person.Position)</li>
 
                 }
             </ul>
