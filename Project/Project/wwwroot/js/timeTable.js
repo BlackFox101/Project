@@ -1,7 +1,8 @@
 /*let persons = document.querySelectorAll('.persons_Team');
 console.log(persons);
 console.log('Кол-во человек ' + persons.length);*/
-let date = new Date();
+let date = new Date(); //Дата
+let persons = document.getElementById('persons'); //Количество сотрудников
 
 initYear();
 function initYear() {
@@ -56,7 +57,22 @@ function intiDate() {
     wdTr.appendChild(wd);
   }
 
-
+  initTable();
+  function initTable() {
+    for(let i = 0; i < persons.innerHTML; i++) {
+      let daysTr = document.getElementById('str-'+(i+1));
+      for(let j = 1; j < daysInMonth(currentYear, currentMonth)+1; j++) {
+        let day = document.createElement('td');
+        let hol = firstDayInMonth(currentYear, currentMonth, j);
+        day.innerHTML = '';
+        day.classList.add(j);
+        if (hol == 6 || hol == 0) {
+          day.classList.add('hol');
+        }
+        daysTr.appendChild(day);
+      }
+    }
+  }
 }
 
 function generalDay(hol) {
@@ -76,8 +92,12 @@ function generalDay(hol) {
     case 6:
       return 'сб'; break;
   }
-
 }
+
+function duties() {
+  
+}
+
 /*
 let selectMonth = document.querySelector('#monthSel').value//Выбранный месяц
 let selectYear = document.querySelector('#yearSel').value//Выбранный год

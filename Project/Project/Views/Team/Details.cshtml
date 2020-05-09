@@ -8,9 +8,9 @@
 <div>
     <hr />
     <dl>
-        <dt>Название @Html.DisplayFor(model => model.Title)</dt>
+        <dt>Название: @Html.DisplayFor(model => model.Title)</dt>
+        <dt>Дежурства(дни): @Html.DisplayFor(model => model.Duty)</dt>
         <dt>Участники</dt>
-
         <dd>
             <ul>
                 @foreach (Person person in Model.Persons)

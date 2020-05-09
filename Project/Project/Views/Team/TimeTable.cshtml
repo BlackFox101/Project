@@ -6,12 +6,6 @@
 }
 <div>
     <h1>График дежурств</h1>
-    <ul  class="persons_Team">
-        @foreach (Person person in Model.Persons)
-        {
-            <li>@person.Name (@person.Position)</li>
-        }
-    </ul>
     <div class="yearOpt">
         <select id="yearSel" name="yearSel">
         </select>
@@ -32,15 +26,24 @@
     </div>
     <div style="clear:both;"></div>
     <div id="graf">
-        <table class="scheduleTable" id="scheduleTable">
+        <table class="timeTable">
             <tbody>
                 <tr id="days">
                     <td rowspan="2"></td>
                 </tr>
                 <tr id="wd">
                 </tr>
+                @{ var i = 0; }
+                @foreach (Person person in Model.Persons)
+                {
+                    i++;
+                    <tr id="str-@i">
+                        <td>@person.Name</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
+    <span class="hidden" id="persons">@i</span>
     <script src="~/js/timeTable.js"></script>
 </div>

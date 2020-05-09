@@ -1,1 +1,36 @@
-table.table
+.hidden {
+    visibility: hidden;
+}
+
+.timeTable {
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 10px 0px 5px 0;
+}
+
+.hol {
+    background-color: #FFEA06;
+}
+
+#days, #wd td {
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: inherit;
+}
+
+.timeTable td {
+    border: 1px solid #333;
+    min-width: 25px;
+    display: table-cell;
+}
+
+.timeTable tr[id*="str"] {
+    height: 25px;
+    text-align: left;
+    padding: 0 5px;
+}
+
+[id*="str"] td {
+    padding: 0 5px;
+}
