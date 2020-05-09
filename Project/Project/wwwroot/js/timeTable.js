@@ -1,10 +1,7 @@
-/*let persons = document.querySelectorAll('.persons_Team');
-console.log(persons);
-console.log('Кол-во человек ' + persons.length);*/
-let date = new Date(); //Дата
+﻿let date = new Date(); // Текущая дата
 let persons = document.getElementById('persons'); //Количество сотрудников
 
-initYear();
+initYear();//Добавляет текущий год и 2 следующих
 function initYear() {
   let currentYear = date.getFullYear();
   for(let i = currentYear; i < currentYear + 3; i++) {
@@ -12,43 +9,57 @@ function initYear() {
     document.querySelector('#yearSel').appendChild(newOption);
   }
 }
-let yearSel = document.querySelector('#yearSel');
-let monthSel = document.querySelector('#monthSel');
-
-yearSel.addEventListener('change', () => {
-  console.log('year='+document.querySelector('#yearSel').value)
-});
-monthSel.addEventListener('change', () => {
-  console.log('month='+document.querySelector('#monthSel').value)
-});
+intiDate();
 
 // Процедура определяющая количество дней в месяце
 function daysInMonth(year, month) {
   return 32 - new Date(year, month, 32).getDate();
 }
 // Процедура определяющая день в месяце
-// 1-понедельник 0- воскресенье
+// 6-суббота 0- воскресенье
 function firstDayInMonth(year, month, day) {
   return new Date(year, month, day).getDay();
 }
 
-intiDate();
-function intiDate() {
+//Обработчики событий на смену года и месяца---------------------------------
+let yearSel = document.querySelector('#yearSel');
+let monthSel = document.querySelector('#monthSel');
+yearSel.addEventListener('change', () => {
+  intiDate(monthSel.value, document.querySelector('#yearSel').value);
+});
+monthSel.addEventListener('change', () => {
+  intiDate(document.querySelector('#monthSel').value, yearSel.value);
+});
+//-----------------------------------------------------------------------------
+
+function intiDate(month, year) {
+  let currentMonth;
+  let currentYear;
+  //---------------------------------------------
+  if (month) {
+    currentMonth = month;
+    console.log('month='+month);
+  } else {
+    currentMonth = date.getMonth();
+    document.getElementById('monthSel').value = currentMonth;
+  }
+  if (year) {
+    currentYear = year;
+    console.log('year='+year);
+  } else {
+    currentYear = date.getFullYear();
+  }
+  //---------------------------------------------
   let daysTr = document.querySelector('#days') //Строка с днями месяца
   let wdTr = document.querySelector('#wd')     //Строка с днями недели
-  let currentMonth = date.getMonth();
-  let currentYear = date.getFullYear();
-  //Устанавливается текущий месяц
-  document.getElementById('monthSel').value = currentMonth;
-  //let month = currentDate.getMonth() //месяц от 0 до 11, 0 - январь
   for(let i = 1; i < daysInMonth(currentYear, currentMonth)+1; i++) {
     let day = document.createElement('td');
     let wd = document.createElement('td');
     let hol = firstDayInMonth(currentYear, currentMonth, i);
     day.innerHTML = i;
     wd.innerHTML = generalDay(hol);
-    day.classList.add(i);
-    wd.classList.add(i);
+    day.classList.add('col'+i);
+    wd.classList.add('col'+i);
     if (hol == 6 || hol == 0) {
       day.classList.add('hol');
       wd.classList.add('hol');
@@ -65,7 +76,7 @@ function intiDate() {
         let day = document.createElement('td');
         let hol = firstDayInMonth(currentYear, currentMonth, j);
         day.innerHTML = '';
-        day.classList.add(j);
+        day.classList.add('col'+j);
         if (hol == 6 || hol == 0) {
           day.classList.add('hol');
         }
@@ -95,7 +106,7 @@ function generalDay(hol) {
 }
 
 function duties() {
-  
+
 }
 
 /*
