@@ -12,6 +12,16 @@
     background-color: #FFEA06;
 }
 
+#yearSel, #monthSel {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid #495057;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 5px;
+}
+
 #days, #wd td {
     font-size: 13px;
     font-weight: 500;
@@ -33,4 +43,8 @@
 
 [id*="str"] td {
     padding: 0 5px;
+}
+
+.yearOpt {
+    margin-top: 15px;
 }
