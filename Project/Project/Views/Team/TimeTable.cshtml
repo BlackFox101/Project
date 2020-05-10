@@ -3,9 +3,30 @@
 
 @{
     ViewBag.Title = "Команда " + @Model.Title;
+    string day;
+    switch (Model.Duty)
+    {
+        case 1:
+            day = ("день");
+            break;
+        case 2:
+        case 3:
+        case 4:
+            day = ("дня");
+            break;
+        default:
+            day = ("дней");
+            break;
+    }
 }
 <div>
     <h1>График дежурств</h1>
+    <dl>
+        <dt>Команда: @Model.Title</dt>
+        <dt>
+            Дежурства: @Model.Duty @day
+        </dt>
+    </dl>
     <div class="yearOpt">
         <select id="yearSel" name="yearSel">
         </select>

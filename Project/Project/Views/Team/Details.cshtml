@@ -3,13 +3,28 @@
 
 @{
     ViewBag.Title = "Команда " + @Model.Title;
+    string day;
+    switch (Model.Duty)
+    {
+        case 1:
+            day = ("день");
+            break;
+        case 2:
+        case 3:
+        case 4:
+            day = ("дня");
+            break;
+        default:
+            day = ("дней");
+            break;
+    }
 }
 <a asp-action="TimeTable" asp-controller="Team" asp-route-id="@Model.Id">График</a>
 <div>
     <hr />
     <dl>
-        <dt>Название: @Html.DisplayFor(model => model.Title)</dt>
-        <dt>Дежурства(дни): @Html.DisplayFor(model => model.Duty)</dt>
+        <dt>Команда: @Model.Title</dt>
+        <dt>Дежурства: @Model.Duty @day</dt>
         <dt>Участники</dt>
         <dd>
             <ul>
@@ -21,4 +36,5 @@
             </ul>
         </dd>
     </dl>
+    <a asp-action="Edit" asp-controller="Team" asp-route-id="@Model.Id">Изменить</a>
 </div>

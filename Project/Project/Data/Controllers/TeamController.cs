@@ -85,6 +85,23 @@ namespace Project.Data.Controllers
             }
             return NotFound();
         }
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id != null)
+            {
+                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (user != null)
+                    return View(user);
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Team user)
+        {
+            db.Teams.Update(user);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
 

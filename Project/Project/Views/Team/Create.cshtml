@@ -1,4 +1,4 @@
-﻿@model Project.Models.Team
+﻿@model Team
 @{
     ViewBag.Title = "Создать команду";
 }
@@ -9,15 +9,15 @@
     </div>
     <div class="form-group">
         <label asp-for="Duty" class="control-label">Дежурства:</label>
-        <select id="Duty" name="Duty" class = "select-control">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+        <select id="Duty" name="Duty" class="select-control">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
         </select>
     </div>
     <div class="form-group">
-        <input type="submit" value="Отправить" class="btn btn-default" />
+        <input type="submit" value="Отправить" class="btn" />
     </div>
 </form>

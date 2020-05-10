@@ -10,16 +10,6 @@ function initYear() {
   }
 }
 
-// Процедура определяющая количество дней в месяце
-function daysInMonth(year, month) {
-  return 32 - new Date(year, month, 32).getDate();
-}
-// Процедура определяющая день в месяце
-// 6-суббота 0- воскресенье
-function firstDayInMonth(year, month, day) {
-  return new Date(year, month, day).getDay();
-}
-
 //Обработчики событий на смену года и месяца---------------------------------
 let yearSel = document.querySelector('#yearSel');
 let monthSel = document.querySelector('#monthSel');
@@ -123,6 +113,16 @@ function clearTable(monthLength) {
       }
     }
   }
+}
+
+// Процедура определяющая количество дней в месяце
+function daysInMonth(year, month) {
+  return 32 - new Date(year, month, 32).getDate();
+}
+// Процедура определяющая день в месяце
+// 6-суббота 0- воскресенье
+function firstDayInMonth(year, month, day) {
+  return new Date(year, month, day).getDay();
 }
 
 /*
