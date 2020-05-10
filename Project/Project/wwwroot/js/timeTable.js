@@ -9,7 +9,6 @@ function initYear() {
     document.querySelector('#yearSel').appendChild(newOption);
   }
 }
-intiDate();
 
 // Процедура определяющая количество дней в месяце
 function daysInMonth(year, month) {
@@ -30,8 +29,11 @@ yearSel.addEventListener('change', () => {
 monthSel.addEventListener('change', () => {
   intiDate(document.querySelector('#monthSel').value, yearSel.value);
 });
-//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------;
 
+let previousMonth;
+let previousYear;
+intiDate();
 function intiDate(month, year) {
   let currentMonth;
   let currentYear;
@@ -50,6 +52,11 @@ function intiDate(month, year) {
     currentYear = date.getFullYear();
   }
   //---------------------------------------------
+  if (previousMonth) {
+    clearTable(daysInMonth(previousYear, previousMonth));
+  }
+  previousMonth = currentMonth;
+  previousYear = currentYear;
   let daysTr = document.querySelector('#days') //Строка с днями месяца
   let wdTr = document.querySelector('#wd')     //Строка с днями недели
   for(let i = 1; i < daysInMonth(currentYear, currentMonth)+1; i++) {
@@ -105,8 +112,17 @@ function generalDay(hol) {
   }
 }
 
-function duties() {
-
+function clearTable(monthLength) {
+  let col = document.querySelector('.col1');
+  if (col) {
+    let cols = document.querySelectorAll('.col1');
+    for(let i = 1; i < cols.length + 1; i++) {
+      for(let j = 1; j < monthLength +1; j++){
+        let td = document.querySelector(`.col${j}`);
+        td.remove();
+      }
+    }
+  }
 }
 
 /*
