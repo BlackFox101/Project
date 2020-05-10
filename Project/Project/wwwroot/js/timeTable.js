@@ -1,5 +1,6 @@
 ﻿let date = new Date(); // Текущая дата
-let persons = document.getElementById('persons'); //Количество сотрудников
+let persons = document.getElementById('persons').innerHTML; //Количество сотрудников
+let duties = document.getElementById('duties').innerHTML; // Дежуства
 
 initYear();//Добавляет текущий год и 2 следующих
 function initYear() {
@@ -67,7 +68,7 @@ function intiDate(month, year) {
 
   initTable();
   function initTable() {
-    for(let i = 0; i < persons.innerHTML; i++) {
+    for(let i = 0; i < persons; i++) {
       let daysTr = document.getElementById('str-'+(i+1));
       for(let j = 1; j < daysInMonth(currentYear, currentMonth)+1; j++) {
         let day = document.createElement('td');
@@ -81,6 +82,10 @@ function intiDate(month, year) {
       }
     }
   }
+}
+
+function dutiesDate() {
+
 }
 
 function generalDay(hol) {
@@ -124,9 +129,3 @@ function daysInMonth(year, month) {
 function firstDayInMonth(year, month, day) {
   return new Date(year, month, day).getDay();
 }
-
-/*
-let selectMonth = document.querySelector('#monthSel').value//Выбранный месяц
-let selectYear = document.querySelector('#yearSel').value//Выбранный год
-let currentMonth = date.getMonth(); //Текущий месяц
-*/

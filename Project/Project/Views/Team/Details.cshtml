@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Команда " + @Model.Title;
+    int i = 0;
     string day;
     switch (Model.Duty)
     {
@@ -30,8 +31,12 @@
             <ul>
                 @foreach (Person person in Model.Persons)
                 {
+                    i++;
                     <li>@person.Name (@person.Position)</li>
-
+                }
+                @if (i == 0)
+                {
+                    <li>Отсутствуют</li>
                 }
             </ul>
         </dd>

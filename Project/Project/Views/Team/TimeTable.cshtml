@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Команда " + @Model.Title;
+    int i = 0;
     string day;
     switch (Model.Duty)
     {
@@ -24,7 +25,7 @@
     <dl>
         <dt>Команда: @Model.Title</dt>
         <dt>
-            Дежурства: @Model.Duty @day
+            Дежурства: <span id="duties">@Model.Duty</span> @day
         </dt>
     </dl>
     <div class="yearOpt">
@@ -54,7 +55,6 @@
                 </tr>
                 <tr id="wd">
                 </tr>
-                @{ var i = 0; }
                 @foreach (Person person in Model.Persons)
                 {
                     i++;
