@@ -10,7 +10,6 @@
 
         <dt>Должность</dt>
         <dd>@Model.Position</dd>
-
         <dt>Команда</dt>
         @if (@Model.TeamId == null)
         {
@@ -18,7 +17,7 @@
         }
         else
         {
-            <dd>@Model.Team?.Title</dd>
+            <dd><a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Team.Id">@Model.Team?.Title</a></dd>
         }
     </dl>
     <a asp-action="Edit" asp-controller="Person" asp-route-id="@Model.Id">Изменить</a>

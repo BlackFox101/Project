@@ -84,10 +84,6 @@ function intiDate(month, year) {
   }
 }
 
-function dutiesDate() {
-
-}
-
 function generalDay(hol) {
   switch (hol) {
     case 0:

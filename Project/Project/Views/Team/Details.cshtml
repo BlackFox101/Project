@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Команда " + @Model.Title;
     int i = 0;
-    string day;
+    string day, alt, duty;
     switch (Model.Duty)
     {
         case 1:
@@ -26,20 +26,48 @@
     <dl>
         <dt>Команда: @Model.Title</dt>
         <dt>Дежурства: @Model.Duty @day</dt>
-        <dt>Участники</dt>
-        <dd>
-            <ul>
-                @foreach (Person person in Model.Persons)
-                {
-                    i++;
-                    <li>@person.Name (@person.Position)</li>
-                }
-                @if (i == 0)
-                {
-                    <li>Отсутствуют</li>
-                }
-            </ul>
-        </dd>
+        <dt>Участники:</dt>
     </dl>
+    <table class="persons_table">
+        <thead>
+            <tr class="title_tr">
+                <td><h5 class="center">№</h5></td>
+                <td class="pad_td"><h5>Имя:</h5></td>
+                <td><img src="~/images/icon_duty.png" class="icon_duty" title="Дежурства" alt="icon_duty"></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody id="team_det">
+            @foreach (Person person in Model.Persons)
+            {
+                i++;
+                if (person.Duty == 0)
+                {
+                    duty = "/images/x_check.png";
+                    alt = "x_check";
+                }
+                else
+                {
+                    duty = "/images/ok_check.png";
+                    alt = "ok_check";
+                }
+                <tr>
+                    <td><h5 class="center" id="">@i.</h5></td>
+                    <td class="pad_td">@person.Name</td>
+                    <td id="duties"><img asp-route-id="@person.Id" src=@duty id="duty-@i" class="duty" alt="@alt" /></td>
+                    <td class="pad_td">
+                        <a asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">Подробнее</a> |
+                        <a asp-action="Delete" asp-controller="Person" asp-route-id="@person.Id">Удалить</a>
+                    </td>
+                </tr>
+            }
+            @if (i == 0)
+            {
+                <tr><td colspan="4">Отсутствуют</td></tr>
+            }
+        </tbody>
+    </table>
     <a asp-action="Edit" asp-controller="Team" asp-route-id="@Model.Id">Изменить</a>
+    <span class="hidden" id="persons">@i</span>
+    <script src="~/js/dutyCheck.js"></script>
 </div>

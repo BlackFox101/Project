@@ -100,5 +100,26 @@ namespace Project.Data.Controllers
             }
             return NotFound();
         }
+
+        [HttpPut]
+        public async Task<IActionResult> EditDuty(int? id)
+        {
+            if (id != null)
+            {
+                Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                if (user.Duty == 1)
+                {
+                    user.Duty = 0;
+                }
+                else
+                {
+                    user.Duty = 1;
+                }
+                await db.SaveChangesAsync();
+                if (user != null)
+                    return Ok(user.Duty);
+            }
+            return NotFound();
+        }
     }
 }

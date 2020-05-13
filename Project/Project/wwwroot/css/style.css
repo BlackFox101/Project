@@ -19,6 +19,12 @@ a {
     background-color: transparent;
 }
 
+a:hover {
+    color: #0054AD;
+    text-decoration: none;
+    background-color: transparent;
+}
+
 .navbar {
     position: relative;
     display: flex;
@@ -177,4 +183,50 @@ ul {
     margin-top: 0;
     margin-bottom: 1rem;
     padding-left: 40px;
+}
+
+.persons_table {
+    margin: 10px 0px 10px 10px;
+    padding: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.persons_table td {
+    border: 1px solid #333;
+    min-width: 25px;
+    display: table-cell;
+    box-sizing: border-box;
+}
+
+td.pad_td {
+    padding: 0 5px 0 5px;
+}
+
+.center {
+    text-align: center;
+}
+
+.icon_duty {
+    width: 20px;
+    height: 20px;
+    margin: 0 0 -3px 2px;
+}
+
+.duty {
+    width: 20px;
+    height: 20px;
+    margin: 0 0 -3px 2px;
+}
+
+[id*="duty"] {
+    cursor: pointer;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.center {
+    text-align: center;
 }

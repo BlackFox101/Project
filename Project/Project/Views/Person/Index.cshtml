@@ -1,16 +1,25 @@
 ﻿@model IEnumerable<Person>
 @{
     ViewBag.Title = "Все пользователи";
+    int i = 0;
 }
 <a asp-action="Create">Добавить сотрудника</a>
 <table class="table">
-
     @foreach (var item in Model)
     {
+        i++;
         <tr>
-            <td>@item.Name</td>
-            <td>@item.Position</td>
-            <td>@item.Team?.Title</td>
+            <td><h5>@i.</h5></td>
+            <td class="pad_td">@item.Name</td>
+            <td class="pad_td">@item.Position</td>
+            @if (@item.TeamId == null)
+            {
+                <td class="pad_td center">------</td>
+            }
+            else
+            {
+                <td class="pad_td"><a asp-action="Details" asp-controller="Team" asp-route-id="@item.Team.Id">@item.Team?.Title</a></td>
+            }
             <td>
                 <a asp-action="Details" asp-controller="Person" asp-route-id="@item.Id">Подробнее</a> |
                 <a asp-action="Edit" asp-controller="Person" asp-route-id="@item.Id">Изменить</a> |

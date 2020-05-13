@@ -15,6 +15,10 @@ namespace Project.Models
         [Required]
         [MaxLength(100)]
         public string Position { get; set; }
+        [Required]
+        [Range(0, 1)]
+        public int Duty { get; set; }
+        //public 
         public int? TeamId { get; set; }
         public Team Team { get; set; }
     }
