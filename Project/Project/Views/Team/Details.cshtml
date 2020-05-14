@@ -1,11 +1,11 @@
-﻿@using Project.Models
+﻿@using Project.Data.Models
 @model Team
 
 @{
     ViewBag.Title = "Команда " + @Model.Title;
     int i = 0;
     string day, alt, duty;
-    switch (Model.Duty)
+    switch (Model.DutyDuration)
     {
         case 1:
             day = ("день");
@@ -25,10 +25,10 @@
     <hr />
     <dl>
         <dt>Команда: @Model.Title</dt>
-        <dt>Дежурства: @Model.Duty @day</dt>
+        <dt>Дежурства: @Model.DutyDuration @day</dt>
         <dt>Участники:</dt>
     </dl>
-    <table class="persons_table">
+    <table class="data_table">
         <thead>
             <tr class="title_tr">
                 <td><h5 class="center">№</h5></td>
@@ -50,7 +50,7 @@
                 {
                     duty = "/images/ok_check.png";
                     alt = "ok_check";
-                }
+                }   
                 <tr>
                     <td><h5 class="center" id="">@i.</h5></td>
                     <td class="pad_td">@person.Name</td>

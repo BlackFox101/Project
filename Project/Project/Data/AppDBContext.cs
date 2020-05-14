@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project.Models;
+using Project.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,7 @@ namespace Project.Data
 {
     public class AppDBContext : DbContext
     {
+        public DbSet<Vacation> Vacations { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Team> Teams { get; set; }
         public AppDBContext(DbContextOptions<AppDBContext> options)
@@ -21,6 +22,10 @@ namespace Project.Data
             modelBuilder.Entity<Person>()
                 .HasOne(p => p.Team)
                 .WithMany(t => t.Persons)
+                .OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<Vacation>()
+                .HasOne(p => p.Person)
+                .WithMany(t => t.Vacations)
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }

@@ -1,8 +1,8 @@
-﻿@model Person
+﻿@using Project.Data.Models
+@model Person
 @{
     ViewBag.Title = Model.Name;
 }
-<h2>Сотрудник: @Model.Name</h2>
 <div>
     <dl class="dl-horizontal">
         <dt>Имя</dt>
@@ -19,6 +19,8 @@
         {
             <dd><a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Team.Id">@Model.Team?.Title</a></dd>
         }
+        <dt><a asp-action="ViewVacations" asp-controller="Person" asp-route-id="@Model.Id" class="vac-link">Отпуска ↵</a></dt>
     </dl>
+    <hr class="hr-det"/>
     <a asp-action="Edit" asp-controller="Person" asp-route-id="@Model.Id">Изменить</a>
 </div>

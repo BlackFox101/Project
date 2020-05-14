@@ -1,11 +1,11 @@
-﻿@using Project.Models
+﻿@using Project.Data.Models
 @model Team
 
 @{
     ViewBag.Title = "Команда " + @Model.Title;
     int i = 0;
     string day;
-    switch (Model.Duty)
+    switch (Model.DutyDuration)
     {
         case 1:
             day = ("день");
@@ -25,7 +25,7 @@
     <dl>
         <dt>Команда: @Model.Title</dt>
         <dt>
-            Дежурства: <span id="duties">@Model.Duty</span> @day
+            Дежурства: <span id="duties">@Model.DutyDuration</span> @day
         </dt>
     </dl>
     <div class="yearOpt">
@@ -55,7 +55,7 @@
                 </tr>
                 <tr id="wd">
                 </tr>
-                @foreach (Person person in Model.Persons)
+                @foreach (Person person in Model.Persons.Where(c => c.Duty == 1 ))
                 {
                     i++;
                     <tr id="str-@i">

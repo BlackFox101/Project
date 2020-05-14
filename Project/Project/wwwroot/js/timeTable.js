@@ -1,6 +1,6 @@
 ﻿let date = new Date(); // Текущая дата
-let persons = document.getElementById('persons').innerHTML; //Количество сотрудников
-let duties = document.getElementById('duties').innerHTML; // Дежуства
+const persons = document.getElementById('persons').innerHTML; //Количество сотрудников
+//let duties = document.getElementById('duties').innerHTML; // Дежуства
 
 initYear();//Добавляет текущий год и 2 следующих
 function initYear() {
@@ -15,17 +15,17 @@ function initYear() {
 let yearSel = document.querySelector('#yearSel');
 let monthSel = document.querySelector('#monthSel');
 yearSel.addEventListener('change', () => {
-  intiDate(monthSel.value, document.querySelector('#yearSel').value);
+  initDate(monthSel.value, document.querySelector('#yearSel').value);
 });
 monthSel.addEventListener('change', () => {
-  intiDate(document.querySelector('#monthSel').value, yearSel.value);
+  initDate(document.querySelector('#monthSel').value, yearSel.value);
 });
 //-----------------------------------------------------------------------------;
 
 let previousMonth;
 let previousYear;
-intiDate();
-function intiDate(month, year) {
+initDate();
+function initDate(month, year) {
   let currentMonth;
   let currentYear;
   //---------------------------------------------
@@ -44,41 +44,41 @@ function intiDate(month, year) {
   }
   //---------------------------------------------
   if (previousMonth) {
-    clearTable(daysInMonth(previousYear, previousMonth));
+    clearTable(getDaysInMonth(previousYear, previousMonth));
   }
   previousMonth = currentMonth;
   previousYear = currentYear;
-  let daysTr = document.querySelector('#days') //Строка с днями месяца
-  let wdTr = document.querySelector('#wd')     //Строка с днями недели
-  for(let i = 1; i < daysInMonth(currentYear, currentMonth)+1; i++) {
+  let daysTrElement = document.querySelector('#days') //Строка с днями месяца
+  let wdTrElement = document.querySelector('#wd')     //Строка с днями недели
+  for(let i = 1; i < getDaysInMonth(currentYear, currentMonth)+1; i++) {
     let day = document.createElement('td');
-    let wd = document.createElement('td');
-    let hol = firstDayInMonth(currentYear, currentMonth, i);
+    let wedDay = document.createElement('td');
+    let isHol = getFirstDayInMonth(currentYear, currentMonth, i);
     day.innerHTML = i;
-    wd.innerHTML = generalDay(hol);
+    wedDay.innerHTML = generalDay(isHol);
     day.classList.add('col'+i);
-    wd.classList.add('col'+i);
-    if (hol == 6 || hol == 0) {
+    wedDay.classList.add('col'+i);
+    if (isHol == 6 || isHol == 0) {
       day.classList.add('hol');
-      wd.classList.add('hol');
+      wedDay.classList.add('hol');
     }
-    daysTr.appendChild(day);
-    wdTr.appendChild(wd);
+    daysTrElement.appendChild(day);
+    wdTrElement.appendChild(wedDay);
   }
 
   initTable();
   function initTable() {
     for(let i = 0; i < persons; i++) {
-      let daysTr = document.getElementById('str-'+(i+1));
-      for(let j = 1; j < daysInMonth(currentYear, currentMonth)+1; j++) {
+      let daysTrElement = document.getElementById('str-'+(i+1));
+      for(let j = 1; j < getDaysInMonth(currentYear, currentMonth)+1; j++) {
         let day = document.createElement('td');
-        let hol = firstDayInMonth(currentYear, currentMonth, j);
+        let isHol = getFirstDayInMonth(currentYear, currentMonth, j);
         day.innerHTML = '';
         day.classList.add('col'+j);
-        if (hol == 6 || hol == 0) {
+        if (isHol == 6 || isHol == 0) {
           day.classList.add('hol');
         }
-        daysTr.appendChild(day);
+        daysTrElement.appendChild(day);
       }
     }
   }
@@ -117,11 +117,11 @@ function clearTable(monthLength) {
 }
 
 // Процедура определяющая количество дней в месяце
-function daysInMonth(year, month) {
+function getDaysInMonth(year, month) {
   return 32 - new Date(year, month, 32).getDate();
 }
 // Процедура определяющая день в месяце
 // 6-суббота 0- воскресенье
-function firstDayInMonth(year, month, day) {
+function getFirstDayInMonth(year, month, day) {
   return new Date(year, month, day).getDay();
 }

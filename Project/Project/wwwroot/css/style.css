@@ -102,8 +102,6 @@ ul.navbar-nav {
     }
 }
 
-/*Стили для Person*/
-
 dt {
     font-weight: 700;
 }
@@ -185,14 +183,14 @@ ul {
     padding-left: 40px;
 }
 
-.persons_table {
+.data_table {
     margin: 10px 0px 10px 10px;
     padding: 0;
     border-spacing: 0;
     border-collapse: collapse;
 }
 
-.persons_table td {
+.data_table td {
     border: 1px solid #333;
     min-width: 25px;
     display: table-cell;
@@ -229,4 +227,58 @@ td.pad_td {
 
 .center {
     text-align: center;
+}
+
+.vacations_table {
+    margin: 10px 0px 10px 10px;
+    padding: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.vacations_table td {
+    border: 1px solid #333;
+    min-width: 25px;
+    display: table-cell;
+    box-sizing: border-box;
+}
+
+.form-reason {
+    display: block;
+    width: 180px;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-date {
+    display: block;
+    width: 140px;
+    height: 38px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.vac-link {
+    display: block;
+    margin-bottom: 10px;
+    color: #343a40 !important;
+    font-size: 16px;
+    font-family: "Segoe UI";
+}
+
+.hr-det {
+    width: 250px;
 }

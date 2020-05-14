@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project.Models
+namespace Project.Data.Models
 {
     public class Team
     {
@@ -13,7 +13,7 @@ namespace Project.Models
         [MaxLength(100)]
         public string Title { get; set; }
         [Required]
-        public int Duty { get; set; }
+        public int DutyDuration { get; set; }
         public List<Person> Persons { get; set; }
         public Team()
         {

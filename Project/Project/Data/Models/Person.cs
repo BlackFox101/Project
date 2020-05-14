@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project.Models
+namespace Project.Data.Models
 {
     public class Person
     {
@@ -18,8 +18,12 @@ namespace Project.Models
         [Required]
         [Range(0, 1)]
         public int Duty { get; set; }
-        //public 
         public int? TeamId { get; set; }
         public Team Team { get; set; }
+        public List<Vacation> Vacations { get; set; }
+        public Person()
+        {
+            Vacations = new List<Vacation>();
+        }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Project.Data;
-using Project.Models;
+using Project.Data.Models;
 
 namespace Project.Controllers
 {

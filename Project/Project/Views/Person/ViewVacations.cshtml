@@ -1,0 +1,39 @@
+﻿@using Project.Data.Models
+@model Person
+@{
+    ViewBag.Title = Model.Name;
+    int i = 0;
+}
+<h2>@Model.Name</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>Отпуска:</dt>
+    </dl>
+    <table class="vacations_table">
+        <thead>
+            <tr class="title_tr">
+                <td><h5 class="center">№</h5></td>
+                <td class="pad_td"><h5>Причина:</h5></td>
+                <td class="pad_td">Начало:</td>
+                <td class="pad_td">Конец:</td>
+            </tr>
+        </thead>
+        <tbody id="team_det">
+            @foreach(Vacation vacation in Model.Vacations)
+            {
+                i++;
+                <tr>
+                    <td><h5 class="center">@i.</h5></td>
+                    <td class="pad_td">@vacation.Reason</td>
+                    <td class="pad_td">@vacation.StartDate.ToString("dd.MM.yyyy")</td>
+                    <td class="pad_td">@vacation.EndDate.ToString("dd.MM.yyyy")</td>
+                </tr>
+            }
+            @if (i == 0)
+            {
+                <tr><td colspan="4">Отсутствуют</td></tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="AddVacation" asp-controller="Person" asp-route-id="@Model.Id">Добавить</a>
+</div>
