@@ -58,3 +58,7 @@
 .yearOpt {
     margin-top: 15px;
 }
+
+#vacations {
+    display: none;
+}

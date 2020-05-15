@@ -33,7 +33,6 @@ namespace Project.Data.Controllers
         public async Task<IActionResult> Create(Person user)
         {
             db.Persons.Add(user);
-            Console.WriteLine("id=" + user.Id + " PersonId=" + user.Name);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -138,9 +137,8 @@ namespace Project.Data.Controllers
         public async Task<IActionResult> AddVacation(Vacation item)
         {
             db.Vacations.Add(item);
-            Console.WriteLine("id=" + item.Id + " PersonId=" + item.PersonId);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewVacations", new { id = item.PersonId });
         }
         public async Task<IActionResult> ViewVacations(int? id)
         {
@@ -152,6 +150,19 @@ namespace Project.Data.Controllers
                 Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
                 if (user != null)
                     return View(user);
+            }
+            return NotFound();
+        }
+        [HttpPut]
+        public async Task<IActionResult> DelVacation(int? id)
+        {
+            if (id != null)
+            {
+                Vacation user = await db.Vacations.FirstOrDefaultAsync(p => p.Id == id);
+                int? PersonId = user.PersonId;
+                db.Vacations.Remove(user);
+                await db.SaveChangesAsync();
+                return Ok(PersonId);
             }
             return NotFound();
         }

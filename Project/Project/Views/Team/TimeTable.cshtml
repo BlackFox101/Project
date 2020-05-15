@@ -4,6 +4,8 @@
 @{
     ViewBag.Title = "Команда " + @Model.Title;
     int i = 0;
+    int j = 0;
+    int k = 0;
     string day;
     switch (Model.DutyDuration)
     {
@@ -66,5 +68,19 @@
         </table>
     </div>
     <span class="hidden" id="persons">@i</span>
+    <div id="vacations">
+        @foreach (Person person in Model.Persons.Where(c => c.Duty == 1))
+        {
+            j++;
+            k = 0;
+            <ul id="@j">
+                @foreach (Vacation vacation in person.Vacations)
+                {
+                    k++;
+                    <li id="@k" startDate="@vacation.StartDate.ToString("dd.MM.yyyy")" endDate="@vacation.EndDate.ToString("dd.MM.yyyy")"></li>
+                }
+            </ul>
+        }
+    </div>
     <script src="~/js/timeTable.js"></script>
 </div>

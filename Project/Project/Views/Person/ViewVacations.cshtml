@@ -4,7 +4,7 @@
     ViewBag.Title = Model.Name;
     int i = 0;
 }
-<h2>@Model.Name</h2>
+<h2><a asp-action="Details" asp-controller="Person" asp-route-id="@Model.Id" class="person-link">@Model.Name</a></h2>
 <div>
     <dl class="dl-horizontal">
         <dt>Отпуска:</dt>
@@ -12,28 +12,31 @@
     <table class="vacations_table">
         <thead>
             <tr class="title_tr">
-                <td><h5 class="center">№</h5></td>
-                <td class="pad_td"><h5>Причина:</h5></td>
-                <td class="pad_td">Начало:</td>
-                <td class="pad_td">Конец:</td>
+                <th><h5 class="center">№</h5></th>
+                <th class="pad_td">Причина:</th>
+                <th class="pad_td">Начало:</th>
+                <th class="pad_td">Конец:</th>
+                <th></th>
             </tr>
         </thead>
         <tbody id="team_det">
-            @foreach(Vacation vacation in Model.Vacations)
+            @foreach (Vacation vacation in Model.Vacations)
             {
                 i++;
-                <tr>
+                <tr id="vac-@i">
                     <td><h5 class="center">@i.</h5></td>
                     <td class="pad_td">@vacation.Reason</td>
                     <td class="pad_td">@vacation.StartDate.ToString("dd.MM.yyyy")</td>
                     <td class="pad_td">@vacation.EndDate.ToString("dd.MM.yyyy")</td>
+                    <td id="del_vacation"><img asp-route-id="@vacation.Id" src="~/images/del_check.png" id="@i" class="del_vacation" alt="del_check" /></td>
                 </tr>
             }
             @if (i == 0)
             {
-                <tr><td colspan="4">Отсутствуют</td></tr>
+                <tr><td colspan="5">Отсутствуют</td></tr>
             }
         </tbody>
     </table>
     <a asp-action="AddVacation" asp-controller="Person" asp-route-id="@Model.Id">Добавить</a>
+    <script src="~/js/vacation.js"></script>
 </div>

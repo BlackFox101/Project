@@ -3,8 +3,8 @@
     ViewBag.Title = "Добавить отпуск";
 
 }
-<h1>Добавить отпуск</h1>
-<h2>@ViewBag.Person.Name</h2>
+<h2 class="person-link">Добавить отпуск</h2>
+<h2><a asp-action="Details" asp-controller="Person" asp-route-id="@ViewBag.Person.Id" class="person-link">@ViewBag.Person.Name</a></h2>
 <form asp-action="AddVacation" asp-controller="Person">
     <input type="hidden" asp-for="Id" value="" />
     <input type="hidden" asp-for="PersonId" value="@ViewBag.PersonId" />
