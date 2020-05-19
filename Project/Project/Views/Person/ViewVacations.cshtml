@@ -4,7 +4,7 @@
     ViewBag.Title = Model.Name;
     int i = 0;
 }
-<h2><a asp-action="Details" asp-controller="Person" asp-route-id="@Model.Id" class="person-link">@Model.Name</a></h2>
+<h2><a asp-action="Details" asp-controller="Person" asp-route-id="@Model.Id">@Model.Name</a></h2>
 <div>
     <dl class="dl-horizontal">
         <dt>Отпуска:</dt>
@@ -12,11 +12,11 @@
     <table class="vacations_table">
         <thead>
             <tr class="title_tr">
-                <th><h5 class="center">№</h5></th>
-                <th class="pad_td">Причина:</th>
-                <th class="pad_td">Начало:</th>
-                <th class="pad_td">Конец:</th>
-                <th></th>
+                <th class="th_item"><h5 class="center">№</h5></th>
+                <th class="pad_th">Начало</th>
+                <th class="pad_th">Конец</th>
+                <th class="pad_th">Причина</th>
+                <th class="th_item">Удалить</th>
             </tr>
         </thead>
         <tbody id="team_det">
@@ -25,15 +25,15 @@
                 i++;
                 <tr id="vac-@i">
                     <td><h5 class="center">@i.</h5></td>
-                    <td class="pad_td">@vacation.Reason</td>
                     <td class="pad_td">@vacation.StartDate.ToString("dd.MM.yyyy")</td>
                     <td class="pad_td">@vacation.EndDate.ToString("dd.MM.yyyy")</td>
+                    <td class="pad_td">@vacation.Reason</td>
                     <td id="del_vacation"><img asp-route-id="@vacation.Id" src="~/images/del_check.png" id="@i" class="del_vacation" alt="del_check" /></td>
                 </tr>
             }
             @if (i == 0)
             {
-                <tr><td colspan="5">Отсутствуют</td></tr>
+                <tr><td class="center" colspan="5">Отсутствуют</td></tr>
             }
         </tbody>
     </table>

@@ -31,19 +31,6 @@ namespace Project.Data.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        [ActionName("Delete")]
-        public async Task<IActionResult> ConfirmDelete(int? id)
-        {
-            if (id != null)
-            {
-                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
-                    return View(user);
-            }
-            return NotFound();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -86,11 +73,11 @@ namespace Project.Data.Controllers
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Team user)
+        public async Task<IActionResult> Edit(Team team)
         {
-            db.Teams.Update(user);
+            db.Teams.Update(team);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = team.Id });
         }
         public async Task<IActionResult> Details(int? id)
         {
@@ -102,6 +89,20 @@ namespace Project.Data.Controllers
                 Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
                 if (user != null)
                     return View(user);
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ExcludeTeam(int? id)
+        {
+            if (id != null)
+            {
+                Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                int? team = user.TeamId;
+                user.TeamId = null;
+                await db.SaveChangesAsync();
+                if (user != null)
+                    return RedirectToAction("Details", new { id = team });
             }
             return NotFound();
         }

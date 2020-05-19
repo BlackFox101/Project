@@ -1,6 +1,5 @@
 ﻿let date = new Date(); // Текущая дата
-const persons = document.getElementById('persons').innerHTML; //Количество сотрудников
-//let duties = document.getElementById('duties').innerHTML; // Дежуства
+let persons = Number(document.getElementById('persons').innerHTML); //Количество сотрудников
 
 initYear();//Добавляет текущий год и 2 следующих
 function initYear() {
@@ -24,20 +23,20 @@ monthSel.addEventListener('change', () => {
 
 let previousMonth;
 let previousYear;
+let currentMonth;
+let currentYear;
 initDate();
 function initDate(month, year) {
-  let currentMonth;
-  let currentYear;
   //---------------------------------------------
   if (month) {
-    currentMonth = month;
+    currentMonth = Number(month);
     console.log('month='+month);
   } else {
     currentMonth = date.getMonth();
     document.getElementById('monthSel').value = currentMonth;
   }
   if (year) {
-    currentYear = year;
+    currentYear = Number(year);
     console.log('year='+year);
   } else {
     currentYear = date.getFullYear();
@@ -46,8 +45,8 @@ function initDate(month, year) {
   if (previousMonth) {
     clearTable(getDaysInMonth(previousYear, previousMonth));
   }
-  previousMonth = currentMonth;
-  previousYear = currentYear;
+  previousMonth = monthSel.value;
+  previousYear = yearSel.value;
   let daysTrElement = document.querySelector('#days') //Строка с днями месяца
   let wdTrElement = document.querySelector('#wd')     //Строка с днями недели
   for(let i = 1; i < getDaysInMonth(currentYear, currentMonth)+1; i++) {
@@ -81,6 +80,10 @@ function initDate(month, year) {
         daysTrElement.appendChild(day);
       }
     }
+  }
+  if (persons != 0) {
+    puttingVacation();
+    puttingDuties();
   }
 }
 
@@ -124,4 +127,72 @@ function getDaysInMonth(year, month) {
 // 6-суббота 0- воскресенье
 function getFirstDayInMonth(year, month, day) {
   return new Date(year, month, day).getDay();
+}
+
+function puttingVacation() {
+  let vacations = document.querySelector('#vacations');
+  for(let i = 1; i < persons + 1; i++) {
+    let str = document.querySelector('#str-'+i);
+    let vacPerson = vacations.querySelector('#person-'+i);
+    let vac = vacPerson.querySelectorAll('#vacs-' + i);
+    for(let j = 0; j < vac.length; j++) {
+      let startDate = vac[j].getAttribute('startdate');
+      let endDate = vac[j].getAttribute('enddate');
+      startDate = new Date(startDate.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+      endDate = new Date(endDate.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+      if (currentMonth == startDate.getMonth()) {
+        let startDay = startDate.getDate();
+        let endDay = endDate.getDate();
+        if (currentMonth == endDate.getMonth()) {
+          for (let k = startDay; k < endDay + 1; k++) {
+            let dayVac = str.querySelector('.col' + k);
+            dayVac.classList.add('vac');
+          }
+        } else {
+          for (let k = startDay; k < getDaysInMonth(currentYear, currentMonth) + 1; k++) {
+            let dayVac = str.querySelector('.col' + k);
+            dayVac.classList.add('vac');
+          }
+        }
+      }
+    }
+  }
+}
+
+function puttingDuties() {
+  let dutyDuration = Number(document.getElementById('duties').innerHTML); // Длительность дежуств
+  let day = 1;
+  while(day < getDaysInMonth(currentYear, currentMonth)+1) {
+    for(let i = 1; (i < persons + 1 && day < getDaysInMonth(currentYear, currentMonth)+1); ) {
+      let str = document.querySelector('#str-' + i);
+      for (let j = 1; (j < dutyDuration + 1 && day < getDaysInMonth(currentYear, currentMonth)+1);) {
+        let dayDej = str.querySelector('.col' + day);
+        if (!(dayDej.classList.contains('hol') || dayDej.classList.contains('vac'))) {
+          dayDej.classList.add('dej');
+          j++;
+        } else if (dayDej.classList.contains('vac')) {
+          j++;
+        }
+        day++;
+        if (dayDej.classList.contains('vac')) {
+          day--;
+        }
+      }
+      i++;
+    }
+  }
+}
+
+//Возвращает дату в строку форматом 'dd.mm.yyyy'
+function getFormatDate(date) {
+  let dd = date.getDate();
+  if (dd < 10) dd = '0' + dd;
+
+  let mm = date.getMonth() + 1;
+  if (mm < 10) mm = '0' + mm;
+
+  let yy = date.getFullYear() % 100;
+  if (yy < 10) yy = '0' + yy;
+
+  return dd + '.' + mm + '.' + yy;
 }

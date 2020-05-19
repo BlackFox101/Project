@@ -20,21 +20,25 @@
             break;
     }
 }
-<a asp-action="TimeTable" asp-controller="Team" asp-route-id="@Model.Id">График</a>
 <div>
-    <hr />
     <dl>
-        <dt>Команда: @Model.Title</dt>
-        <dt>Дежурства: @Model.DutyDuration @day</dt>
+        <dt>Команда: @Model.Title
+            <a asp-action="Edit" asp-controller="Team" asp-route-id="@Model.Id">
+                <img asp-route-id="@Model.Id" src="~/images/settings.png" class="settings" alt="settings" />
+            </a>
+        </dt>
+        <dt>Длительность дежурств: @Model.DutyDuration @day</dt>
         <dt>Участники:</dt>
     </dl>
     <table class="data_table">
         <thead>
             <tr class="title_tr">
-                <td><h5 class="center">№</h5></td>
-                <td class="pad_td"><h5>Имя:</h5></td>
-                <td><img src="~/images/icon_duty.png" class="icon_duty" title="Дежурства" alt="icon_duty"></td>
-                <td></td>
+                <th class="th_item"><h5 class="center">№</h5></th>
+                <th class="pad_th"><h5>Имя</h5></th>
+                <th class="th_item">Дежурство
+                    <img src="/images/ok_check.png" class="duty_example" alt="ok_check"/>/<img src="/images/x_check.png" class="duty_example" alt="x_check" />
+                </th>
+                <th class="th_item">Исключить</th>
             </tr>
         </thead>
         <tbody id="team_det">
@@ -50,14 +54,15 @@
                 {
                     duty = "/images/ok_check.png";
                     alt = "ok_check";
-                }   
+                }
                 <tr>
                     <td><h5 class="center" id="">@i.</h5></td>
-                    <td class="pad_td">@person.Name</td>
+                    <td class="pad_td"><a asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
                     <td id="duties"><img asp-route-id="@person.Id" src=@duty id="duty-@i" class="duty" alt="@alt" /></td>
-                    <td class="pad_td">
-                        <a asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">Подробнее</a> |
-                        <a asp-action="Delete" asp-controller="Person" asp-route-id="@person.Id">Удалить</a>
+                    <td class="pad_td center">
+                        <form asp-action="ExcludeTeam" asp-controller="Team" asp-route-id="@person.Id">
+                            <button class="button_del"><img src="~/images/del_check.png" class="del" alt="del_check" /></button>
+                        </form>
                     </td>
                 </tr>
             }
@@ -67,7 +72,7 @@
             }
         </tbody>
     </table>
-    <a asp-action="Edit" asp-controller="Team" asp-route-id="@Model.Id">Изменить</a>
+    <a asp-action="TimeTable" asp-controller="Team" asp-route-id="@Model.Id">График</a>
     <span class="hidden" id="persons">@i</span>
     <script src="~/js/dutyCheck.js"></script>
 </div>

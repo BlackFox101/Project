@@ -3,20 +3,33 @@
     ViewBag.Title = "Все команды";
     int i = 0;
 }
-<a asp-action="Create">Создать команду</a>
-<table class="table">
-
-    @foreach (var item in Model)
-    {
-        i++;
-        <tr>
-            <td><h5>@i.</h5></td>
-            <td class="pad_td">@item.Title</td>
-            <td>
-                <a asp-action="Details" asp-controller="Team" asp-route-id="@item.Id">Подробнее</a> |
-                <a asp-action="Edit" asp-controller="Team" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Delete" asp-controller="Team" asp-route-id="@item.Id">Удалить</a>
-            </td>
+<h2>Все команды</h2>
+<table class="list_table">
+    <thead>
+        <tr class="title_tr">
+            <th class="th_item"><h5 class="center">№</h5></th>
+            <th class="pad_th">Название</th>
+            <th class="th_item">Удалить</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td><h5 class="center">@i.</h5></td>
+                <td class="pad_td center"><a asp-action="Details" asp-controller="Team" asp-route-id="@item.Id">@item.Title</a></td>
+                <td class="pad_td center">
+                    <form asp-action="Delete" asp-controller="Team" asp-route-id="@item.Id">
+                        <button class="button_del"><img src="~/images/del_check.png" class="del" alt="del_check" /></button>
+                    </form>
+                </td>
+            </tr>
+        }
+        @if (i == 0)
+        {
+            <tr><td colspan="3" class="center">Отсутствуют</td></tr>
+        }
+    </tbody>
 </table>
+<a asp-action="Create">Создать команду</a>

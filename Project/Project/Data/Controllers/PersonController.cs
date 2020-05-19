@@ -70,22 +70,6 @@ namespace Project.Data.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        [ActionName("Delete")]
-        public async Task<IActionResult> ConfirmDelete(int? id)
-        {
-            if (id != null)
-            {
-                var person = db.Persons
-                        .Include(c => c.Team)  // добавляем данные по пользователям
-                        .ToList();
-                Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
-                    return View(user);
-            }
-            return NotFound();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Delete(int? id)
         {

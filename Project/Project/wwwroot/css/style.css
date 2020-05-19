@@ -194,7 +194,7 @@ ul {
 }
 
 td.pad_td {
-    padding: 0 5px 0 5px;
+    padding: 0 10px 0 10px;
 }
 
 .center {
@@ -213,8 +213,19 @@ td.pad_td {
     margin: 0 0 -3px 2px;
 }
 
+.settings {
+    width: 14px;
+    height: 14px;
+    margin: 0 0 -2px 0;
+}
+
+
 [id*="duty"] {
     cursor: pointer;
+}
+
+#duties {
+    text-align: center;
 }
 
 .hidden {
@@ -232,7 +243,21 @@ td.pad_td {
     border-collapse: collapse;
 }
 
-.vacations_table td, th {
+.vacations_table td {
+    border: 1px solid #333;
+    min-width: 25px;
+    display: table-cell;
+    box-sizing: border-box;
+}
+
+.list_table {
+    margin: 10px 0px 10px 10px;
+    padding: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.list_table td {
     border: 1px solid #333;
     min-width: 25px;
     display: table-cell;
@@ -286,11 +311,14 @@ a.vac-link:hover {
 .del_vacation {
     width: 20px;
     height: 20px;
-    margin: 0 0 -3px 2px;
+    margin-bottom: -3px;
+    cursor: pointer;
 }
 
-[id*="del"] {
-    cursor: pointer;
+#del_vacation {
+    width: 20px;
+    height: 20px;
+    text-align: center;
 }
 
 .person-link {
@@ -302,4 +330,66 @@ a.vac-link:hover {
 
 a.person-link:hover {
     color: rgba(0,0,0,.8);
+}
+
+.pad_th {
+    border: 1px solid #333;
+    padding: 0 32px 0 32px;
+}
+
+.th {
+    border: 1px solid #333;
+}
+
+.th_item {
+    border: 1px solid #333;
+    padding: 0 5px 0 5px;
+}
+
+.btn-edit {
+    -webkit-appearance: none;
+    text-decoration: none;
+    display: block;
+    border: none;
+    color: #007bff;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: transparent;
+    margin-bottom: -3px;
+}
+
+.btn-edit:hover {
+    color: #0054AD;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.button_del {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+.del {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-bottom: -3px;
+}
+
+button:focus {
+    outline: none;
+}
+
+.duty_example {
+    width: 13px;
+    height: 13px;
+    margin: 0 0 -2px 0;
+}
+
+select {
+    cursor: pointer;
 }

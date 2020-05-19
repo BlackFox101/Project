@@ -3,28 +3,44 @@
     ViewBag.Title = "Все пользователи";
     int i = 0;
 }
-<a asp-action="Create">Добавить сотрудника</a>
-<table class="table">
-    @foreach (var item in Model)
-    {
-        i++;
-        <tr>
-            <td><h5>@i.</h5></td>
-            <td class="pad_td">@item.Name</td>
-            <td class="pad_td">@item.Position</td>
-            @if (@item.TeamId == null)
-            {
-                <td class="pad_td center">------</td>
-            }
-            else
-            {
-                <td class="pad_td"><a asp-action="Details" asp-controller="Team" asp-route-id="@item.Team.Id">@item.Team?.Title</a></td>
-            }
-            <td>
-                <a asp-action="Details" asp-controller="Person" asp-route-id="@item.Id">Подробнее</a> |
-                <a asp-action="Edit" asp-controller="Person" asp-route-id="@item.Id">Изменить</a> |
-                <a asp-action="Delete" asp-controller="Person" asp-route-id="@item.Id">Удалить</a>
-            </td>
+<h2>Все сотрудники:</h2>
+<table class="list_table">
+    <thead>
+        <tr class="title_tr">
+            <th class="th_item"><h5 class="center">№</h5></th>
+            <th class="pad_th">ФИО</th>
+            <th class="pad_th">Должность</th>
+            <th class="pad_th">Команда</th>
+            <th class="th_item">Удалить</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td><h5 class="center">@i.</h5></td>
+                <td class="pad_td"><a asp-action="Details" asp-controller="Person" asp-route-id="@item.Id">@item.Name</a></td>
+                <td class="pad_td center">@item.Position</td>
+                @if (@item.TeamId == null)
+                {
+                    <td class="pad_td center">Отсутствует</td>
+                }
+                else
+                {
+                    <td class="pad_td center"><a asp-action="Details" asp-controller="Team" asp-route-id="@item.Team.Id">@item.Team?.Title</a></td>
+                }
+                <td class="pad_td center">
+                    <form asp-action="Delete" asp-controller="Person" asp-route-id="@item.Id">
+                        <button class="button_del"><img src="~/images/del_check.png" class="del" alt="del_check" /></button>
+                    </form>
+                </td>
+            </tr>
+        }
+        @if (i == 0)
+        {
+            <tr><td class="center" colspan="5">Отсутствуют</td></tr>
+        }
+    </tbody>
 </table>
+<a asp-action="Create">Добавить сотрудника</a>

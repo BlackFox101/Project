@@ -6,8 +6,12 @@
 <div>
     <dl class="dl-horizontal">
         <dt>Имя</dt>
-        <dd>@Model.Name</dd>
-
+        <dd>
+            @Model.Name
+                <a asp-action="Edit" asp-controller="Person" asp-route-id="@Model.Id">
+                    <img asp-route-id="@Model.Id" src="~/images/settings.png" class="settings" alt="settings" />
+                </a>
+            </dd>
         <dt>Должность</dt>
         <dd>@Model.Position</dd>
         <dt>Команда</dt>
@@ -19,8 +23,6 @@
         {
             <dd><a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Team.Id">@Model.Team?.Title</a></dd>
         }
-        <dt><a asp-action="ViewVacations" asp-controller="Person" asp-route-id="@Model.Id" class="vac-link">Отпуска ↵</a></dt>
+        <dt><a asp-action="ViewVacations" asp-controller="Person" asp-route-id="@Model.Id" >Отпуска</a></dt>
     </dl>
-    <hr class="hr-det"/>
-    <a asp-action="Edit" asp-controller="Person" asp-route-id="@Model.Id">Изменить</a>
 </div>
