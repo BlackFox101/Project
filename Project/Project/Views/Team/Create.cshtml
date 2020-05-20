@@ -1,6 +1,7 @@
 ﻿@model Team
 @{
     ViewBag.Title = "Создать команду";
+    DateTime DateNow = DateTime.Now;
 }
 <form asp-action="Create" asp-controller="Team">
     <div class="form-group">
@@ -17,6 +18,7 @@
             <option value="5">5</option>
         </select>
     </div>
+    <input type="date" asp-for="DutyStartDate" value="@DateNow" class="form-start-date" required />
     <div class="form-group">
         <input type="submit" value="Отправить" class="btn" />
     </div>

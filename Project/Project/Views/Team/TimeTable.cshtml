@@ -7,6 +7,7 @@
     int j = 0;
     int k = 0;
     string day;
+    var DutyStartDate = @Model.DutyStartDate;
     switch (Model.DutyDuration)
     {
         case 1:
@@ -28,6 +29,9 @@
         <dt>Команда: <a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Id">@Model.Title</a></dt>
         <dt>
             Длительность дежурств: <span id="duties">@Model.DutyDuration</span> @day
+        </dt>
+        <dt>
+            Начало дежурств: @DutyStartDate.ToString("dd/MM/yyyy")
         </dt>
     </dl>
     <div class="yearOpt">

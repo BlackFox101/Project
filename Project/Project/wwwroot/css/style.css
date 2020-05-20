@@ -279,6 +279,8 @@ td.pad_td {
 }
 
 .form-date {
+    cursor: pointer;
+    padding: 0 5px;
     display: block;
     width: 140px;
     height: 38px;
@@ -305,7 +307,7 @@ a.vac-link:hover {
 }
 
 .hr-det {
-    width: 250px;
+    width: 350px;
 }
 
 .del_vacation {
@@ -392,4 +394,32 @@ button:focus {
 
 select {
     cursor: pointer;
+}
+
+.form-start-date {
+    cursor: pointer;
+    padding: 0 5px;
+    display: block;
+    height: calc(1.5em + .75rem + 2px);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s;
+}
+
+.form-control_readonly {
+    display: block;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

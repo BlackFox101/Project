@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project.Data.Models;
 
@@ -65,7 +66,7 @@ namespace Project.Data.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id != null)
-            {
+            { 
                 Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
                 if (user != null)
                     return View(user);
@@ -105,6 +106,26 @@ namespace Project.Data.Controllers
                     return RedirectToAction("Details", new { id = team });
             }
             return NotFound();
+        }
+        public async Task<IActionResult> TimeTableEdit(int? id)
+        {
+            if (id != null)
+            {
+                SelectList persons = new SelectList(db.Persons.Where(c => c.TeamId == id && c.Duty == 1), "Id", "Name");
+                ViewBag.Persons = persons;
+                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (user != null)
+                    return View(user);
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> TimeTableEdit(Team team)
+        {
+            Console.WriteLine("id:" + team.Id + " FirstPersonId:" + team.FirstPersonInDutyId + " DateStart:" + team.DutyStartDate);
+            db.Teams.Update(team);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Details", new { id = team.Id });
         }
     }
 }

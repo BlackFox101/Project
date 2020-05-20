@@ -68,11 +68,14 @@
             }
             @if (i == 0)
             {
-                <tr><td colspan="4">Отсутствуют</td></tr>
+                <tr><td class="center" colspan="4">Отсутствуют</td></tr>
             }
         </tbody>
     </table>
     <a asp-action="TimeTable" asp-controller="Team" asp-route-id="@Model.Id">График</a>
+    <a asp-action="TimeTableEdit" asp-controller="Team" asp-route-id="@Model.Id">
+        <img asp-route-id="@Model.Id" src="~/images/settings.png" class="settings" alt="settings" />
+    </a>
     <span class="hidden" id="persons">@i</span>
     <script src="~/js/dutyCheck.js"></script>
 </div>
