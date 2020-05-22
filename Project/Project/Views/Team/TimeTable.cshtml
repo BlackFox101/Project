@@ -24,7 +24,11 @@
     }
 }
 <div>
-    <h1>График дежурств</h1>
+    <h1>График дежурств
+        <a asp-action="TimeTableEdit" asp-controller="Team" asp-route-id="@Model.Id">
+            <img asp-route-id="@Model.Id" src="~/images/settings.png" class="big_setting" alt="settings" />
+        </a>
+    </h1>
     <dl>
         <dt>Команда: <a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Id">@Model.Title</a></dt>
         <dt>

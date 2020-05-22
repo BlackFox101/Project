@@ -219,6 +219,12 @@ td.pad_td {
     margin: 0 0 -2px 0;
 }
 
+.big_setting {
+    width: 18px;
+    height: 18px;
+    margin: 0 0 -1px -5px;
+}
+
 
 [id*="duty-"] {
     cursor: pointer;

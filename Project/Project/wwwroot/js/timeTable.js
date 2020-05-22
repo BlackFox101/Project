@@ -4,10 +4,10 @@ let firstPersonInDuty = Number(persons.getAttribute('FirstPersonInDuty'));
 persons = Number(persons.getAttribute('persons'));
 //console.log(firstPersonInDuty);
 //console.log(persons);
-initYear();//Добавляет текущий год и 2 следующих
+initYear();//Добавляет текущий год и 1 следующий
 function initYear() {
   let currentYear = date.getFullYear();
-  for(let i = currentYear; i < currentYear + 3; i++) {
+  for(let i = currentYear; i < currentYear + 2; i++) {
     let newOption = new Option(`${i}`,`${i}`);
     document.querySelector('#yearSel').appendChild(newOption);
   }
@@ -145,7 +145,7 @@ function puttingVacation() {
       endDate = new Date(endDate.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
       let startDay = startDate.getDate();
       let endDay = endDate.getDate();
-      if (currentMonth == startDate.getMonth()) {
+      if (currentMonth == startDate.getMonth() && startDate.getFullYear() == currentYear) {
         if (currentMonth == endDate.getMonth()) {
           for (let k = startDay; k < endDay + 1; k++) {
             let dayVac = str.querySelector('.col' + k);
@@ -157,7 +157,7 @@ function puttingVacation() {
             dayVac.classList.add('vac');
           }
         }
-      } else if(currentMonth > startDate.getMonth() && currentMonth == endDate.getMonth()) {
+      } else if(currentMonth > startDate.getMonth() && currentMonth == endDate.getMonth() && startDate.getFullYear() == currentYear) {
         for (let k = 1; k < endDay + 1; k++) {
           let dayVac = str.querySelector('.col' + k);
           dayVac.classList.add('vac');
@@ -208,7 +208,7 @@ function puttingDuties() {
           vacation = false;
           break;
         } else {
-          if (i.getMonth() == currentMonth) {
+          if (i.getMonth() == currentMonth && i.getFullYear() == currentYear) {
             let dayDej = str.querySelector('.col' + i.getDate());
             dayDej.classList.add('dej');
           }

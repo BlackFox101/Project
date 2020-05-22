@@ -132,7 +132,7 @@ namespace Project.Data.Controllers
         {
             db.Teams.Update(team);
             await db.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = team.Id });
+            return RedirectToAction("TimeTable", new { id = team.Id });
         }
     }
 }

@@ -2,13 +2,16 @@
 @{
     ViewBag.Title = "Редактирование команды";
 }
-<form asp-action="Edit" asp-controller="Team" asp-route-id="@Model.Id">
+<form asp-action="TimeTableEdit" asp-controller="Team" asp-route-id="@Model.Id">
     <dl>
         <dt>Команда: @Model.Title</dt>
     </dl>
     <hr  class="hr-det"/>
     <input type="hidden" asp-for="Title" class="form-control_readonly" readonly />
-    <input type="hidden" asp-for="DutyDuration" value="@Model.DutyDuration" class="form-control" readonly />
+    <div class="form-group">
+        <label asp-for="DutyDuration" class="control-label">Длительность дежурства(в днях):</label>
+        @Html.DropDownList("DutyDuration", new SelectList(new int[] { 1, 2, 3, 4, 5 }, @Model.DutyDuration), new { @class = "select-control" })
+    </div>
     <div class="form-group">
         <label asp-for="FirstPersonInDutyId" class="control-label">Сотрудник который будет дежурить первым:</label>
         @Html.DropDownListFor(model => model.FirstPersonInDutyId, ViewBag.Persons as SelectList, new { @class = "select-control" })
