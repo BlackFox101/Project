@@ -31,7 +31,7 @@
             Длительность дежурств: <span id="duties">@Model.DutyDuration</span> @day
         </dt>
         <dt>
-            Начало дежурств: @DutyStartDate.ToString("dd/MM/yyyy")
+            Начало дежурств: <span id="dutyStartDate" date="@DutyStartDate.ToString("dd/MM/yyyy")">@DutyStartDate.ToString("dd/MM/yyyy")</span>
         </dt>
     </dl>
     <div class="yearOpt">
@@ -61,26 +61,29 @@
                 </tr>
                 <tr id="wd">
                 </tr>
-                @foreach (Person person in Model.Persons.Where(c => c.Duty == 1 ))
+                @foreach (Person person in Model.Persons.Where(c => c.Duty == 1))
                 {
                     i++;
+                    if (@Model.FirstPersonInDutyId == person.Id)
+                    {
+                        k = i;
+                    }
                     <tr id="str-@i">
-                        <td>@person.Name</td>
+                        <td id="duty-@person.Id">@person.Name</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-    <span class="hidden" id="persons">@i</span>
+    <span class="hidden" id="persons" persons="@i" FirstPersonInDuty="@k"></span>
     <div id="vacations">
         @foreach (Person person in Model.Persons.Where(c => c.Duty == 1))
         {
-            j++; 
+            j++;
             <ul id="person-@j">
                 @foreach (Vacation vacation in person.Vacations)
                 {
-                    k++;
-                    <li id="vacs-@j" startDate="@vacation.StartDate.ToString("dd/MM/yyyy")" endDate="@vacation.EndDate.ToString("dd/MM/yyyy")"></li>
+                    <li class="vacs-@j" startDate="@vacation.StartDate.ToString("dd/MM/yyyy")" endDate="@vacation.EndDate.ToString("dd/MM/yyyy")"></li>
                 }
             </ul>
         }

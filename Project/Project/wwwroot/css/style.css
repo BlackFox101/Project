@@ -220,7 +220,7 @@ td.pad_td {
 }
 
 
-[id*="duty"] {
+[id*="duty-"] {
     cursor: pointer;
 }
 

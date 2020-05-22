@@ -21,14 +21,3 @@ for(let i = 0; i < duties.length; i++) {
       }).catch(() => console.log('ошибка'));
   })
 }
-
-dutiesDate()
-function dutiesDate() {
-  let uno = new Date(2017, 1, 28);
-  let dos = new Date(2016, 1, 28);
-  let tres = new Date(2018, 1, 28);
-  console.log(uno);
-  if( tres > uno && uno > dos) {
-    console.log('работает')
-  }
-}

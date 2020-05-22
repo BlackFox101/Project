@@ -58,6 +58,15 @@ namespace Project.Data.Controllers
                         .Include(c => c.Persons)  // добавляем данные по пользователям
                         .ToList();
                 Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (user.FirstPersonInDutyId == null)
+                {
+                    foreach (Person person in user.Persons.Where(c => c.Duty == 1))
+                    {
+                        user.FirstPersonInDutyId = person.Id;
+                        break;
+                    }
+                }
+                Console.WriteLine(user.FirstPersonInDutyId);
                 if (user != null)
                     return View(user);
             }

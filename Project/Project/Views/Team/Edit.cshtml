@@ -11,6 +11,8 @@
         <label asp-for="DutyDuration" class="control-label">Длительность дежурства(в днях):</label>
         @Html.DropDownList("DutyDuration", new SelectList(new int[] { 1, 2, 3, 4, 5 }, @Model.DutyDuration), new { @class = "select-control" })
     </div>
+    <input type="hidden" asp-for="FirstPersonInDutyId" class="form-control" readonly />
+    <input type="hidden" asp-for="DutyStartDate" class="form-start-date" readonly />
     <div class="form-group">
         <input type="submit" value="Сохранить" class="btn btn-default" />
     </div>

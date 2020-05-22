@@ -1,6 +1,10 @@
 ﻿let date = new Date(); // Текущая дата
-let persons = Number(document.getElementById('persons').innerHTML); //Количество сотрудников
-
+let persons = document.getElementById('persons'); //Количество сотрудников
+console.log(persons);
+let firstPersonInDuty = Number(persons.getAttribute('FirstPersonInDuty'));
+persons = Number(persons.getAttribute('persons'));
+//console.log(firstPersonInDuty);
+//console.log(persons);
 initYear();//Добавляет текущий год и 2 следующих
 function initYear() {
   let currentYear = date.getFullYear();
@@ -134,7 +138,7 @@ function puttingVacation() {
   for(let i = 1; i < persons + 1; i++) {
     let str = document.querySelector('#str-'+i);
     let vacPerson = vacations.querySelector('#person-'+i);
-    let vac = vacPerson.querySelectorAll('#vacs-' + i);
+    let vac = vacPerson.querySelectorAll('.vacs-' + i);
     for(let j = 0; j < vac.length; j++) {
       let startDate = vac[j].getAttribute('startdate');
       let endDate = vac[j].getAttribute('enddate');
@@ -160,27 +164,69 @@ function puttingVacation() {
 }
 
 function puttingDuties() {
-  let dutyDuration = Number(document.getElementById('duties').innerHTML); // Длительность дежуств
-  let day = 1;
-  while(day < getDaysInMonth(currentYear, currentMonth)+1) {
-    for(let i = 1; (i < persons + 1 && day < getDaysInMonth(currentYear, currentMonth)+1); ) {
-      let str = document.querySelector('#str-' + i);
-      for (let j = 1; (j < dutyDuration + 1 && day < getDaysInMonth(currentYear, currentMonth)+1);) {
-        let dayDej = str.querySelector('.col' + day);
-        if (!(dayDej.classList.contains('hol') || dayDej.classList.contains('vac'))) {
-          dayDej.classList.add('dej');
-          j++;
-        } else if (dayDej.classList.contains('vac')) {
-          j++;
-        }
-        day++;
-        if (dayDej.classList.contains('vac')) {
-          day--;
+  let date = document.querySelector('#dutyStartDate');
+  const dutyStartDate = new Date(date.getAttribute('date').replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+  let dateEnd = new Date(document.querySelector('#yearSel').value, 11, 31);
+  dateEnd.setDate(dateEnd.getDate() + 1);
+  let dutyDays = 0; //Считает сколько дней с даты начала дежурств до 31 декабря выбранного года
+  let temp = true;
+  let vacation =  false;
+  for(let i = dutyStartDate; i < dateEnd; ) {
+    let tempIndex = getFormatDate(i);
+    let tempDate = getFormatDate(new Date(date.getAttribute('date').replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1')));
+    let vacations = document.querySelector('#vacations');
+    for(let j = 1; (j < persons + 1 && i < dateEnd); ) {
+      if (tempIndex == tempDate && temp) { //Если первый день дежурств то присваивам первого человека
+        j = firstPersonInDuty;
+        temp = false;
+      }
+      let vacPerson = vacations.querySelector('#person-'+j);
+      let vac = vacPerson.querySelectorAll('.vacs-' + j);
+      let str = document.querySelector('#str-'+j);
+      console.log(str);
+      console.log(vacation);
+      vacation = false;
+      for(let k = 0; k < vac.length; k++) {
+        let startDate = vac[k].getAttribute('startdate');
+        startDate = new Date(startDate.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+        console.log(startDate);
+        let endDate = vac[k].getAttribute('enddate');
+        endDate = new Date(endDate.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+        console.log(endDate);
+        let tempDateIndex = i;
+        console.log(tempDateIndex);
+        if (tempDateIndex >= startDate && tempDateIndex <= endDate) {
+          vacation = true;
+          console.log('у чувака', j,'отпуск');
         }
       }
-      i++;
+      //---------------------------------------
+      if (i.getDay() == 6 || i.getDay() == 0) {
+        i.setDate(i.getDate() + 1);
+        dutyDays++;
+        console.log('выходной');
+      } else if (vacation) {
+        j++;
+        console.log('у чувака', j,'отпуск');
+        vacation = false;
+      } else {
+        console.log('Дежурит: ', j);
+        if (i.getMonth() == currentMonth) {
+          let dayDej = str.querySelector('.col' + i.getDate());
+          dayDej.classList.add('dej');
+        }
+        i.setDate(i.getDate() + 1);
+        dutyDays++;
+        j++;
+      }
+      //---------------------------------------
+      console.log('дата: ' + i);
     }
   }
+  console.log(persons + ' сотрудника');
+  console.log(dutyDays+' рабочих дня');
+  console.log(firstPersonInDuty + ' дежурит первый');
+  console.log(dutyStartDate+' - дата начала дежурств');
 }
 
 //Возвращает дату в строку форматом 'dd.mm.yyyy'
@@ -196,3 +242,36 @@ function getFormatDate(date) {
 
   return dd + '.' + mm + '.' + yy;
 }
+
+//dutiesDate()
+function dutiesDate() {
+  let uno = new Date(2017, 1, 28);
+  let dos = new Date(2016, 1, 28);
+  let tres = new Date(2018, 1, 28);
+  console.log(uno);
+  if( tres > uno && uno > dos) {
+    console.log('работает')
+  }
+}
+
+/*let dutyDuration = Number(document.getElementById('duties').innerHTML); // Длительность дежуств
+let day = 1;
+while(day < getDaysInMonth(currentYear, currentMonth)+1) {
+  for(let i = 1; (i < persons + 1 && day < getDaysInMonth(currentYear, currentMonth)+1); ) {
+    let str = document.querySelector('#str-' + i);
+    for (let j = 1; (j < dutyDuration + 1 && day < getDaysInMonth(currentYear, currentMonth)+1);) {
+      let dayDej = str.querySelector('.col' + day);
+      if (!(dayDej.classList.contains('hol') || dayDej.classList.contains('vac'))) {
+        dayDej.classList.add('dej');
+        j++;
+      } else if (dayDej.classList.contains('vac')) {
+        j++;
+      }
+      day++;
+      if (dayDej.classList.contains('vac')) {
+        day--;
+      }
+    }
+    i++;
+  }
+}*/

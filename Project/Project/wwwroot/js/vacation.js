@@ -1,5 +1,5 @@
 ﻿let dels = document.querySelectorAll('.del_vacation');
-// на каждый элемент повесить обработчик на стадии перехвата
+// на каждый элемент повесить обработчик
 let tbody = document.querySelector('#team_det')
 console.log(dels);
 for(let i = 0; i < dels.length; i++) {
