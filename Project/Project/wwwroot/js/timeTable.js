@@ -169,6 +169,7 @@ function puttingDuties() {
   let dateEnd = new Date(document.querySelector('#yearSel').value, 11, 31);
   dateEnd.setDate(dateEnd.getDate() + 1);
   let dutyDays = 0; //Считает сколько дней с даты начала дежурств до 31 декабря выбранного года
+  let dutyDuration = Number(document.getElementById('duties').innerHTML); // Длительность дежуств
   let temp = true;
   let vacation =  false;
   for(let i = dutyStartDate; i < dateEnd; ) {
@@ -186,6 +187,7 @@ function puttingDuties() {
       console.log(str);
       console.log(vacation);
       vacation = false;
+      
       for(let k = 0; k < vac.length; k++) {
         let startDate = vac[k].getAttribute('startdate');
         startDate = new Date(startDate.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
@@ -224,9 +226,10 @@ function puttingDuties() {
     }
   }
   console.log(persons + ' сотрудника');
-  console.log(dutyDays+' рабочих дня');
+  console.log(dutyDays + ' рабочих дня');
   console.log(firstPersonInDuty + ' дежурит первый');
-  console.log(dutyStartDate+' - дата начала дежурств');
+  console.log(dutyStartDate + ' - дата начала дежурств');
+  console.log('Длительность дежурств: ' + dutyDuration + ' дня');
 }
 
 //Возвращает дату в строку форматом 'dd.mm.yyyy'

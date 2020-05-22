@@ -66,7 +66,6 @@ namespace Project.Data.Controllers
                         break;
                     }
                 }
-                Console.WriteLine(user.FirstPersonInDutyId);
                 if (user != null)
                     return View(user);
             }
@@ -131,7 +130,6 @@ namespace Project.Data.Controllers
         [HttpPost]
         public async Task<IActionResult> TimeTableEdit(Team team)
         {
-            Console.WriteLine("id:" + team.Id + " FirstPersonId:" + team.FirstPersonInDutyId + " DateStart:" + team.DutyStartDate);
             db.Teams.Update(team);
             await db.SaveChangesAsync();
             return RedirectToAction("Details", new { id = team.Id });
