@@ -1,4 +1,4 @@
-﻿let date = new Date(); // Текущая дата
+let date = new Date(); // Текущая дата
 let persons = document.getElementById('persons'); //Количество сотрудников
 let firstPersonInDuty = Number(persons.getAttribute('FirstPersonInDuty'));
 persons = Number(persons.getAttribute('persons'));
@@ -33,14 +33,12 @@ function initDate(month, year) {
   //---------------------------------------------
   if (month) {
     currentMonth = Number(month);
-    console.log('month='+month);
   } else {
     currentMonth = date.getMonth();
     document.getElementById('monthSel').value = currentMonth;
   }
   if (year) {
     currentYear = Number(year);
-    console.log('year='+year);
   } else {
     currentYear = date.getFullYear();
   }

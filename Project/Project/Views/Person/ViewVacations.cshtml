@@ -12,11 +12,12 @@
     <table class="vacations_table">
         <thead>
             <tr class="title_tr">
-                <th class="th_item"><h5 class="center">№</h5></th>
+                <th class="th_item center">№</th>
                 <th class="pad_th">Начало</th>
                 <th class="pad_th">Конец</th>
                 <th class="pad_th">Причина</th>
                 <th class="th_item">Удалить</th>
+                <th class="th_item">Изменить</th>
             </tr>
         </thead>
         <tbody id="team_det">
@@ -24,16 +25,21 @@
             {
                 i++;
                 <tr id="vac-@i">
-                    <td><h5 class="center">@i.</h5></td>
+                    <td class="center">@i.</td>
                     <td class="pad_td">@vacation.StartDate.ToString("dd.MM.yyyy")</td>
                     <td class="pad_td">@vacation.EndDate.ToString("dd.MM.yyyy")</td>
                     <td class="pad_td">@vacation.Reason</td>
-                    <td id="del_vacation"><img asp-route-id="@vacation.Id" src="~/images/del_check.png" id="@i" class="del_vacation" alt="del_check" /></td>
+                    <td id="del_vacation" class="center"><img asp-route-id="@vacation.Id" src="~/images/del_check.png" id="@i" class="del_vacation" alt="del_check" /></td>
+                    <td class="center">
+                        <a asp-action="EditVacation" asp-controller="Person" asp-route-id="@vacation.Id">
+                            <img asp-route-id="@vacation.Id" src="~/images/settings.png" class="vacation_settings" alt="settings" />
+                        </a>
+                    </td>
                 </tr>
             }
             @if (i == 0)
             {
-                <tr><td class="center" colspan="5">Отсутствуют</td></tr>
+                <tr><td class="center" colspan="6">Отсутствуют</td></tr>
             }
         </tbody>
     </table>

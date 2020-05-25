@@ -33,8 +33,8 @@
     <table class="data_table">
         <thead>
             <tr class="title_tr">
-                <th class="th_item"><h5 class="center">№</h5></th>
-                <th class="pad_th"><h5>Имя</h5></th>
+                <th class="th_item center">№</th>
+                <th class="th_item center">Имя</th>
                 <th class="th_item">Дежурство
                     <img src="/images/ok_check.png" class="duty_example" alt="ok_check"/>/<img src="/images/x_check.png" class="duty_example" alt="x_check" />
                 </th>
@@ -56,7 +56,7 @@
                     alt = "ok_check";
                 }
                 <tr>
-                    <td><h5 class="center" id="">@i.</h5></td>
+                    <td class="center td_index">@i.</td>
                     <td class="pad_td"><a asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
                     <td id="duties"><img asp-route-id="@person.Id" src=@duty id="duty-@i" class="duty" alt="@alt" /></td>
                     <td class="pad_td center">

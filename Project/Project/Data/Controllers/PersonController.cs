@@ -150,5 +150,26 @@ namespace Project.Data.Controllers
             }
             return NotFound();
         }
+
+        public async Task<IActionResult> EditVacation(int? id)
+        {
+            if (id != null)
+            {
+                var person = db.Vacations
+                       .Include(c => c.Person) // добавляем данные по отпускам
+                       .ToList();
+                Vacation item = await db.Vacations.FirstOrDefaultAsync(p => p.Id == id);
+                if (item != null)
+                    return View(item);
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditVacation(Vacation item)
+        {
+            db.Vacations.Update(item);
+            await db.SaveChangesAsync();
+            return RedirectToAction("ViewVacations", new { id = item.PersonId });
+        }
     }
 }

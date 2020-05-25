@@ -7,17 +7,17 @@
 <table class="list_table">
     <thead>
         <tr class="title_tr">
-            <th class="th_item"><h5 class="center">№</h5></th>
+            <th class="th_item center">№</th>
             <th class="pad_th">Название</th>
             <th class="th_item">Удалить</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (Team item in Model)
         {
             i++;
             <tr>
-                <td><h5 class="center">@i.</h5></td>
+                <td class="center">@i.</td>
                 <td class="pad_td center"><a asp-action="Details" asp-controller="Team" asp-route-id="@item.Id">@item.Title</a></td>
                 <td class="pad_td center">
                     <form asp-action="Delete" asp-controller="Team" asp-route-id="@item.Id">

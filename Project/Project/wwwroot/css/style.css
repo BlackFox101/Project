@@ -1,139 +1,7 @@
-﻿*, ::after, ::before {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    margin: 0;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-}
-
-a {
-    color: #007bff;
-    text-decoration: none;
-    background-color: transparent;
-}
-
-a:hover {
+﻿a:hover {
     color: #0054AD;
     text-decoration: none;
     background-color: transparent;
-}
-
-.navbar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 8px 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
-    border-bottom: 1px solid #dee2e6 !important;
-    background-color: #fff !important;
-}
-
-.container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    align-items: center;
-}
-
-a.navbar-brand {
-    color: rgba(0,0,0,.9);
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-    display: inline-block;
-    padding-top: .3125rem;
-    padding-bottom: .3125rem;
-    margin-right: 1rem;
-    font-size: 1.25rem;
-    line-height: inherit;
-    font-family: "Segoe UI";
-}
-
-.navbar-collapse {
-    flex-grow: 1;
-    align-items: center;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-    display: inline-block;
-    flex-basis: auto;
-}
-
-a.nav-link {
-    display: block;
-    padding: 8px 8px 8px 0;
-    color: #343a40 !important;
-    font-size: 16px;
-    font-family: "Segoe UI";
-}
-
-ul.navbar-nav {
-    display: flex;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-}
-
-@media (min-width: 576px) {
-    .container {
-        max-width: 540px;
-    }
-}
-
-@media (min-width: 768px) {
-    .container {
-        max-width: 720px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        max-width: 1140px;
-    }
-}
-
-dt {
-    font-weight: 700;
-}
-
-dd {
-    margin-bottom: .5rem;
-    margin-left: 0;
-}
-
-label.control-label {
-    display: inline-block;
-    margin-bottom: .5rem;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-control {
-    display: block;
-    width: 100%;
-    height: calc(1.5em + .75rem + 2px);
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 select.select-control {
@@ -147,36 +15,6 @@ select.select-control {
     border: 1px solid #ced4da;
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-.btn {
-    cursor: pointer;
-    display: inline-block;
-    font-weight: 400;
-    color: #212529;
-    text-align: center;
-    vertical-align: middle;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-hr {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: 0;
-    border-top: 1px solid rgba(0,0,0,.1);
-}
-
-ul {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    padding-left: 40px;
 }
 
 .data_table {
@@ -210,13 +48,26 @@ td.pad_td {
 .duty {
     width: 20px;
     height: 20px;
-    margin: 0 0 -3px 2px;
+    margin: 0 0 3px 2px;
+}
+
+.del {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-bottom: 3px;
+}
+
+.duty_example {
+    width: 13px;
+    height: 13px;
+    margin: 0;
 }
 
 .settings {
     width: 14px;
     height: 14px;
-    margin: 0 0 -2px 0;
+    margin: 0;
 }
 
 .big_setting {
@@ -236,10 +87,6 @@ td.pad_td {
 
 .hidden {
     visibility: hidden;
-}
-
-.center {
-    text-align: center;
 }
 
 .vacations_table {
@@ -312,21 +159,11 @@ a.vac-link:hover {
     color: #212529;
 }
 
-.hr-det {
-    width: 350px;
-}
-
 .del_vacation {
     width: 20px;
     height: 20px;
-    margin-bottom: -3px;
+    margin-bottom: 3px;
     cursor: pointer;
-}
-
-#del_vacation {
-    width: 20px;
-    height: 20px;
-    text-align: center;
 }
 
 .person-link {
@@ -352,6 +189,10 @@ a.person-link:hover {
 .th_item {
     border: 1px solid #333;
     padding: 0 5px 0 5px;
+}
+
+.td_index {
+    font-weight: bold;
 }
 
 .btn-edit {
@@ -381,21 +222,8 @@ a.person-link:hover {
     background-color: transparent;
 }
 
-.del {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    margin-bottom: -3px;
-}
-
 button:focus {
     outline: none;
-}
-
-.duty_example {
-    width: 13px;
-    height: 13px;
-    margin: 0 0 -2px 0;
 }
 
 select {
@@ -428,4 +256,10 @@ select {
     border: 1px solid #ced4da;
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.vacation_settings{
+    width: 19px;
+    height: 19px;
+    margin-bottom: 3px;
 }

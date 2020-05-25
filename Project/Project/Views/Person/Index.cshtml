@@ -7,7 +7,7 @@
 <table class="list_table">
     <thead>
         <tr class="title_tr">
-            <th class="th_item"><h5 class="center">№</h5></th>
+            <th class="th_item center">№</th>
             <th class="pad_th">ФИО</th>
             <th class="pad_th">Должность</th>
             <th class="pad_th">Команда</th>
@@ -19,7 +19,7 @@
         {
             i++;
             <tr>
-                <td><h5 class="center">@i.</h5></td>
+                <td class="center">@i.</td>
                 <td class="pad_td"><a asp-action="Details" asp-controller="Person" asp-route-id="@item.Id">@item.Name</a></td>
                 <td class="pad_td center">@item.Position</td>
                 @if (@item.TeamId == null)
