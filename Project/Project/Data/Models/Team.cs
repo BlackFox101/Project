@@ -15,13 +15,13 @@ namespace Project.Data.Models
         public string Title { get; set; }
         [Required]
         public int DutyDuration { get; set; }
+        public int? FirstPersonInDutyId { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime DutyStartDate { get; set; }
         public List<Person> Persons { get; set; }
         public Team()
         {
             Persons = new List<Person>();
         }
-        public int? FirstPersonInDutyId { get; set; }
-        [Column(TypeName = "date")]
-        public DateTime DutyStartDate { get; set; }
     }
 }

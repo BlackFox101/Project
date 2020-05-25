@@ -18,10 +18,7 @@ namespace Project.Data.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var person = db.Persons
-                        .Include(c => c.Team)  // добавляем данные по командам
-                        .ToList();
-            return View(await db.Persons.ToListAsync());
+            return View(await db.Persons.Include(c => c.Team).ToListAsync());
         }
         public IActionResult Create()
         {

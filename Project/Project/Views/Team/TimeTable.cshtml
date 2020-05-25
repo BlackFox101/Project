@@ -73,7 +73,7 @@
                         k = i;
                     }
                     <tr id="str-@i">
-                        <td id="duty-@person.Id">@person.Name</td>
+                        <td id="duty-@person.Id"><a asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
                     </tr>
                 }
             </tbody>
