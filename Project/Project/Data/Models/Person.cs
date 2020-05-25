@@ -16,8 +16,7 @@ namespace Project.Data.Models
         [MaxLength(100)]
         public string Position { get; set; }
         [Required]
-        [Range(0, 1)]
-        public int Duty { get; set; }
+        public bool Duty { get; set; }
         public int? TeamId { get; set; }
         public Team Team { get; set; }
         public List<Vacation> Vacations { get; set; }

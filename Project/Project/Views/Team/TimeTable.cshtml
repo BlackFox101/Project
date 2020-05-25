@@ -65,7 +65,7 @@
                 </tr>
                 <tr id="wd">
                 </tr>
-                @foreach (Person person in Model.Persons.Where(c => c.Duty == 1))
+                @foreach (Person person in Model.Persons.Where(c => c.Duty == true))
                 {
                     i++;
                     if (@Model.FirstPersonInDutyId == person.Id)
@@ -81,7 +81,7 @@
     </div>
     <span class="hidden" id="persons" persons="@i" FirstPersonInDuty="@k"></span>
     <div id="vacations">
-        @foreach (Person person in Model.Persons.Where(c => c.Duty == 1))
+        @foreach (Person person in Model.Persons.Where(c => c.Duty == true))
         {
             j++;
             <ul id="person-@j">

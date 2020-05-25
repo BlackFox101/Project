@@ -45,7 +45,7 @@
             @foreach (Person person in Model.Persons)
             {
                 i++;
-                if (person.Duty == 0)
+                if (person.Duty == false)
                 {
                     duty = "/images/x_check.png";
                     alt = "x_check";

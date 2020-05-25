@@ -30,9 +30,9 @@ namespace Project.Data.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Person user)
+        public async Task<IActionResult> Create(Person person)
         {
-            db.Persons.Add(user);
+            db.Persons.Add(person);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -40,13 +40,15 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                var person = db.Persons
+                var teams = db.Persons
                         .Include(c => c.Team)  // добавляем данные по команде
                         .Include(c => c.Vacations) // добавляем данные по отпускам
                         .ToList();
-                Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
-                    return View(user);
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                if (person != null)
+                {
+                    return View(person);
+                }
             }
             return NotFound();
         }
@@ -56,16 +58,18 @@ namespace Project.Data.Controllers
             {
                 SelectList teams = new SelectList(db.Teams, "Id", "Title");
                 ViewBag.Teams = teams;
-                Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
-                    return View(user);
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                if (person != null)
+                {
+                    return View(person);
+                }
             }
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Person user)
+        public async Task<IActionResult> Edit(Person person)
         {
-            db.Persons.Update(user);
+            db.Persons.Update(person);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -75,10 +79,10 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                if (person != null)
                 {
-                    db.Persons.Remove(user);
+                    db.Persons.Remove(person);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -91,18 +95,20 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                if (user.Duty == 1)
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                if (person.Duty == true)
                 {
-                    user.Duty = 0;
+                    person.Duty = false;
                 }
                 else
                 {
-                    user.Duty = 1;
+                    person.Duty = true;
                 }
                 await db.SaveChangesAsync();
-                if (user != null)
-                    return Ok(user.Duty);
+                if (person != null)
+                {
+                    return Ok(person.Duty);
+                }
             }
             return NotFound();
         }
@@ -118,22 +124,24 @@ namespace Project.Data.Controllers
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> AddVacation(Vacation item)
+        public async Task<IActionResult> AddVacation(Vacation vac)
         {
-            db.Vacations.Add(item);
+            db.Vacations.Add(vac);
             await db.SaveChangesAsync();
-            return RedirectToAction("ViewVacations", new { id = item.PersonId });
+            return RedirectToAction("ViewVacations", new { id = vac.PersonId });
         }
         public async Task<IActionResult> ViewVacations(int? id)
         {
             if (id != null)
             {
-                var person = db.Persons
+                var vacations = db.Persons
                         .Include(c => c.Vacations) // добавляем данные по отпускам
                         .ToList();
-                Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
-                    return View(user);
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                if (person != null)
+                {
+                    return View(person);
+                }
             }
             return NotFound();
         }
@@ -142,9 +150,9 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                Vacation user = await db.Vacations.FirstOrDefaultAsync(p => p.Id == id);
-                int? PersonId = user.PersonId;
-                db.Vacations.Remove(user);
+                Vacation vac = await db.Vacations.FirstOrDefaultAsync(p => p.Id == id);
+                int? PersonId = vac.PersonId;
+                db.Vacations.Remove(vac);
                 await db.SaveChangesAsync();
                 return Ok(PersonId);
             }
@@ -158,18 +166,20 @@ namespace Project.Data.Controllers
                 var person = db.Vacations
                        .Include(c => c.Person) // добавляем данные по отпускам
                        .ToList();
-                Vacation item = await db.Vacations.FirstOrDefaultAsync(p => p.Id == id);
-                if (item != null)
-                    return View(item);
+                Vacation vac = await db.Vacations.FirstOrDefaultAsync(p => p.Id == id);
+                if (vac != null)
+                {
+                    return View(vac);
+                }
             }
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> EditVacation(Vacation item)
+        public async Task<IActionResult> EditVacation(Vacation vac)
         {
-            db.Vacations.Update(item);
+            db.Vacations.Update(vac);
             await db.SaveChangesAsync();
-            return RedirectToAction("ViewVacations", new { id = item.PersonId });
+            return RedirectToAction("ViewVacations", new { id = vac.PersonId });
         }
     }
 }

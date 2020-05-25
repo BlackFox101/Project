@@ -25,9 +25,9 @@ namespace Project.Data.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Team user)
+        public async Task<IActionResult> Create(Team team)
         {
-            db.Teams.Add(user);
+            db.Teams.Add(team);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -37,10 +37,10 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
+                Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (team != null)
                 {
-                    db.Teams.Remove(user);
+                    db.Teams.Remove(team);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -52,22 +52,24 @@ namespace Project.Data.Controllers
             if (id != null)
             {
                 var persons = db.Persons
-                        .Include(c => c.Vacations)  // добавляем данные по пользователям
+                        .Include(c => c.Vacations)  // добавляем данные по отпускам
                         .ToList();
-                var team = db.Teams
+                var teams = db.Teams
                         .Include(c => c.Persons)  // добавляем данные по пользователям
                         .ToList();
-                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
-                if (user.FirstPersonInDutyId == null)
+                Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (team.FirstPersonInDutyId == null)
                 {
-                    foreach (Person person in user.Persons.Where(c => c.Duty == 1))
+                    foreach (Person person in team.Persons.Where(c => c.Duty == true))
                     {
-                        user.FirstPersonInDutyId = person.Id;
+                        team.FirstPersonInDutyId = person.Id;
                         break;
                     }
                 }
-                if (user != null)
-                    return View(user);
+                if (team != null)
+                {
+                    return View(team);
+                }
             }
             return NotFound();
         }
@@ -75,9 +77,11 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             { 
-                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
-                    return View(user);
+                Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (team != null)
+                {
+                    return View(team);
+                }
             }
             return NotFound();
         }
@@ -92,12 +96,14 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                var team = db.Teams
+                var persons = db.Teams
                         .Include(c => c.Persons)  // добавляем данные по пользователям
                         .ToList();
-                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
-                    return View(user);
+                Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (team != null)
+                {
+                    return View(team);
+                }
             }
             return NotFound();
         }
@@ -106,12 +112,14 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                Person user = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                int? team = user.TeamId;
-                user.TeamId = null;
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                int? team = person.TeamId;
+                person.TeamId = null;
                 await db.SaveChangesAsync();
-                if (user != null)
+                if (person != null)
+                {
                     return RedirectToAction("Details", new { id = team });
+                }
             }
             return NotFound();
         }
@@ -119,11 +127,13 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                SelectList persons = new SelectList(db.Persons.Where(c => c.TeamId == id && c.Duty == 1), "Id", "Name");
+                SelectList persons = new SelectList(db.Persons.Where(c => c.TeamId == id && c.Duty == true), "Id", "Name");
                 ViewBag.Persons = persons;
-                Team user = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
-                if (user != null)
-                    return View(user);
+                Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (team != null)
+                {
+                    return View(team);
+                }
             }
             return NotFound();
         }

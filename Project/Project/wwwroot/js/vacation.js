@@ -21,7 +21,7 @@ for(let i = 0; i < dels.length; i++) {
           tbody.appendChild(trEmpty);
           trEmpty.appendChild(tdEmpty);
           tdEmpty.innerHTML = 'Отсутствуют';
-          tdEmpty.setAttribute('colspan', 5);
+          tdEmpty.setAttribute('colspan', 6);
         }
       }).catch(() => console.log('ошибка'));
   })

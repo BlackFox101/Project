@@ -38,14 +38,14 @@ namespace Project.Data
             modelBuilder.Entity<Person>().HasData(
             new Person[]
             {
-                new Person { Id=1, Name="Половцев Эдуард Агапович", Position="Разработчик", Duty=1, TeamId=1},
-                new Person { Id=2, Name="Яндульский Иван Кондратьевич", Position="Разработчик", Duty=1, TeamId=1},
-                new Person { Id=3, Name="Иванов Иван Иванович", Position="Разработчик", Duty=1, TeamId=1},
-                new Person { Id=4, Name="Янович Руслан Савелиевич", Position="Тестировщик", Duty=0, TeamId=1},
-                new Person { Id=5, Name="Циркунов Руслан Олегович", Position="Тестировщик", Duty=1, TeamId=1},
-                new Person { Id=6, Name="Арефьев Захар Пахомович", Position="Тестировщик", Duty=0, TeamId=2},
-                new Person { Id=7, Name="Яробкин Феликс Куприянович", Position="Разработчик", Duty=0, TeamId=2},
-                new Person { Id=8, Name="Ковалев Мстислав Маркович", Position="Тестировщик", Duty=0, TeamId=3}
+                new Person { Id=1, Name="Половцев Эдуард Агапович", Position="Разработчик", Duty=true, TeamId=1},
+                new Person { Id=2, Name="Яндульский Иван Кондратьевич", Position="Разработчик", Duty=true, TeamId=1},
+                new Person { Id=3, Name="Иванов Иван Иванович", Position="Разработчик", Duty=true, TeamId=1},
+                new Person { Id=4, Name="Янович Руслан Савелиевич", Position="Тестировщик", Duty=false, TeamId=1},
+                new Person { Id=5, Name="Циркунов Руслан Олегович", Position="Тестировщик", Duty=true, TeamId=1},
+                new Person { Id=6, Name="Арефьев Захар Пахомович", Position="Тестировщик", Duty=false, TeamId=2},
+                new Person { Id=7, Name="Яробкин Феликс Куприянович", Position="Разработчик", Duty=false, TeamId=2},
+                new Person { Id=8, Name="Ковалев Мстислав Маркович", Position="Тестировщик", Duty=false, TeamId=3}
             });
             modelBuilder.Entity<Vacation>().HasData(
             new Vacation[]

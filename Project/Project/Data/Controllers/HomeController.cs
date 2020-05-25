@@ -14,11 +14,6 @@ namespace Project.Controllers
 {
     public class HomeController : Controller
     {
-        private AppDBContext db;
-        public HomeController(AppDBContext context)
-        {
-            db = context;
-        }
         public IActionResult Index()
         {
             return View();
