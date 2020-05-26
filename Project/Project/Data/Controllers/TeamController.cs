@@ -61,10 +61,10 @@ namespace Project.Data.Controllers
                 Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
                 if (team.FirstPersonInDutyId == null)
                 {
-                    foreach (Person person in team.Persons.Where(c => c.Duty == true))
+                    Person person = team.Persons.FirstOrDefault(c => c.Duty == true);
+                    if (person != null)
                     {
                         team.FirstPersonInDutyId = person.Id;
-                        break;
                     }
                 }
                 if (team != null)

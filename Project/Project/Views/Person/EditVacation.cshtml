@@ -1,9 +1,9 @@
 ﻿@model Vacation
 @{
-    ViewBag.Title = "Редактировать отпуск";
+    ViewBag.Title = "Изменить отпуск";
 
 }
-<h2 class="person-link">Редактировать отпуск</h2>
+<h2 class="person-link">Изменить отпуск</h2>
 <h2><a asp-action="Details" asp-controller="Person" asp-route-id="@Model.Person.Id">@Model.Person.Name</a></h2>
 <form asp-action="EditVacation" asp-controller="Person">
     <table class="vacations_table">
