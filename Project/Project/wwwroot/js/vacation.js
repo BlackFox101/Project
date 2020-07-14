@@ -21,6 +21,7 @@ for(let i = 0; i < dels.length; i++) {
           tbody.appendChild(trEmpty);
           trEmpty.appendChild(tdEmpty);
           tdEmpty.innerHTML = 'Отсутствуют';
+          tdEmpty.classList.add('center');
           tdEmpty.setAttribute('colspan', 6);
         }
       }).catch(() => console.log('ошибка'));

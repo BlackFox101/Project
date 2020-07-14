@@ -1,0 +1,83 @@
+﻿@using Project.Data.Models
+@model Team
+
+@{
+    ViewBag.Title = "Команда " + @Model.Title;
+    int i = 0;
+    string day, alt, duty;
+    switch (Model.DutyDuration)
+    {
+        case 1:
+            day = ("день");
+            break;
+        case 2:
+        case 3:
+        case 4:
+            day = ("дня");
+            break;
+        default:
+            day = ("дней");
+            break;
+    }
+}
+<div>
+    <dl>
+        <dt>
+            Команда: @Model.Title
+            <a asp-action="Edit" asp-controller="Team" asp-route-id="@Model.Id">
+                <img asp-route-id="@Model.Id" src="~/images/settings.png" class="settings" alt="settings" />
+            </a>
+        </dt>
+        <dt>Длительность дежурств: @Model.DutyDuration @day</dt>
+        <dt>Участники:</dt>
+    </dl>
+    <table class="data_table">
+        <thead>
+            <tr class="title_tr">
+                <th class="th_item center">№</th>
+                <th class="th_item center">Имя</th>
+                <th class="th_item">
+                    Дежурство
+                    <img src="/images/ok_check.png" class="duty_example" alt="ok_check" />/<img src="/images/x_check.png" class="duty_example" alt="x_check" />
+                </th>
+                <th class="th_item">Исключить</th>
+            </tr>
+        </thead>
+        <tbody id="team_det">
+            @foreach (Person person in Model.Persons)
+            {
+                i++;
+                if (person.Duty == false)
+                {
+                    duty = "/images/x_check.png";
+                    alt = "x_check";
+                }
+                else
+                {
+                    duty = "/images/ok_check.png";
+                    alt = "ok_check";
+                }
+                <tr>
+                    <td class="center td_index">@i.</td>
+                    <td class="pad_td"><a asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
+                    <td id="duties"><img asp-route-id="@person.Id" src=@duty id="duty-@i" class="duty" alt="@alt" /></td>
+                    <td class="pad_td center">
+                        <form asp-action="ExcludeTeam" asp-controller="Team" asp-route-id="@person.Id">
+                            <button class="button_del"><img src="~/images/del_check.png" class="del" alt="del_check" /></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            @if (i == 0)
+            {
+                <tr><td class="center" colspan="4">Отсутствуют</td></tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="TimeTable" asp-controller="Team" asp-route-id="@Model.Id">График</a>
+    <a asp-action="TimeTableEdit" asp-controller="Team" asp-route-id="@Model.Id">
+        <img asp-route-id="@Model.Id" src="~/images/settings.png" class="settings" alt="settings" />
+    </a>
+    <span class="hidden" id="persons">@i</span>
+    <script src="~/js/dutyCheck.js"></script>
+</div>

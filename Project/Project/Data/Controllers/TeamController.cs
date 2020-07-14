@@ -145,6 +145,21 @@ namespace Project.Data.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("TimeTable", new { id = team.Id });
         }
+        public async Task<IActionResult> Сoefficients(int? id)
+        {
+            if (id != null)
+            {
+                var persons = db.Teams
+                        .Include(c => c.Persons)  // добавляем данные по пользователям
+                        .ToList();
+                Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                if (team != null)
+                {
+                    return View(team);
+                }
+            }
+            return NotFound();
+        }
     }
 }
 

@@ -2,8 +2,6 @@ let date = new Date(); // Текущая дата
 let persons = document.getElementById('persons'); //Количество сотрудников
 let firstPersonInDuty = Number(persons.getAttribute('FirstPersonInDuty'));
 persons = Number(persons.getAttribute('persons'));
-//console.log(firstPersonInDuty);
-//console.log(persons);
 initYear();//Добавляет текущий год и 1 следующий
 function initYear() {
   let currentYear = date.getFullYear();
@@ -204,13 +202,18 @@ function puttingDuties() {
           dutyDays++;
         } else if (vacation) {
           vacation = false;
+          if (persons == 1) {
+            l++;
+            i.setDate(i.getDate() + 1);
+            dutyDays++;
+          }
           break;
         } else {
           if (i.getMonth() == currentMonth && i.getFullYear() == currentYear) {
             let dayDej = str.querySelector('.col' + i.getDate());
             dayDej.classList.add('dej');
           }
-          l++
+          l++;
           i.setDate(i.getDate() + 1);
           dutyDays++;
         }
