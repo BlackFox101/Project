@@ -145,7 +145,7 @@ namespace Project.Data.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("TimeTable", new { id = team.Id });
         }
-        public async Task<IActionResult> Сoefficients(int? id)
+        public async Task<IActionResult> Coefficients(int? id)
         {
             if (id != null)
             {

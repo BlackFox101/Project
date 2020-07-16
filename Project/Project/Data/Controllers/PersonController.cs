@@ -178,5 +178,21 @@ namespace Project.Data.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("ViewVacations", new { id = vac.PersonId });
         }
+
+        [HttpPut]
+        public async Task<IActionResult> EditFactor(int? id, [FromBody] double Coefficient)
+        {
+            if (id != null)
+            {
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                person.Coefficient = Coefficient;
+                await db.SaveChangesAsync();
+                if (person != null)
+                {
+                    return Ok(person.Coefficient);
+                }
+            }
+            return NotFound();
+        }
     }
 }

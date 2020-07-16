@@ -1,0 +1,38 @@
+﻿@using Project.Data.Models
+@model Team
+
+@{
+    ViewBag.Title = "Команда " + @Model.Title;
+    int i = 0;
+}
+<div>
+    <h1>Корректирующие коэффициенты</h1>
+    <dl>
+        <dt>Команда: <a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Id">@Model.Title</a></dt>
+    </dl>
+    <table class="data_table">
+        <thead>
+            <tr class="title_tr">
+                <th class="th_item center">№</th>
+                <th class="th_item center">Имя</th>
+                <th class="th_item center">Коэффициент</th>
+            </tr>
+        </thead>
+        <tbody id="team_det">
+            @foreach (Person person in Model.Persons)
+            {
+                i++;
+                <tr>
+                    <td class="center td_index">@i.</td>
+                    <td class="pad_td"><a asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
+                    <td class="coef_width"><input asp-route-id="@person.Id" pattern="\d+(.\d{0,})?" placeholder="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" value="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" class="edit center" /></td>
+                </tr>
+            }
+            @if (i == 0)
+            {
+                <tr><td class="center" colspan="4">Отсутствуют</td></tr>
+            }
+        </tbody>
+    </table>
+    <script src="~/js/coefficientsEdit.js"></script>
+</div>

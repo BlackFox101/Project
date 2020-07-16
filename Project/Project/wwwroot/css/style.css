@@ -263,3 +263,29 @@ select {
     height: 19px;
     margin-bottom: 3px;
 }
+
+.pad_left {
+    padding-left: 10px;
+}
+
+.edit {
+    border: none;
+    outline: none;
+    max-width: 100%;
+}
+
+.edit:focus {
+    outline: none;
+}
+
+input:invalid {
+    border: 1.5px solid red;
+}
+
+.small_input {
+    max-width: 60px !important;
+}
+
+td.coef_width {
+    max-width: 100px;
+}

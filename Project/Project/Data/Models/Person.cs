@@ -18,6 +18,8 @@ namespace Project.Data.Models
         [Required]
         public bool Duty { get; set; }
         public int? TeamId { get; set; }
+        [Required]
+        public double Coefficient { get; set; }
         public Team Team { get; set; }
         public List<Vacation> Vacations { get; set; }
         public Person()

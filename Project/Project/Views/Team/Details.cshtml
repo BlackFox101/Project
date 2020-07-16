@@ -22,7 +22,8 @@
 }
 <div>
     <dl>
-        <dt>Команда: @Model.Title
+        <dt>
+            Команда: @Model.Title
             <a asp-action="Edit" asp-controller="Team" asp-route-id="@Model.Id">
                 <img asp-route-id="@Model.Id" src="~/images/settings.png" class="settings" alt="settings" />
             </a>
@@ -35,8 +36,9 @@
             <tr class="title_tr">
                 <th class="th_item center">№</th>
                 <th class="th_item center">Имя</th>
-                <th class="th_item">Дежурство
-                    <img src="/images/ok_check.png" class="duty_example" alt="ok_check"/>/<img src="/images/x_check.png" class="duty_example" alt="x_check" />
+                <th class="th_item">
+                    Дежурство
+                    <img src="/images/ok_check.png" class="duty_example" alt="ok_check" />/<img src="/images/x_check.png" class="duty_example" alt="x_check" />
                 </th>
                 <th class="th_item">Исключить</th>
             </tr>
@@ -76,6 +78,7 @@
     <a asp-action="TimeTableEdit" asp-controller="Team" asp-route-id="@Model.Id">
         <img asp-route-id="@Model.Id" src="~/images/settings.png" class="settings" alt="settings" />
     </a>
+    <a asp-action="Coefficients" asp-controller="Team" asp-route-id="@Model.Id" class="pad_left">Коэффициенты сотрудников</a>
     <span class="hidden" id="persons">@i</span>
     <script src="~/js/dutyCheck.js"></script>
 </div>
