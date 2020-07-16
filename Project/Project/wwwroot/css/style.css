@@ -278,14 +278,23 @@ select {
     outline: none;
 }
 
-input:invalid {
-    border: 1.5px solid red;
-}
-
 .small_input {
     max-width: 60px !important;
 }
 
-td.coef_width {
+[id*="factor-"] {
     max-width: 100px;
+}
+
+[id*="hour-"] {
+    max-width: 70px;
+}
+
+.icon_width { /*Если добавлю ожидарние ответа сервера при изменении часов и коэфов*/
+    width: 13px;
+    height: 13px;
+}
+
+[id*="factor-"], [id*="hour-"] {
+    
 }

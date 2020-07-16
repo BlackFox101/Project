@@ -179,7 +179,7 @@ namespace Project.Data.Controllers
             return RedirectToAction("ViewVacations", new { id = vac.PersonId });
         }
 
-        [HttpPut]
+        [HttpPut] 
         public async Task<IActionResult> EditFactor(int? id, [FromBody] double Coefficient)
         {
             if (id != null)
@@ -190,6 +190,22 @@ namespace Project.Data.Controllers
                 if (person != null)
                 {
                     return Ok(person.Coefficient);
+                }
+            }
+            return NotFound();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> EditWorkHours(int? id, [FromBody] int workHours)
+        {
+            if (id != null)
+            {
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                person.WorkHours = workHours;
+                await db.SaveChangesAsync();
+                if (person != null)
+                {
+                    return Ok(person.WorkHours);
                 }
             }
             return NotFound();
