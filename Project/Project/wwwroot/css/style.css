@@ -298,3 +298,7 @@ select {
 [id*="factor-"], [id*="hour-"] {
     
 }
+
+.unvalid {
+    border: 1.5px solid red !important;
+}

@@ -8,47 +8,66 @@ loadFinish.classList.remove("hidden");
 load.remove();
 loadFinish.remove();
 
+const patternFactor = /^[0-9]*[.,]?[0-9]+$/;
+const patternHour = /^[0-9]*[.,]?[0-9]+$/;
+
 for(let i = 0; i < coefficients.length; i++) {
-  coefficients[i].addEventListener('change', () =>{
+  coefficients[i].addEventListener('change', () => {
     let person = coefficients[i];
-    person.remove();
-    document.querySelector('#factor-' + i).appendChild(load);
-    let factor = person.value.replace(',', '.');
-    let id = person.getAttribute('asp-route-id')
-    fetch('/Person/EditFactor/' + id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: factor
-    }).then(response => response.text())
-      .then(data => {
-        loading(i, person, data, '#factor');
-      }).catch(() => console.log('ошибка'));
+    person.addEventListener('click', () => {
+      person.classList.remove('unvalid');
+    })
+    let factor = person.value;
+    factor = getDesiredFormat(factor);
+    if (patternFactor.test(factor)) { //Если валидно то отправить
+      person.remove();
+      document.querySelector('#factor-' + i).appendChild(load);
+      let id = person.getAttribute('asp-route-id')
+      fetch('/Person/EditFactor/' + id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: factor
+      }).then(response => response.text())
+        .then(data => {
+          loading(i, person, data, '#factor');
+          person.classList.remove('unvalid');
+        }).catch(() => console.log('ошибка'));
+    } else {
+      person.classList.add('unvalid');
+    }
   })
 }
 
 for(let i = 0; i < workHours.length; i++) {
   workHours[i].addEventListener('change', () =>{
     let person = workHours[i];
-    person.remove();
-    document.querySelector('#hour-' + i).appendChild(load);
+    person.addEventListener('click', () => {
+      person.classList.remove('unvalid');
+    })
     let hours = person.value;
-    let id = person.getAttribute('asp-route-id')
-    fetch('/Person/EditWorkHours/' + id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: hours
-    }).then(response => response.text())
-      .then(data => {
-        loading(i, person, data, '#hour')
-      }).catch(() => console.log('ошибка'));
+    hours = getDesiredFormat(hours);
+    if (patternHour.test(hours)) { //Если валидно то отправить
+      person.remove();
+      document.querySelector('#hour-' + i).appendChild(load);
+      let id = person.getAttribute('asp-route-id')
+      fetch('/Person/EditWorkHours/' + id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: hours
+      }).then(response => response.text())
+        .then(data => {
+          loading(i, person, data, '#hour');
+          person.classList.remove('unvalid');
+        }).catch(() => console.log('ошибка'));
+    } else {
+      person.classList.add('unvalid');
+    }
   })
 }
-//<img id="loadAnswer" src="~/images/loading.gif" class="icon_width"/>
-//<img id="loadFinish" src="~/images/load_finish.png" class="icon_width"/>
 
 function loading(i, person, data, id) {
   load.remove();
@@ -56,4 +75,10 @@ function loading(i, person, data, id) {
   loadFinish.remove();
   document.querySelector(id + '-' + i).appendChild(person);
   person.value = data;
+}
+
+function getDesiredFormat(data) {
+  let desiredFormat = data.replace(',', '.');
+  desiredFormat = desiredFormat.replace(/[^\d\.]/g, '')
+  return desiredFormat;
 }

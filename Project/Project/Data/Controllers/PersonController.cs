@@ -201,6 +201,7 @@ namespace Project.Data.Controllers
             if (id != null)
             {
                 Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                Console.WriteLine(workHours);
                 person.WorkHours = workHours;
                 await db.SaveChangesAsync();
                 if (person != null)
