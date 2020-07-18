@@ -18,6 +18,7 @@
                     <th class="th_item center" colspan="2">Спринт 1</th>
                     <th class="th_item center" colspan="2">Спринт 2</th>
                     <th class="th_item center" colspan="2">Спринт 3</th>
+                    <th class="th_item center" colspan="2"></th>
                 </tr>
                 <tr class="title_tr">
                     <th class="th_item center">№</th>
@@ -29,6 +30,8 @@
                     <th class="th_item center">Рабочие часы</th>
                     <th class="th_item center">Часы</th>
                     <th class="th_item center">Рабочие часы</th>
+                    <th class="th_item center">Сумма часов</th>
+                    <th class="th_item center">Сумма рабочих часов</th>
                 </tr>
             </thead>
             <tbody id="team_det">
@@ -37,17 +40,20 @@
                     i++;
                     <tr>
                         <td class="center td_index">@i.</td>
-                        <td class="pad_td"><a asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
+                        <td class="pad_td name"><a class="name" asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
                         <td id="factor-@k" class="center"><input asp-route-id="@person.Id" pattern="\d+(.\d{0,})?" placeholder="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" value="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" class="edit factor center" /></td>
                         
-                        <td id="hour1-@k" class="center"><input colId="1" pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours1" value="@person.Hours1" class="edit hours1 center" /></td>
+                        <td id="hour1-@k" class="center"><input id="hours1-@k" colId="1" pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours1" value="@person.Hours1" class="edit hours1 center" /></td>
                         <td id="workHours1-@k" class="center"></td>
                         
-                        <td id="hour2-@k" class="center"><input colId="2" pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours2" value="@person.Hours2" class="edit hours2 center" /></td>
+                        <td id="hour2-@k" class="center"><input id="hours2-@k" colId="2" pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours2" value="@person.Hours2" class="edit hours2 center" /></td>
                         <td id="workHours2-@k" class="center"></td>
                         
-                        <td id="hour3-@k" class="center"><input colId="3" pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours3" value="@person.Hours3" class="edit hours3 center" /></td>
+                        <td id="hour3-@k" class="center"><input id="hours3-@k" colId="3" pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours3" value="@person.Hours3" class="edit hours3 center" /></td>
                         <td id="workHours3-@k" class="center"></td>
+
+                        <td id="sumHours-@k" class="center"></td>
+                        <td id="sumWorkHours-@k" class="center"></td>
                     </tr>
                     k++;
                 }

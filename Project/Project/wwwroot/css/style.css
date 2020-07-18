@@ -296,3 +296,8 @@ select {
     width: 13px;
     height: 13px;
 }
+
+.name {
+    display: block;
+    min-width: 228px;
+}

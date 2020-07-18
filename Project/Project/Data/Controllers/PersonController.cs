@@ -57,6 +57,8 @@ namespace Project.Data.Controllers
                 SelectList teams = new SelectList(db.Teams, "Id", "Title");
                 ViewBag.Teams = teams;
                 Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                Console.WriteLine("Hours1: " + person.Hours1 + ", Hours2: " + person.Hours2 + ", Hours3: " + person.Hours3);
+                Console.WriteLine("Coefficient: " + person.Coefficient );
                 if (person != null)
                 {
                     return View(person);
@@ -67,6 +69,8 @@ namespace Project.Data.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Person person)
         {
+            Console.WriteLine("Hours1: " + person.Hours1 + ", Hours2: " + person.Hours2 + ", Hours3: " + person.Hours3);
+            Console.WriteLine("Coefficient: " + person.Coefficient);
             db.Persons.Update(person);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

@@ -3,6 +3,10 @@
     ViewBag.Title = "Редактирование сотрудника";
 }
 <form asp-action="edit" asp-controller="person" asp-route-id="@Model.Id">
+    <input type="hidden" asp-for="Hours1" readonly/>
+    <input type="hidden" asp-for="Hours2" readonly/>
+    <input type="hidden" asp-for="Hours3" readonly/>
+    <input type="hidden" asp-for="Coefficient" value="@Model.Coefficient" />
     <div class="form-group">
         <label asp-for="Name" class="control-label">Имя</label>
         <input type="text" asp-for="Name" class="form-control" required />
@@ -10,10 +14,6 @@
     <div class="form-group">
         <label asp-for="Position" class="control-label">Должность</label>
         <input type="text" asp-for="Position" class="form-control" required />
-    </div>
-    <div class="form-group">
-        <label asp-for="Coefficient" class="control-label">Коэффициент (Дробное число, либо целое)</label>
-        <input pattern="\d+(.\d{0,})?" placeholder="0,00" value="@Model.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" asp-for="Coefficient" class="form-control small_input" required />
     </div>
     <div class="form-group">
         <label asp-for="TeamId" class="control-label">Команда</label>
