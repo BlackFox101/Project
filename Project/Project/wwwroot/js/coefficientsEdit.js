@@ -1,5 +1,5 @@
 ﻿let coefficients = document.querySelectorAll('.factor');
-let workHours = document.querySelectorAll('.hours');
+let hours = document.querySelectorAll('.hours');
 
 let load = document.querySelector('#load');
 let loadFinish = document.querySelector('#loadFinish');
@@ -12,6 +12,7 @@ const patternFactor = /^[0-9]*[.,]?[0-9]+$/;
 const patternHour = /^\d+$/;
 
 for(let i = 0; i < coefficients.length; i++) {
+  printWorkHours(coefficients[i].value, hours[i].value, '#workHours-' + i)
   coefficients[i].addEventListener('change', () => {
     let person = coefficients[i];
     person.addEventListener('click', () => {
@@ -33,6 +34,7 @@ for(let i = 0; i < coefficients.length; i++) {
         .then(data => {
           loading(i, person, data, '#factor');
           person.classList.remove('unvalid');
+          printWorkHours(coefficients[i].value, hours[i].value, '#workHours-' + i)
         }).catch(() => console.log('ошибка'));
     } else {
       person.classList.add('unvalid');
@@ -40,18 +42,18 @@ for(let i = 0; i < coefficients.length; i++) {
   })
 }
 
-for(let i = 0; i < workHours.length; i++) {
-  workHours[i].addEventListener('change', () =>{
-    let person = workHours[i];
+for(let i = 0; i < hours.length; i++) {
+  hours[i].addEventListener('change', () =>{
+    let person = hours[i];
     person.addEventListener('click', () => {
       person.classList.remove('unvalid');
     })
-    let hours = person.value;
-    hours = getDesiredFormat(hours);
-    hours = Math.round(hours);
-    if (patternHour.test(hours)) { //Если валидно то отправить
-      if (/^0/.test(hours)) {
-        hours = hours.replace('0', '');
+    let hour = person.value;
+    hour = getDesiredFormat(hour);
+    hour = Math.round(hour);
+    if (patternHour.test(hour)) { //Если валидно то отправить
+      if (/^0/.test(hour)) {
+        hour = hour.replace('0', '');
       }
       person.remove();
       document.querySelector('#hour-' + i).appendChild(load);
@@ -61,11 +63,12 @@ for(let i = 0; i < workHours.length; i++) {
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
         },
-        body: hours
+        body: hour
       }).then(response => response.text())
         .then(data => {
           loading(i, person, data, '#hour');
           person.classList.remove('unvalid');
+          printWorkHours(coefficients[i].value, hours[i].value, '#workHours-' + i)
         }).catch(() => console.log('ошибка'));
     } else {
       person.classList.add('unvalid');
@@ -85,4 +88,9 @@ function getDesiredFormat(data) {
   let desiredFormat = data.replace(',', '.');
   desiredFormat = desiredFormat.replace(/[^\d\.]/g, '')
   return desiredFormat;
+}
+
+function printWorkHours(factor, hours, id) {
+  let workHours = factor * hours;
+  document.querySelector(id).innerHTML = workHours;
 }
