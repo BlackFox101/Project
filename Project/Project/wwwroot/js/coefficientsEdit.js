@@ -71,7 +71,7 @@ function editHours(hours, number) {
       hour = getDesiredFormat(hour);
       hour = Math.round(hour);
       if (patternHour.test(hour)) { //Если валидно то отправить
-        if (/^0/.test(hour)) {
+        if (/^0\d/.test(hour)) {
           hour = hour.replace('0', '');
         }
         person.remove();
@@ -92,9 +92,8 @@ function editHours(hours, number) {
           .then(answer => {
             loading(i, person, answer, cellId);
             person.classList.remove('unvalid');
-            printWorkHours(coefficients[i].value, answer, '#workHours1-' + i);
-            printWorkHours(coefficients[i].value, answer, '#workHours2-' + i);
-            printWorkHours(coefficients[i].value, answer, '#workHours3-' + i);
+            id = id - 1;
+            printWorkHours(coefficients[i].value, answer, '#workHours' + id + '-' + i);
           }).catch(() => console.log('Ошибка!'));
       } else {
         person.classList.add('unvalid');
