@@ -92,8 +92,8 @@ function editHours(hours, number) {
           .then(answer => {
             loading(i, person, answer, cellId);
             person.classList.remove('unvalid');
-            id = id - 1;
-            printWorkHours(coefficients[i].value, answer, '#workHours' + id + '-' + i);
+            let colId = person.getAttribute('colId');
+            printWorkHours(coefficients[i].value, answer, '#workHours' + colId + '-' + i);
           }).catch(() => console.log('Ошибка!'));
       } else {
         person.classList.add('unvalid');
