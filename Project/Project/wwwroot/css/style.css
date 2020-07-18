@@ -301,3 +301,24 @@ select {
     display: block;
     min-width: 228px;
 }
+
+.td_factor {
+    padding: 0;
+    margin: 0;
+}
+
+.factor, .cell_factor {
+    background-color: red;
+}
+
+[class*="hour"], .cell_hour {
+    background-color: yellow;
+}
+
+[id*="workHours"], .cell_work_hour {
+    background-color: #465eff;
+}
+
+.cell_sum {
+    background-color: #00ff21;
+}
