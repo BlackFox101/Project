@@ -1,5 +1,5 @@
 ﻿let coefficients = document.querySelectorAll('.factor');
-let workHours = document.querySelectorAll('.work_hours');
+let workHours = document.querySelectorAll('.hours');
 
 let load = document.querySelector('#load');
 let loadFinish = document.querySelector('#loadFinish');
@@ -9,7 +9,7 @@ load.remove();
 loadFinish.remove();
 
 const patternFactor = /^[0-9]*[.,]?[0-9]+$/;
-const patternHour = /^[0-9]*[.,]?[0-9]+$/;
+const patternHour = /^\d+$/;
 
 for(let i = 0; i < coefficients.length; i++) {
   coefficients[i].addEventListener('change', () => {
@@ -48,7 +48,11 @@ for(let i = 0; i < workHours.length; i++) {
     })
     let hours = person.value;
     hours = getDesiredFormat(hours);
+    hours = Math.round(hours);
     if (patternHour.test(hours)) { //Если валидно то отправить
+      if (/^0/.test(hours)) {
+        hours = hours.replace('0', '');
+      }
       person.remove();
       document.querySelector('#hour-' + i).appendChild(load);
       let id = person.getAttribute('asp-route-id')

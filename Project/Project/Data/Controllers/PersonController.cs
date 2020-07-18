@@ -196,17 +196,16 @@ namespace Project.Data.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditWorkHours(int? id, [FromBody] int workHours)
+        public async Task<IActionResult> EditWorkHours(int? id, [FromBody] int Hours)
         {
             if (id != null)
             {
                 Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                Console.WriteLine(workHours);
-                person.WorkHours = workHours;
+                person.Hours = Hours;
                 await db.SaveChangesAsync();
                 if (person != null)
                 {
-                    return Ok(person.WorkHours);
+                    return Ok(person.Hours);
                 }
             }
             return NotFound();

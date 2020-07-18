@@ -272,10 +272,12 @@ select {
     border: none;
     outline: none;
     max-width: 100%;
+    cursor: pointer;
 }
 
 .edit:focus {
     outline: none;
+    cursor: text;
 }
 
 .small_input {
@@ -296,9 +298,14 @@ select {
 }
 
 [id*="factor-"], [id*="hour-"] {
-    
+   
 }
 
 .unvalid {
     border: 1.5px solid red !important;
+}
+
+input.hours::-webkit-outer-spin-button,
+input.hours::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }

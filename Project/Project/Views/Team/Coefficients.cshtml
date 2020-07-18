@@ -28,7 +28,7 @@
                         <td class="center td_index">@i.</td>
                         <td class="pad_td"><a asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
                         <td id="factor-@k" class="center"><input asp-route-id="@person.Id" pattern="\d+(.\d{0,})?" placeholder="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" value="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" class="edit factor center" /></td>
-                        <td id="hour-@k" class="center"><input pattern="^[ 0-9]+$" asp-route-id="@person.Id" placeholder="@person.WorkHours" value="@person.WorkHours" class="edit work_hours center" /></td>
+                        <td id="hour-@k" class="center"><input pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours" value="@person.Hours" class="edit hours center" /></td>
                     </tr>
                     k++;
                 }
