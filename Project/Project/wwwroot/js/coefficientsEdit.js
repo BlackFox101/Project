@@ -15,6 +15,9 @@ const patternHour = /^\d+$/;
 
 for(let i = 0; i < coefficients.length; i++) {
   // Расчитать рабочие часы
+  printWorkHours(coefficients[i].value, hours1[i].value, '#workHours1-' + i);
+  printWorkHours(coefficients[i].value, hours2[i].value, '#workHours2-' + i)
+  printWorkHours(coefficients[i].value, hours3[i].value, '#workHours3-' + i)
   coefficients[i].addEventListener('change', () => {
     let person = coefficients[i];
     person.addEventListener('click', () => {
@@ -33,22 +36,28 @@ for(let i = 0; i < coefficients.length; i++) {
         },
         body: factor
       }).then(response => response.text())
-        .then(data => {
-          loading(i, person, data, '#factor');
+        .then(answer => {
+          loading(i, person, answer, '#factor');
           person.classList.remove('unvalid');
           // Расчитать рабочие часы
-        }).catch(() => console.log('ошибка'));
+          printWorkHours(answer, hours1[i].value, '#workHours1-' + i);
+          printWorkHours(answer, hours2[i].value, '#workHours2-' + i);
+          printWorkHours(answer, hours3[i].value, '#workHours3-' + i);
+          // Расчитать сумму
+
+        }).catch(() => console.log('Ошибка!'));
     } else {
       person.classList.add('unvalid');
     }
   })
 }
 
-editHours(hours1, '#hour1', 1);
-editHours(hours2, '#hour2', 2);
-editHours(hours3, '#hour3', 3);
+editHours(hours1,1);
+editHours(hours2,2);
+editHours(hours3,3);
 
-function editHours(hours, cellId, number) {
+function editHours(hours, number) {
+  let cellId = '#hour' + number
   for(let i = 0; i < hours.length; i++) {
     hours[i].addEventListener('change', () =>{
       let person = hours[i];
@@ -56,6 +65,9 @@ function editHours(hours, cellId, number) {
         person.classList.remove('unvalid');
       })
       let hour = person.value;
+      if (hour == '') {
+        hour = '0';
+      }
       hour = getDesiredFormat(hour);
       hour = Math.round(hour);
       if (patternHour.test(hour)) { //Если валидно то отправить
@@ -64,19 +76,26 @@ function editHours(hours, cellId, number) {
         }
         person.remove();
         document.querySelector(cellId + '-' + i).appendChild(load);
-        let id = person.getAttribute('asp-route-id')
-        fetch('/Person/EditWorkHours'+ number + '/' + id, {
+        let id = person.getAttribute('asp-route-id');
+        let data = {
+          Hours: hour,
+          Number: number
+        };
+        data = JSON.stringify(data);
+        fetch('/Person/EditWorkHours/' + id, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json;charset=utf-8'
           },
-          body: hour
+          body: JSON.stringify(data)
         }).then(response => response.text())
-          .then(data => {
-            loading(i, person, data, cellId);
+          .then(answer => {
+            loading(i, person, answer, cellId);
             person.classList.remove('unvalid');
-            // Расчитать рабочие часы
-          }).catch(() => console.log('ошибка'));
+            printWorkHours(coefficients[i].value, answer, '#workHours1-' + i);
+            printWorkHours(coefficients[i].value, answer, '#workHours2-' + i);
+            printWorkHours(coefficients[i].value, answer, '#workHours3-' + i);
+          }).catch(() => console.log('Ошибка!'));
       } else {
         person.classList.add('unvalid');
       }
@@ -94,11 +113,39 @@ function loading(i, person, data, id) {
 
 function getDesiredFormat(data) {
   let desiredFormat = data.replace(',', '.');
-  desiredFormat = desiredFormat.replace(/[^\d\.]/g, '')
+  desiredFormat = desiredFormat.replace(/[^\d\.]/g, '');
   return desiredFormat;
 }
 
 function printWorkHours(factor, hours, id) {
-  let workHours = factor * hours;
+  const correctionFactor = 10;
+  let workHours = (factor * correctionFactor) * (hours * correctionFactor) / (correctionFactor * correctionFactor);
   document.querySelector(id).innerHTML = workHours;
 }
+
+//console.log(document.querySelector('#hour1-0').innerHTML)
+
+//printSumHours(1)
+
+function printSumHours(str) {
+  let sumHours = 0;
+  let id;
+  for(let column = 1; column < 4; column++) {
+    id = '#hour' + column + '-' + str;
+    sumHours = sumHours + Number(document.querySelector(id).innerHTML);
+  }
+  id = '';
+  document.querySelector(id).innerHTML = sumHours;
+}
+
+/*
+function printSumWorkHours(str) {
+  let sumWorkHours = 0;
+  let id = '';
+  for(let column = 0; column < 3; column++) {
+    id = '#workHours' + column + '-' + str;
+    sumWorkHours = sumWorkHours + Number(document.querySelector(id).innerHTML);
+  }
+  id = '';
+  document.querySelector(id).innerHTML = sumWorkHours;
+}*/
