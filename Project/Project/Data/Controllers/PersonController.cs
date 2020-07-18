@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -196,49 +197,41 @@ namespace Project.Data.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditWorkHours1(int? id, [FromBody] int Hours)
+        public async Task<IActionResult> EditWorkHours(int? id, [FromBody] string data)
+
         {
             if (id != null)
             {
+                DataHours dataHours = JsonSerializer.Deserialize<DataHours>(data);
                 Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                person.Hours1 = Hours;
+                switch (dataHours.Number)
+                {
+                    case 1:
+                        person.Hours1 = dataHours.Hours;
+                        break;
+                    case 2:
+                        person.Hours2 = dataHours.Hours;
+                        break;
+                    case 3:
+                        person.Hours3 = dataHours.Hours;
+                        break;
+                }
                 await db.SaveChangesAsync();
                 if (person != null)
                 {
-                    return Ok(person.Hours1);
+                    switch (dataHours.Number)
+                    {
+                        case 1:
+                            return Ok(person.Hours1);
+                        case 2:
+                            return Ok(person.Hours2);
+                        case 3:
+                            return Ok(person.Hours3);
+                    }
                 }
             }
             return NotFound();
         }
-        [HttpPut]
-        public async Task<IActionResult> EditWorkHours2(int? id, [FromBody] int Hours)
-        {
-            if (id != null)
-            {
-                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                person.Hours2 = Hours;
-                await db.SaveChangesAsync();
-                if (person != null)
-                {
-                    return Ok(person.Hours2);
-                }
-            }
-            return NotFound();
-        }
-        [HttpPut]
-        public async Task<IActionResult> EditWorkHours3(int? id, [FromBody] int Hours)
-        {
-            if (id != null)
-            {
-                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                person.Hours3 = Hours;
-                await db.SaveChangesAsync();
-                if (person != null)
-                {
-                    return Ok(person.Hours3);
-                }
-            }
-            return NotFound();
-        }
+        
     }
 }
