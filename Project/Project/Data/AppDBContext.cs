@@ -38,14 +38,14 @@ namespace Project.Data
             modelBuilder.Entity<Person>().HasData(
             new Person[]
             {
-                new Person { Id=1, Name="Половцев Эдуард Агапович", Position="Разработчик", Duty=true, TeamId=1, Coefficient=1.55, Hours=0},
-                new Person { Id=2, Name="Яндульский Иван Кондратьевич", Position="Разработчик", Duty=true, TeamId=1, Coefficient=1, Hours=0},
-                new Person { Id=3, Name="Иванов Иван Иванович", Position="Разработчик", Duty=true, TeamId=1, Coefficient=1, Hours=0},
-                new Person { Id=4, Name="Янович Руслан Савелиевич", Position="Тестировщик", Duty=false, TeamId=1, Coefficient=1, Hours=0},
-                new Person { Id=5, Name="Циркунов Руслан Олегович", Position="Тестировщик", Duty=true, TeamId=1, Coefficient=1, Hours=0},
-                new Person { Id=6, Name="Арефьев Захар Пахомович", Position="Тестировщик", Duty=false, TeamId=2, Coefficient=1, Hours=0},
-                new Person { Id=7, Name="Яробкин Феликс Куприянович", Position="Разработчик", Duty=false, TeamId=2, Coefficient=1, Hours=0},
-                new Person { Id=8, Name="Ковалев Мстислав Маркович", Position="Тестировщик", Duty=false, TeamId=3, Coefficient=1, Hours=0}
+                new Person { Id=1, Name="Половцев Эдуард Агапович", Position="Разработчик", Duty=true, TeamId=1, Coefficient=0.2, Hours1=1, Hours2=0, Hours3=0},
+                new Person { Id=2, Name="Яндульский Иван Кондратьевич", Position="Разработчик", Duty=true, TeamId=1, Coefficient=0.4, Hours1=2, Hours2=0, Hours3=0},
+                new Person { Id=3, Name="Иванов Иван Иванович", Position="Разработчик", Duty=true, TeamId=1, Coefficient=0.6, Hours1=3, Hours2=0, Hours3=0},
+                new Person { Id=4, Name="Янович Руслан Савелиевич", Position="Тестировщик", Duty=false, TeamId=1, Coefficient=0.8, Hours1=4, Hours2=0, Hours3=0},
+                new Person { Id=5, Name="Циркунов Руслан Олегович", Position="Тестировщик", Duty=true, TeamId=1, Coefficient=1, Hours1=5, Hours2=0, Hours3=0},
+                new Person { Id=6, Name="Арефьев Захар Пахомович", Position="Тестировщик", Duty=false, TeamId=2, Coefficient=1, Hours1=0, Hours2=0, Hours3=0},
+                new Person { Id=7, Name="Яробкин Феликс Куприянович", Position="Разработчик", Duty=false, TeamId=2, Coefficient=1, Hours1=0, Hours2=0, Hours3=0},
+                new Person { Id=8, Name="Ковалев Мстислав Маркович", Position="Тестировщик", Duty=false, TeamId=3, Coefficient=1, Hours1=0, Hours2=0, Hours3=0}
             });
         }
     }

@@ -196,16 +196,46 @@ namespace Project.Data.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditWorkHours(int? id, [FromBody] int Hours)
+        public async Task<IActionResult> EditWorkHours1(int? id, [FromBody] int Hours)
         {
             if (id != null)
             {
                 Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                person.Hours = Hours;
+                person.Hours1 = Hours;
                 await db.SaveChangesAsync();
                 if (person != null)
                 {
-                    return Ok(person.Hours);
+                    return Ok(person.Hours1);
+                }
+            }
+            return NotFound();
+        }
+        [HttpPut]
+        public async Task<IActionResult> EditWorkHours2(int? id, [FromBody] int Hours)
+        {
+            if (id != null)
+            {
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                person.Hours2 = Hours;
+                await db.SaveChangesAsync();
+                if (person != null)
+                {
+                    return Ok(person.Hours2);
+                }
+            }
+            return NotFound();
+        }
+        [HttpPut]
+        public async Task<IActionResult> EditWorkHours3(int? id, [FromBody] int Hours)
+        {
+            if (id != null)
+            {
+                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                person.Hours3 = Hours;
+                await db.SaveChangesAsync();
+                if (person != null)
+                {
+                    return Ok(person.Hours3);
                 }
             }
             return NotFound();

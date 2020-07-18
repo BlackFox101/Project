@@ -21,7 +21,11 @@ namespace Project.Data.Models
         [Required]
         public double Coefficient { get; set; }
         [Required]
-        public int Hours { get; set; }
+        public int Hours1 { get; set; }
+        [Required]
+        public int Hours2 { get; set; }
+        [Required]
+        public int Hours3 { get; set; }
         public Team Team { get; set; }
         public List<Vacation> Vacations { get; set; }
         public Person()

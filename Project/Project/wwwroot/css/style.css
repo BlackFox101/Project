@@ -77,7 +77,7 @@ td.pad_td {
 }
 
 
-[id*="duty-"] {
+.duty {
     cursor: pointer;
 }
 
@@ -288,24 +288,11 @@ select {
     max-width: 100px;
 }
 
-[id*="hour-"] {
+[id*="hour1"], [id*="hour2"], [id*="hour3"] {
     max-width: 70px;
 }
 
 .icon_width { /*Если добавлю ожидарние ответа сервера при изменении часов и коэфов*/
     width: 13px;
     height: 13px;
-}
-
-[id*="factor-"], [id*="hour-"] {
-   
-}
-
-.unvalid {
-    border: 1.5px solid red !important;
-}
-
-input.hours::-webkit-outer-spin-button,
-input.hours::-webkit-inner-spin-button {
-    -webkit-appearance: none;
 }

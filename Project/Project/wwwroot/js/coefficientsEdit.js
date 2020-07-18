@@ -1,5 +1,7 @@
 ﻿let coefficients = document.querySelectorAll('.factor');
-let hours = document.querySelectorAll('.hours');
+let hours1 = document.querySelectorAll('.hours1');
+let hours2 = document.querySelectorAll('.hours2');
+let hours3 = document.querySelectorAll('.hours3');
 
 let load = document.querySelector('#load');
 let loadFinish = document.querySelector('#loadFinish');
@@ -12,7 +14,7 @@ const patternFactor = /^[0-9]*[.,]?[0-9]+$/;
 const patternHour = /^\d+$/;
 
 for(let i = 0; i < coefficients.length; i++) {
-  printWorkHours(coefficients[i].value, hours[i].value, '#workHours-' + i)
+  // Расчитать рабочие часы
   coefficients[i].addEventListener('change', () => {
     let person = coefficients[i];
     person.addEventListener('click', () => {
@@ -34,7 +36,7 @@ for(let i = 0; i < coefficients.length; i++) {
         .then(data => {
           loading(i, person, data, '#factor');
           person.classList.remove('unvalid');
-          printWorkHours(coefficients[i].value, hours[i].value, '#workHours-' + i)
+          // Расчитать рабочие часы
         }).catch(() => console.log('ошибка'));
     } else {
       person.classList.add('unvalid');
@@ -42,38 +44,44 @@ for(let i = 0; i < coefficients.length; i++) {
   })
 }
 
-for(let i = 0; i < hours.length; i++) {
-  hours[i].addEventListener('change', () =>{
-    let person = hours[i];
-    person.addEventListener('click', () => {
-      person.classList.remove('unvalid');
-    })
-    let hour = person.value;
-    hour = getDesiredFormat(hour);
-    hour = Math.round(hour);
-    if (patternHour.test(hour)) { //Если валидно то отправить
-      if (/^0/.test(hour)) {
-        hour = hour.replace('0', '');
+editHours(hours1, '#hour1', 1);
+editHours(hours2, '#hour2', 2);
+editHours(hours3, '#hour3', 3);
+
+function editHours(hours, cellId, number) {
+  for(let i = 0; i < hours.length; i++) {
+    hours[i].addEventListener('change', () =>{
+      let person = hours[i];
+      person.addEventListener('click', () => {
+        person.classList.remove('unvalid');
+      })
+      let hour = person.value;
+      hour = getDesiredFormat(hour);
+      hour = Math.round(hour);
+      if (patternHour.test(hour)) { //Если валидно то отправить
+        if (/^0/.test(hour)) {
+          hour = hour.replace('0', '');
+        }
+        person.remove();
+        document.querySelector(cellId + '-' + i).appendChild(load);
+        let id = person.getAttribute('asp-route-id')
+        fetch('/Person/EditWorkHours'+ number + '/' + id, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: hour
+        }).then(response => response.text())
+          .then(data => {
+            loading(i, person, data, cellId);
+            person.classList.remove('unvalid');
+            // Расчитать рабочие часы
+          }).catch(() => console.log('ошибка'));
+      } else {
+        person.classList.add('unvalid');
       }
-      person.remove();
-      document.querySelector('#hour-' + i).appendChild(load);
-      let id = person.getAttribute('asp-route-id')
-      fetch('/Person/EditWorkHours/' + id, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: hour
-      }).then(response => response.text())
-        .then(data => {
-          loading(i, person, data, '#hour');
-          person.classList.remove('unvalid');
-          printWorkHours(coefficients[i].value, hours[i].value, '#workHours-' + i)
-        }).catch(() => console.log('ошибка'));
-    } else {
-      person.classList.add('unvalid');
-    }
-  })
+    })
+  }
 }
 
 function loading(i, person, data, id) {
