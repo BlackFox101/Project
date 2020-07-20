@@ -4,9 +4,8 @@ let sprintSel = document.querySelector('#sprintSel');
 let sprintsHeader = document.querySelector('#sprints-1'); //Заголовок для спринтов
 let hoursHeader = document.querySelector('.cell_hour'); //Заголовок для часов
 let workHoursHeader = document.querySelector('.cell_work_hour'); //Заголовок для рабочих часов
-console.log(sprintsHeader);
-console.log(hoursHeader);
-console.log(workHoursHeader);
+let hoursCell = document.querySelector('#Hours_td-1-0'); //Ячейка часов
+let workHoursCell = document.querySelector('#WorkHours-1-0'); //Ячейка рабочих часов
 
 let load = document.querySelector('#load');
 let loadFinish = document.querySelector('#loadFinish');
@@ -21,20 +20,22 @@ const patternFactor = /^[0-9]*[.,]?[0-9]+$/;
 editFactor();
 initSprints();
 
-let previousSprints = sprintSel.getAttribute('currentSprints');
+let lastSprint = Number(sprintSel.getAttribute('currentSprints'));
+
 function initSprints() {
   let currentSprints = sprintSel.getAttribute('currentSprints');
   sprintSel.value = currentSprints;
 }
-
 sprintSel.addEventListener('change', () => {
   let sprints = sprintSel.value;
   let id = sprintSel.getAttribute('asp-route-id');
-  changeSprints(sprints, id, previousSprints);
+  changeSprints(sprints, id, lastSprint);
+  lastSprint = Number(sprintSel.value);
 })
-
-function changeSprints(currentSprints, id, previous) {
-  fetch('/Team/СhangeSprints/' + id, {
+function changeSprints(currentSprints, id, last) {
+  let numberOfNewSprint;
+  currentSprints = Number(currentSprints);
+  fetch('/Team/ChangeSprints/' + id, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
@@ -43,72 +44,116 @@ function changeSprints(currentSprints, id, previous) {
   }).then(response => response.text())
     .then(answer => {
       sprintSel.value = answer;
+      if (last < currentSprints) {
+        console.log('Новый больше');
+        numberOfNewSprint = currentSprints - last;
+        for(let i = last + 1 ; i < currentSprints + 1; i++) {
+          addSprint(i);
+          console.log('Добавлен ' + i + ' спринт!');
+        }
+      } else {
+        console.log('Новый меньше');
+        numberOfNewSprint = last - currentSprints;
+        for(let i = last; i > currentSprints ;i--) {
+          delSprint(i);
+          console.log('Удален ' + i + ' спринт!')
+        }
+      }
     }).catch(() => console.log('Ошибка!'));
-  if (previous < currentSprints) {
-    console.log('Новый больше');
-    //getNewSprint();
-  } else {
-    console.log('Новый меньше');
-    //delSprints();
-  }
 }
 
-function getNewSprint() {
-  /*Создать новые часы по спринтам для сотрудников*/
-  //addNewColumns();
-  /*Добавить колонки спринтов в таблицу*/
-  /*Добавить данные в колонки*/
-  // Повесить на input'ы обработчики событий
+function addSprint(sprintNumber) {
+  addNewHeaders(sprintNumber); //Добавить нвоые заголовки спринтам
+  addNewSprintHoursInDB(sprintNumber); //Добавить спринт в бд
+  addNewHoursInTable(sprintNumber); //Добавить колонку: часы
+  addNewWorkHoursInTable(sprintNumber); //Добавить колонку: рабочие часы
+  //Повесить на input'ы обработчики событий
+}
+function delSprint(sprintNumber) {
+  delSprintFromTable(sprintNumber); //Удалить колоки спринта
+  delSprintFromDB(sprintNumber);//Удалить спринт из бд
 }
 
-//addNewColumns();
-function addNewColumns() {
+function addNewHeaders(sprintNumber) {
   //Заголовок спринта
-  let temp = sprintsHeader.cloneNode();
-  let tempId = Number(sprintSel.value) + 1;
-  temp.classList.remove('column-1');
-  temp.classList.add('column-' + tempId);
-  temp.setAttribute('id', 'sprints-' + tempId);
-  document.querySelector('#emptyAboveSum').before(temp);
-  temp.innerHTML = 'Спринт ' + tempId;
-  //Заголовок часов
-  temp = hoursHeader.cloneNode();
-  temp.classList.remove('column-1');
-  temp.classList.add('column-' + tempId);
-  document.querySelector('.cell_sum').before(temp);
-  temp.innerHTML = 'Часы';
-  //Заголовок рабочих часов
-  temp = workHoursHeader.cloneNode();
-  temp.classList.remove('column-1');
-  temp.classList.add('column-' + tempId);
-  document.querySelector('.cell_sum').before(temp);
-  temp.innerHTML = 'Рабочие часы';
+  let tempNode = sprintsHeader.cloneNode();
+  changeClassColumn(tempNode, sprintNumber);
+  tempNode.setAttribute('id', 'sprints-' + sprintNumber);
+  document.querySelector('#emptyAboveSum').before(tempNode);
+  tempNode.innerHTML = 'Спринт ' + sprintNumber;
 
+  //Заголовок часов
+  tempNode = hoursHeader.cloneNode();
+  changeClassColumn(tempNode, sprintNumber);
+  document.querySelector('.cell_sum').before(tempNode);
+  tempNode.innerHTML = 'Часы';
+
+  //Заголовок рабочих часов
+  tempNode = workHoursHeader.cloneNode(true);
+  changeClassColumn(tempNode, sprintNumber);
+  document.querySelector('.cell_sum').before(tempNode);
+  tempNode.innerHTML = 'Рабочие часы';
+}
+function addNewSprintHoursInDB(sprintNumber) {
   /*Создать спринты часов для сотрудников*/
-  /*for(let i = 0; i < coefficients.length; i++) {
-    fetch('/Team/СhangeSprints/' + id, {
-      method: 'PUT',
+  for(let i = 0; i < coefficients.length; i++) {
+    let person = coefficients[i];
+    let id = person.getAttribute('asp-route-id')
+    fetch('/Person/AddSprintHours/' + id, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       },
-      body: currentSprints
+      body: sprintNumber
     }).then(response => response.text())
-      .then(answer => {
-        sprintSel.value = answer;
-      }).catch(() => console.log('Ошибка!'));
-  }*/
+      .catch(() => console.log('Ошибка!'));
+  }
 }
-delSprints(1);
-function delSprints(id) {
-  /*Удалить часы по спринтам для сотрудников*/
-  /*Удалить колонки по спринтам*/
-  fetch('/Person/AddSprintHours/' + id, {
-    method: 'POST',
-  }).then(response => response.text())
-    .then(answer => {
-      console.log('Пришло:');
-      console.log(answer);
-    }).catch(() => console.log('Ошибка!'));
+function addNewHoursInTable(sprintNumber) {
+  for(let i = 0; i < coefficients.length; i++) {
+    let temp = hoursCell.cloneNode(true);
+    let tempInput = temp.firstChild;
+    changeClassColumn(temp, sprintNumber);
+    temp.setAttribute('id', 'Hours_td-' + sprintNumber + '-' + i);
+    tempInput.setAttribute('id', 'Hours-' + sprintNumber + '-' + i);
+    tempInput.setAttribute('value', 0);
+    document.querySelector('#sumHours-' + i).before(temp);
+  }
+}
+function addNewWorkHoursInTable(sprintNumber) {
+  for(let i = 0; i < coefficients.length; i++) {
+    let temp = workHoursCell.cloneNode();
+    changeClassColumn(temp, sprintNumber);
+    temp.setAttribute('id', 'WorkHours-' + sprintNumber + '-' + i);
+    document.querySelector('#sumHours-' + i).before(temp);
+    //console.log(temp);
+  }
+}
+function delSprintFromTable(sprintNumber) {
+  let delColumn = document.querySelectorAll('.column-'+ sprintNumber);
+  for(let i = 0; i < delColumn.length; i++) {
+    delColumn[i].remove();
+  }
+}
+function delSprintFromDB(sprintNumber) {
+  /*Удалить спирнты сотрудников из бд*/
+  for(let i = 0; i < coefficients.length; i++) {
+    let person = coefficients[i];
+    let id = person.getAttribute('asp-route-id')
+    fetch('/Person/DelSprintHours/' + id, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: sprintNumber
+    }).then(response => response.text())
+      .catch(() => console.log('Ошибка!'));
+  }
+}
+
+function changeClassColumn(node, id) {
+  node.classList.remove('column-1');
+  node.classList.add('column-' + id);
 }
 
 function editFactor() {
@@ -127,7 +172,7 @@ function editFactor() {
         document.querySelector('#factor-' + i).appendChild(load);
         let id = person.getAttribute('asp-route-id')
         fetch('/Person/EditFactor/' + id, {
-          method: 'PUT',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json;charset=utf-8'
           },
@@ -145,7 +190,6 @@ function editFactor() {
     })
   }
 }
-
 function loading(i, person, data, id) {
   load.remove();
   document.querySelector(id + '-' + i).appendChild(loadFinish);
@@ -153,7 +197,6 @@ function loading(i, person, data, id) {
   document.querySelector(id + '-' + i).appendChild(person);
   person.value = data;
 }
-
 function getDesiredFormat(data) {
   let desiredFormat = data.replace(',', '.');
   if (/^\d+\.$/.test(desiredFormat)) {

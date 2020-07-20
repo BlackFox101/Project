@@ -11,6 +11,8 @@ namespace Project.Data.Models
         public int Id { get; set; }
         [Required]
         public int Hours { get; set; }
+        [Required]
+        public int Sprint { get; set; }
         public int? PersonId { get; set; }
         public Person Person { get; set; }
     }

@@ -165,7 +165,7 @@ namespace Project.Data.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> СhangeSprints(int? id, [FromBody] int Sprints)
+        public async Task<IActionResult> ChangeSprints(int? id, [FromBody] int Sprints)
         {
             if (id != null)
             {

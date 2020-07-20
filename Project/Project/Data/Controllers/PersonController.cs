@@ -180,7 +180,7 @@ namespace Project.Data.Controllers
             return RedirectToAction("ViewVacations", new { id = vac.PersonId });
         }
 
-        [HttpPut] 
+        [HttpPost] 
         public async Task<IActionResult> EditFactor(int? id, [FromBody] double Coefficient)
         {
             if (id != null)
@@ -196,13 +196,14 @@ namespace Project.Data.Controllers
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> AddSprintHours(int? id, SprintHour hour)
+        public async Task<IActionResult> AddSprintHours(int? id, [FromBody] int sprint, SprintHour hour)
         {
             if (id != null)
-            { 
-                hour.PersonId = id;
-                hour.Hours = 0;
+            {
                 hour.Id = 0;
+                hour.Hours = 0;
+                hour.Sprint = sprint;
+                hour.PersonId = id;
                 db.SprintHours.Add(hour);
                 await db.SaveChangesAsync();
                 if (hour != null)
@@ -212,42 +213,22 @@ namespace Project.Data.Controllers
             }
             return NotFound();
         }
-
-        /*[HttpPut]
-        public async Task<IActionResult> EditWorkHours(int? id, [FromBody] string data)
-
+        [HttpPost]
+        public async Task<IActionResult> DelSprintHours(int? id, [FromBody] int sprint)
         {
             if (id != null)
             {
-                DataHours dataHours = JsonSerializer.Deserialize<DataHours>(data);
-                Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                switch (dataHours.Number)
+                SprintHour sprintHour = await db.SprintHours.FirstOrDefaultAsync(p => (p.PersonId == id && p.Sprint == sprint));
+                Console.WriteLine("PersonId: " + sprintHour.PersonId + ", Sprint: " + sprintHour.Sprint);
+                Console.WriteLine();
+                if (sprintHour != null)
                 {
-                    case 1:
-                        person.Hours1 = dataHours.Hours;
-                        break;
-                    case 2:
-                        person.Hours2 = dataHours.Hours;
-                        break;
-                    case 3:
-                        person.Hours3 = dataHours.Hours;
-                        break;
-                }
-                await db.SaveChangesAsync();
-                if (person != null)
-                {
-                    switch (dataHours.Number)
-                    {
-                        case 1:
-                            return Ok(person.Hours1);
-                        case 2:
-                            return Ok(person.Hours2);
-                        case 3:
-                            return Ok(person.Hours3);
-                    }
+                    db.SprintHours.Remove(sprintHour);
+                    await db.SaveChangesAsync();
+                    return Ok();
                 }
             }
             return NotFound();
-        }*/
+        }
     }
 }

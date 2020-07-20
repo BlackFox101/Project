@@ -57,21 +57,23 @@ namespace Project.Data
             modelBuilder.Entity<SprintHour>().HasData(
             new SprintHour[]
             {
-                new SprintHour { Id=1, Hours=1, PersonId=1},
-                new SprintHour { Id=2, Hours=2, PersonId=2},
-                new SprintHour { Id=3, Hours=3, PersonId=3},
-                new SprintHour { Id=4, Hours=4, PersonId=4},
-                new SprintHour { Id=5, Hours=5, PersonId=5},
-                new SprintHour { Id=6, Hours=1, PersonId=1},
-                new SprintHour { Id=7, Hours=2, PersonId=2},
-                new SprintHour { Id=8, Hours=3, PersonId=3},
-                new SprintHour { Id=9, Hours=4, PersonId=4},
-                new SprintHour { Id=10, Hours=5, PersonId=5},
-                new SprintHour { Id=11, Hours=1, PersonId=1},
-                new SprintHour { Id=12, Hours=2, PersonId=2},
-                new SprintHour { Id=13, Hours=3, PersonId=3},
-                new SprintHour { Id=14, Hours=4, PersonId=4},
-                new SprintHour { Id=15, Hours=5, PersonId=5}
+                new SprintHour { Id=1, Hours=1, Sprint=1, PersonId=1},
+                new SprintHour { Id=2, Hours=2, Sprint=1, PersonId=2},
+                new SprintHour { Id=3, Hours=3, Sprint=1, PersonId=3},
+                new SprintHour { Id=4, Hours=4, Sprint=1, PersonId=4},
+                new SprintHour { Id=5, Hours=5, Sprint=1, PersonId=5},
+
+                new SprintHour { Id=6, Hours=1, Sprint=2, PersonId=1},
+                new SprintHour { Id=7, Hours=2, Sprint=2, PersonId=2},
+                new SprintHour { Id=8, Hours=3, Sprint=2, PersonId=3},
+                new SprintHour { Id=9, Hours=4, Sprint=2, PersonId=4},
+                new SprintHour { Id=10, Hours=5, Sprint=2, PersonId=5},
+
+                new SprintHour { Id=11, Hours=1, Sprint=3, PersonId=1},
+                new SprintHour { Id=12, Hours=2, Sprint=3, PersonId=2},
+                new SprintHour { Id=13, Hours=3, Sprint=3, PersonId=3},
+                new SprintHour { Id=14, Hours=4, Sprint=3, PersonId=4},
+                new SprintHour { Id=15, Hours=5, Sprint=3, PersonId=5}
             });
         }
     }

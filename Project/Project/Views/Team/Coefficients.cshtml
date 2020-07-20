@@ -11,7 +11,7 @@
     <h1>Корректирующие коэффициенты</h1>
     <dl>
         <dt>Команда: <a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Id">@Model.Title</a></dt>
-        <dt>Спринты <select id="sprintSel" currentSprints="@Model.Sprints" asp-route-id="@Model.Id">
+        <dt>Спринты: <select id="sprintSel" currentSprints="@Model.Sprints" asp-route-id="@Model.Id">
                         <option selected="selected" value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -56,7 +56,7 @@
                     {
                         s++;
                         <td id="Hours_td-@s-@k" class="center cell_hour column-@s"><input id="Hours-@s-@k" class="edit center hour_input-@s" asp-route-id="@person.Id" placeholder="@SprintHour.Hours" value="@SprintHour.Hours"/></td>
-                        <td id="WorkHours-@s-@k" class="WorkHours-@s center cell_work_hour column-@s"></td>
+                        <td id="WorkHours-@s-@k" class="center cell_work_hour column-@s"></td>
                     }
                     <td id="sumHours-@k" class="cell_sum center"></td>
                     <td id="sumWorkHours-@k" class="cell_sum center"></td>
