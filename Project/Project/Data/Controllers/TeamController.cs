@@ -149,13 +149,32 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                var persons = db.Teams
+                var persons = db.Persons
+                        .Include(c => c.SprintHours)  // добавляем данные по отпускам
+                        .ToList();
+                var teams = db.Teams
                         .Include(c => c.Persons)  // добавляем данные по пользователям
                         .ToList();
                 Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
                 if (team != null)
                 {
                     return View(team);
+                }
+            }
+            return NotFound();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> СhangeSprints(int? id, [FromBody] int Sprints)
+        {
+            if (id != null)
+            {
+                Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == id);
+                team.Sprints = Sprints;
+                await db.SaveChangesAsync();
+                if (team != null)
+                {
+                    return Ok(team.Sprints);
                 }
             }
             return NotFound();

@@ -18,7 +18,8 @@
             <option value="5">5</option>
         </select>
     </div>
-    <input type="hidden" asp-for="DutyStartDate" value="@DateNow" class="form-start-date" required />
+    <input type="hidden" asp-for="DutyStartDate" value="@DateNow" readonly />
+    <input type="hidden" asp-for="Sprints" value="1" readonly />
     <div class="form-group">
         <input type="submit" value="Отправить" class="btn btn-light" />
     </div>

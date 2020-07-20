@@ -3,9 +3,9 @@
     ViewBag.Title = "Редактирование сотрудника";
 }
 <form asp-action="edit" asp-controller="person" asp-route-id="@Model.Id">
-    <input type="hidden" asp-for="Hours1" readonly/>
+    @*<input type="hidden" asp-for="Hours1" readonly/>
     <input type="hidden" asp-for="Hours2" readonly/>
-    <input type="hidden" asp-for="Hours3" readonly/>
+    <input type="hidden" asp-for="Hours3" readonly/>*@
     <input type="hidden" asp-for="Coefficient" value="@Model.Coefficient" />
     <div class="form-group">
         <label asp-for="Name" class="control-label">Имя</label>

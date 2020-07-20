@@ -3,67 +3,73 @@
 
 @{
     ViewBag.Title = "Команда " + @Model.Title;
-    int i = 0;
-    int k = 0;
+    int i = 0; //Номер сотрудника
+    int k = 0; //Порядковый номер в списке
+    int s = 0; //Спринты
 }
-    <div>
-        <h1>Корректирующие коэффициенты</h1>
-        <dl>
-            <dt>Команда: <a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Id">@Model.Title</a></dt>
-        </dl>
-        <table class="data_table">
-            <thead>
-                <tr class="title_tr">
-                    <th class="th_item" colspan="3"></th>
-                    <th class="th_item center" colspan="2">Спринт 1</th>
-                    <th class="th_item center" colspan="2">Спринт 2</th>
-                    <th class="th_item center" colspan="2">Спринт 3</th>
-                    <th class="th_item center" colspan="2"></th>
-                </tr>
-                <tr class="title_tr">
-                    <th class="th_item center">№</th>
-                    <th class="th_item center">Имя</th>
-                    <th class="th_item center cell_factor">Коэффициент</th>
-                    <th class="th_item center cell_hour">Часы</th>
-                    <th class="th_item center cell_work_hour">Рабочие часы</th>
-                    <th class="th_item center cell_hour">Часы</th>
-                    <th class="th_item center cell_work_hour">Рабочие часы</th>
-                    <th class="th_item center cell_hour">Часы</th>
-                    <th class="th_item center cell_work_hour">Рабочие часы</th>
-                    <th class="th_item center cell_sum">Сумма часов</th>
-                    <th class="th_item center cell_sum">Сумма рабочих часов</th>
-                </tr>
-            </thead>
-            <tbody id="team_det">
-                @foreach (Person person in Model.Persons)
+<div>
+    <h1>Корректирующие коэффициенты</h1>
+    <dl>
+        <dt>Команда: <a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Id">@Model.Title</a></dt>
+        <dt>Спринты <select id="sprintSel" currentSprints="@Model.Sprints" asp-route-id="@Model.Id">
+                        <option selected="selected" value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+        </dt>
+    </dl>
+    <table class="data_table">
+        <thead>
+            <tr class="title_tr">
+                <th class="th_item" colspan="3"></th>
+                @for (int j = 1; j < @Model.Sprints + 1; j++)
                 {
-                    i++;
-                    <tr>
-                        <td class="center td_index">@i.</td>
-                        <td class="pad_td name"><a class="name" asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
-                        <td id="factor-@k" class="cell_factor center"><input class="edit factor center" asp-route-id="@person.Id" pattern="\d+(.\d{0,})?" placeholder="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" value="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" /></td>
-                        
-                        <td id="hour1-@k" class="center cell_hour"><input id="hours1-@k" colId="1" pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours1" value="@person.Hours1" class="edit hours1 center" /></td>
-                        <td id="workHours1-@k" class="center cell_work_hour"></td>
-                        
-                        <td id="hour2-@k" class="center cell_hour"><input id="hours2-@k" colId="2" pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours2" value="@person.Hours2" class="edit hours2 center" /></td>
-                        <td id="workHours2-@k" class="center cell_work_hour"></td>
-                        
-                        <td id="hour3-@k" class="center cell_hour"><input id="hours3-@k" colId="3" pattern="^[0-9]+$" asp-route-id="@person.Id" placeholder="@person.Hours3" value="@person.Hours3" class="edit hours3 center" /></td>
-                        <td id="workHours3-@k" class="center cell_work_hour"></td>
-
-                        <td id="sumHours-@k" class="cell_sum center"></td>
-                        <td id="sumWorkHours-@k" class="cell_sum center"></td>
-                    </tr>
-                    k++;
+                    <th id="sprints-@j" class="th_item center column-@j" colspan="2">Спринт @j</th>
                 }
-                @if (i == 0)
+                <th id="emptyAboveSum" class="th_item" colspan="2"></th>
+            </tr>
+            <tr class="title_tr">
+                <th class="th_item center">№</th>
+                <th class="th_item center">Имя</th>
+                <th class="th_item center cell_factor">Коэффициент</th>
+                @for (int j = 1; j < @Model.Sprints + 1; j++)
                 {
-                    <tr><td class="center" colspan="4">Отсутствуют</td></tr>
+                    <th class="th_item center cell_hour column-@j">Часы</th>
+                    <th class="th_item center cell_work_hour column-@j">Рабочие часы</th>
                 }
-            </tbody>
-        </table>
-        <img id="load" src="~/images/loading.gif" class="icon_width hidden" />
-        <img id="loadFinish" src="~/images/load_finish.png" class="icon_width hidden" />
-        <script src="~/js/coefficientsEdit.js"></script>
-    </div>
+                <th class="th_item center cell_sum">Сумма часов</th>
+                <th class="th_item center cell_sum">Сумма рабочих часов</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Person person in Model.Persons)
+            {
+                i++;
+                s = 0;
+                <tr>
+                    <td class="center td_index">@i.</td>
+                    <td class="pad_td name"><a class="name" asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
+                    <td id="factor-@k" class="cell_factor center"><input  class="edit factor center" asp-route-id="@person.Id" pattern="\d+(.\d{0,})?" placeholder="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" value="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" /></td>
+                    @foreach (SprintHour SprintHour in person.SprintHours)
+                    {
+                        s++;
+                        <td id="Hours_td-@s-@k" class="center cell_hour column-@s"><input id="Hours-@s-@k" class="edit center hour_input-@s" asp-route-id="@person.Id" placeholder="@SprintHour.Hours" value="@SprintHour.Hours"/></td>
+                        <td id="WorkHours-@s-@k" class="WorkHours-@s center cell_work_hour column-@s"></td>
+                    }
+                    <td id="sumHours-@k" class="cell_sum center"></td>
+                    <td id="sumWorkHours-@k" class="cell_sum center"></td>
+                </tr>
+                k++;
+            }
+            @if (i == 0)
+            {
+                <tr><td class="center" colspan="4">Отсутствуют</td></tr>
+            }
+        </tbody>
+    </table>
+    <img id="load" src="~/images/loading.gif" class="icon_width hidden" />
+    <img id="loadFinish" src="~/images/load_finish.png" class="icon_width hidden" />
+    <script src="~/js/coefficientsEdit.js"></script>
+</div>

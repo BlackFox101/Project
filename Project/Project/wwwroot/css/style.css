@@ -1,10 +1,4 @@
-﻿a:hover {
-    color: #0054AD;
-    text-decoration: none;
-    background-color: transparent;
-}
-
-select.select-control {
+﻿select.select-control {
     cursor: pointer;
     display: block;
     height: calc(1.5em + .75rem + 2px);
@@ -288,10 +282,6 @@ select {
     max-width: 100px;
 }
 
-[id*="hour1"], [id*="hour2"], [id*="hour3"] {
-    max-width: 70px;
-}
-
 .icon_width { /*Если добавлю ожидарние ответа сервера при изменении часов и коэфов*/
     width: 13px;
     height: 13px;
@@ -307,9 +297,12 @@ select {
     margin: 0;
 }
 
-.factor, .cell_factor {
-    background-color: red;
+input.unvalid {
+    border: 1.5px solid red;
 }
+/*.factor, .cell_factor {
+    background-color: red;
+}*/
 
 [class*="hour"], .cell_hour {
     background-color: yellow;
@@ -321,4 +314,18 @@ select {
 
 .cell_sum {
     background-color: #00ff21;
+}
+
+#sprintSel {
+    margin-top: 5px;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid #495057;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 2px;
+}
+
+[class*="hour_input"] {
+    max-width: 70px;
 }

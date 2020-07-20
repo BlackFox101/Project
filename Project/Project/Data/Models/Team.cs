@@ -18,6 +18,8 @@ namespace Project.Data.Models
         public int? FirstPersonInDutyId { get; set; }
         [Column(TypeName = "date")]
         public DateTime DutyStartDate { get; set; }
+        [Required]
+        public int Sprints { get; set; }
         public List<Person> Persons { get; set; }
         public Team()
         {

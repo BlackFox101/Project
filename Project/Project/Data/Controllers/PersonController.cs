@@ -57,8 +57,6 @@ namespace Project.Data.Controllers
                 SelectList teams = new SelectList(db.Teams, "Id", "Title");
                 ViewBag.Teams = teams;
                 Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                Console.WriteLine("Hours1: " + person.Hours1 + ", Hours2: " + person.Hours2 + ", Hours3: " + person.Hours3);
-                Console.WriteLine("Coefficient: " + person.Coefficient );
                 if (person != null)
                 {
                     return View(person);
@@ -69,8 +67,6 @@ namespace Project.Data.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Person person)
         {
-            Console.WriteLine("Hours1: " + person.Hours1 + ", Hours2: " + person.Hours2 + ", Hours3: " + person.Hours3);
-            Console.WriteLine("Coefficient: " + person.Coefficient);
             db.Persons.Update(person);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -199,8 +195,25 @@ namespace Project.Data.Controllers
             }
             return NotFound();
         }
+        [HttpPost]
+        public async Task<IActionResult> AddSprintHours(int? id, SprintHour hour)
+        {
+            if (id != null)
+            { 
+                hour.PersonId = id;
+                hour.Hours = 0;
+                hour.Id = 0;
+                db.SprintHours.Add(hour);
+                await db.SaveChangesAsync();
+                if (hour != null)
+                {
+                    return Ok();
+                }
+            }
+            return NotFound();
+        }
 
-        [HttpPut]
+        /*[HttpPut]
         public async Task<IActionResult> EditWorkHours(int? id, [FromBody] string data)
 
         {
@@ -235,7 +248,6 @@ namespace Project.Data.Controllers
                 }
             }
             return NotFound();
-        }
-        
+        }*/
     }
 }
