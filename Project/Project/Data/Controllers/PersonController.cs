@@ -219,8 +219,6 @@ namespace Project.Data.Controllers
             if (id != null)
             {
                 SprintHour sprintHour = await db.SprintHours.FirstOrDefaultAsync(p => (p.PersonId == id && p.Sprint == sprint));
-                Console.WriteLine("PersonId: " + sprintHour.PersonId + ", Sprint: " + sprintHour.Sprint);
-                Console.WriteLine();
                 if (sprintHour != null)
                 {
                     db.SprintHours.Remove(sprintHour);

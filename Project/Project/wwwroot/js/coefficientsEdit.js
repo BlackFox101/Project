@@ -33,7 +33,6 @@ sprintSel.addEventListener('change', () => {
   lastSprint = Number(sprintSel.value);
 })
 function changeSprints(currentSprints, id, last) {
-  let numberOfNewSprint;
   currentSprints = Number(currentSprints);
   fetch('/Team/ChangeSprints/' + id, {
     method: 'PUT',
@@ -45,15 +44,11 @@ function changeSprints(currentSprints, id, last) {
     .then(answer => {
       sprintSel.value = answer;
       if (last < currentSprints) {
-        console.log('Новый больше');
-        numberOfNewSprint = currentSprints - last;
         for(let i = last + 1 ; i < currentSprints + 1; i++) {
           addSprint(i);
           console.log('Добавлен ' + i + ' спринт!');
         }
       } else {
-        console.log('Новый меньше');
-        numberOfNewSprint = last - currentSprints;
         for(let i = last; i > currentSprints ;i--) {
           delSprint(i);
           console.log('Удален ' + i + ' спринт!')
