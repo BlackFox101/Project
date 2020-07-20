@@ -30,6 +30,7 @@ namespace Project.Data.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Person person)
         {
+
             db.Persons.Add(person);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -57,6 +58,7 @@ namespace Project.Data.Controllers
                 SelectList teams = new SelectList(db.Teams, "Id", "Title");
                 ViewBag.Teams = teams;
                 Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+                Console.WriteLine(person.TeamId);
                 if (person != null)
                 {
                     return View(person);
@@ -67,6 +69,10 @@ namespace Project.Data.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Person person)
         {
+            Console.WriteLine("Новый TeamId: " + person.TeamId);
+            Person testPerson = await db.Persons.FirstOrDefaultAsync(p => p.Id == person.Id);
+            Console.WriteLine("Старый TeamId: " + testPerson.TeamId);
+            Console.WriteLine("Id: " + person.Id + ", TeamId: " + person.TeamId);
             db.Persons.Update(person);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
