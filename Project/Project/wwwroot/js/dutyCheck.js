@@ -1,5 +1,4 @@
 let duties = document.querySelectorAll('.duty');
-//let persons = document.getElementById('persons').innerHTML; //Количество сотрудников
 // на каждый элемент повесить обработчик на стадии перехвата
 let isDuty;
 for(let i = 0; i < duties.length; i++) {

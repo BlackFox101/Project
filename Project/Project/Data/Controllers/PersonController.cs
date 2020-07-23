@@ -17,6 +17,7 @@ namespace Project.Data.Controllers
         {
             db = context;
         }
+        //СheckChangeTeam СheckChangeTeam = new СheckChangeTeam();
         public async Task<IActionResult> Index()
         {
             return View(await db.Persons.Include(c => c.Team).ToListAsync());
@@ -58,7 +59,6 @@ namespace Project.Data.Controllers
                 SelectList teams = new SelectList(db.Teams, "Id", "Title");
                 ViewBag.Teams = teams;
                 Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
-                Console.WriteLine(person.TeamId);
                 if (person != null)
                 {
                     return View(person);
@@ -67,13 +67,55 @@ namespace Project.Data.Controllers
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Person person)
+        public async Task<IActionResult> Edit(Person person, int lastTeam)
         {
-            Console.WriteLine("Новый TeamId: " + person.TeamId);
-            Person testPerson = await db.Persons.FirstOrDefaultAsync(p => p.Id == person.Id);
-            Console.WriteLine("Старый TeamId: " + testPerson.TeamId);
-            Console.WriteLine("Id: " + person.Id + ", TeamId: " + person.TeamId);
+            if (lastTeam != person.TeamId)
+            {
+                Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == person.TeamId);
+                int sprints = team.Sprints;
+                Console.WriteLine("В новой команде " + sprints + " спринта");
+                int i = 1;
+                foreach (SprintHour sprinthour in db.SprintHours.Where(p => p.PersonId == person.Id))
+                {
+                    if (i <= sprints)
+                    {
+                        sprinthour.Hours = 0;
+                        sprinthour.Sprint = i;
+                        Console.WriteLine("Обнулил спринт с i = " + i);
+                        Console.WriteLine("Id: " + sprinthour.Id);
+                        Console.WriteLine("Hours: " + sprinthour.Hours);
+                        Console.WriteLine("Sprint: " + sprinthour.Sprint);
+                        Console.WriteLine("PersonId: " + sprinthour.PersonId);
+                        Console.WriteLine();
+                    }
+                    else 
+                    {
+                        Console.WriteLine("Удалил спринт с i = " + i);
+                        Console.WriteLine();
+                        db.SprintHours.Remove(sprinthour);
+                    }
+                    i++;
+                }
+                Console.WriteLine("i = " + i);
+                for (int j = i; j <= sprints; j++)
+                {
+                    SprintHour sprint = new SprintHour
+                    {
+                        Hours = 0,
+                        Sprint = j,
+                        PersonId = person.Id,
+                    };
+                    db.SprintHours.Add(sprint);
+                    Console.WriteLine("Создал спринт с i = " + j);
+                    Console.WriteLine("Id: " + sprint.Id);
+                    Console.WriteLine("Hours: " + sprint.Hours);
+                    Console.WriteLine("Sprint: " + sprint.Sprint);
+                    Console.WriteLine("PersonId: " + sprint.PersonId);
+                    Console.WriteLine();
+                }
+            }
             db.Persons.Update(person);
+            Console.WriteLine("Сохранение..");
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

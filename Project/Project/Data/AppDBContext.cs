@@ -37,7 +37,7 @@ namespace Project.Data
             new Team[]
             {
                 new Team { Id=1, Title="Google", DutyDuration=1, FirstPersonInDutyId=1, DutyStartDate=new DateTime(2020, 05, 04), Sprints=3},
-                new Team { Id=2, Title="Microsoft", DutyDuration=2, FirstPersonInDutyId=1, DutyStartDate=new DateTime(2020, 05, 04), Sprints=1},
+                new Team { Id=2, Title="Microsoft", DutyDuration=2, FirstPersonInDutyId=1, DutyStartDate=new DateTime(2020, 05, 04), Sprints=3},
                 new Team { Id=3, Title="CD Project RED", DutyDuration=5, FirstPersonInDutyId=1, DutyStartDate=new DateTime(2020, 05, 04), Sprints=1}
             });
 
@@ -73,7 +73,16 @@ namespace Project.Data
                 new SprintHour { Id=12, Hours=2, Sprint=3, PersonId=2},
                 new SprintHour { Id=13, Hours=3, Sprint=3, PersonId=3},
                 new SprintHour { Id=14, Hours=4, Sprint=3, PersonId=4},
-                new SprintHour { Id=15, Hours=5, Sprint=3, PersonId=5}
+                new SprintHour { Id=15, Hours=5, Sprint=3, PersonId=5},
+
+                new SprintHour { Id=16, Hours=1, Sprint=1, PersonId=6},
+                new SprintHour { Id=17, Hours=1, Sprint=1, PersonId=7},
+
+                new SprintHour { Id=18, Hours=2, Sprint=2, PersonId=6},
+                new SprintHour { Id=19, Hours=2, Sprint=2, PersonId=7},
+
+                new SprintHour { Id=20, Hours=3, Sprint=3, PersonId=6},
+                new SprintHour { Id=21, Hours=3, Sprint=3, PersonId=7}
             });
         }
     }

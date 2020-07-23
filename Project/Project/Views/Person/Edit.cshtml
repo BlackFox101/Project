@@ -16,6 +16,7 @@
         <label asp-for="TeamId" class="control-label">Команда</label>
         @Html.DropDownListFor(model => model.TeamId, ViewBag.Teams as SelectList, "Выбрать", new {@class= "select-control"})
     </div>
+    <input type="hidden" name="lastTeam" value="@Model.TeamId" readonly />
     <div class="form-group">
         <input type="submit" value="Сохранить" class="btn btn-light" />
     </div>

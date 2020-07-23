@@ -34,7 +34,7 @@ function initDate(month, year) {
   } else {
     currentMonth = date.getMonth();
     document.getElementById('monthSel').value = currentMonth;
-  }
+  }88
   if (year) {
     currentYear = Number(year);
   } else {
