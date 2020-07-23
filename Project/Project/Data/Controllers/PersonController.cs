@@ -44,12 +44,6 @@ namespace Project.Data.Controllers
                     PersonId = person.Id,
                 };
                 db.SprintHours.Add(sprint);
-                Console.WriteLine("Создал спринт с i = " + i);
-                Console.WriteLine("Id: " + sprint.Id);
-                Console.WriteLine("Hours: " + sprint.Hours);
-                Console.WriteLine("Sprint: " + sprint.Sprint);
-                Console.WriteLine("PersonId: " + sprint.PersonId);
-                Console.WriteLine();
             }
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -130,6 +124,11 @@ namespace Project.Data.Controllers
                 Person person = await db.Persons.FirstOrDefaultAsync(p => p.Id == id);
                 if (person != null)
                 {
+                    foreach (SprintHour sprinthour in db.SprintHours.Where(p => p.PersonId == person.Id))
+                    {
+                        db.SprintHours.Remove(sprinthour);
+                        Console.WriteLine("Удалил спринт!");
+                    }
                     db.Persons.Remove(person);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
