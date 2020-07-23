@@ -82,7 +82,8 @@ namespace Project.Data
                 new SprintHour { Id=19, Hours=2, Sprint=2, PersonId=7},
 
                 new SprintHour { Id=20, Hours=3, Sprint=3, PersonId=6},
-                new SprintHour { Id=21, Hours=3, Sprint=3, PersonId=7}
+                new SprintHour { Id=21, Hours=3, Sprint=3, PersonId=7},
+                new SprintHour { Id=22, Hours=1, Sprint=1, PersonId=8}
             });
         }
     }

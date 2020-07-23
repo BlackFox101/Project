@@ -127,7 +127,6 @@ namespace Project.Data.Controllers
                     foreach (SprintHour sprinthour in db.SprintHours.Where(p => p.PersonId == person.Id))
                     {
                         db.SprintHours.Remove(sprinthour);
-                        Console.WriteLine("Удалил спринт!");
                     }
                     db.Persons.Remove(person);
                     await db.SaveChangesAsync();
