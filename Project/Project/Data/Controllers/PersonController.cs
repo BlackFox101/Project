@@ -248,15 +248,20 @@ namespace Project.Data.Controllers
         {
             if (id != null)
             {
-                SprintHour sprinthHour = new SprintHour
+                SprintHour sprintHour = new SprintHour
                 {
                     Hours = 0,
                     Sprint = sprint,
                     PersonId = id,
                 };
-                db.SprintHours.Add(sprinthHour);
+                Console.WriteLine("Создаем спринт");
+                Console.WriteLine("PersonId:" + sprintHour.PersonId);
+                Console.WriteLine("Hours:" + sprintHour.Hours);
+                Console.WriteLine("Sprint:" + sprintHour.Sprint);
+                Console.WriteLine("");
+                db.SprintHours.Add(sprintHour);
                 await db.SaveChangesAsync();
-                if (sprinthHour != null)
+                if (sprintHour != null)
                 {
                     return Ok();
                 }
@@ -271,6 +276,11 @@ namespace Project.Data.Controllers
                 SprintHour sprintHour = await db.SprintHours.FirstOrDefaultAsync(p => (p.PersonId == id && p.Sprint == sprint));
                 if (sprintHour != null)
                 {
+                    Console.WriteLine("Удаляем спринт");
+                    Console.WriteLine("PersonId:" + sprintHour.PersonId);
+                    Console.WriteLine("Hours:" + sprintHour.Hours);
+                    Console.WriteLine("Sprint:" + sprintHour.Sprint);
+                    Console.WriteLine("");
                     db.SprintHours.Remove(sprintHour);
                     await db.SaveChangesAsync();
                     return Ok();
@@ -284,10 +294,13 @@ namespace Project.Data.Controllers
             if (id != null)
             {
                 SprintHour dataJson = JsonSerializer.Deserialize<SprintHour>(data);
-                Console.WriteLine("Hours:" + dataJson.Hours);
-                Console.WriteLine("Sprint:" + dataJson.Sprint);
                 SprintHour SprintHour = await db.SprintHours.FirstOrDefaultAsync(p => (p.PersonId == id && p.Sprint == dataJson.Sprint));
                 SprintHour.Hours = dataJson.Hours;
+                Console.WriteLine("Изменяем часы у спринта");
+                Console.WriteLine("PersonId:" + SprintHour.PersonId);
+                Console.WriteLine("Hours:" + SprintHour.Hours);
+                Console.WriteLine("Sprint:" + SprintHour.Sprint);
+                Console.WriteLine("");
                 await db.SaveChangesAsync();
                 if (data != null)
                 {

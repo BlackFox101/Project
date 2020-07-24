@@ -5,7 +5,6 @@
     ViewBag.Title = "Команда " + @Model.Title;
     int i = 0; //Номер сотрудника
     int k = 0; //Порядковый номер в списке
-    int s = 0; //Спринты
 }
 <div>
     <h1>Корректирующие коэффициенты</h1>
@@ -26,7 +25,7 @@
         <thead>
             <tr class="title_tr">
                 <th class="th_item" colspan="3"></th>
-                @for (int j = 1; j < @Model.Sprints + 1; j++)
+                @for (int j = 1; j <= @Model.Sprints; j++)
                 {
                     <th id="sprints-@j" class="th_item center column-@j" colspan="2">Спринт @j</th>
                 }
@@ -36,7 +35,7 @@
                 <th class="th_item center">№</th>
                 <th class="th_item center">Имя</th>
                 <th class="th_item center cell_factor">Коэффициент</th>
-                @for (int j = 1; j < @Model.Sprints + 1; j++)
+                @for (int j = 1; j <= @Model.Sprints; j++)
                 {
                     <th class="th_item center cell_hour column-@j">Часы</th>
                     <th class="th_item center cell_work_hour column-@j">Рабочие часы</th>
@@ -49,16 +48,18 @@
             @foreach (Person person in Model.Persons)
             {
                 i++;
-                s = 0;
                 <tr>
                     <td class="center td_index">@i.</td>
                     <td class="pad_td name"><a class="name" asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
                     <td id="factor-@k" class="cell_factor center"><input  class="edit factor center" asp-route-id="@person.Id" pattern="\d+(.\d{0,})?" placeholder="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" value="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" /></td>
-                    @foreach (SprintHour SprintHour in person.SprintHours)
+                    @for(int sprint = 1; sprint <= @Model.Sprints; sprint++)
                     {
-                        s++;
-                        <td id="Hours_td-@s-@k" class="center cell_hour column-@s"><input id="Hours-@s-@k" class="edit center hour_input-@s" asp-route-id="@person.Id" placeholder="@SprintHour.Hours" value="@SprintHour.Hours"/></td>
-                        <td id="WorkHours-@s-@k" class="center cell_work_hour column-@s"></td>
+                        @foreach (SprintHour SprintHour in person.SprintHours.Where(p => (p.PersonId == person.Id && p.Sprint == sprint)))
+                        {
+                            <td id="Hours_td-@sprint-@k" class="center cell_hour column-@sprint"><input id="Hours-@sprint-@k" class="edit center hour_input-@sprint" asp-route-id="@person.Id" placeholder="@SprintHour.Hours" value="@SprintHour.Hours"/></td>
+                            <td id="WorkHours-@sprint-@k" class="center cell_work_hour column-@sprint"></td>
+                        }
+
                     }
                     <td id="sumHours-@k" class="cell_sum center"></td>
                     <td id="sumWorkHours-@k" class="cell_sum center"></td>

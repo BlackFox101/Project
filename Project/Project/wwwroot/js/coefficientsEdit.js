@@ -24,7 +24,7 @@ const patternHour = /^\d+$/;
 let lastSprint = Number(sprintSel.getAttribute('currentSprints'));
 
 editFactor();
-editHours(lastSprint);
+editHours(lastSprint, 1);
 initSprints();
 
 
@@ -53,16 +53,15 @@ function changeSprints(currentSprints, id, last) {
       if (last < currentSprints) {
         for(let i = last + 1 ; i < currentSprints + 1; i++) {
           addSprint(i);
-          editHours(lastSprint);
           console.log('Добавлен ' + i + ' спринт!');
         }
       } else {
         for(let i = last; i > currentSprints ;i--) {
           delSprint(i);
-          editHours(lastSprint);
           console.log('Удален ' + i + ' спринт!')
         }
       }
+      editHours(currentSprints, last + 1);
       load.remove();
       selTd.appendChild(loadFinish);
       setTimeout(() => {
@@ -107,7 +106,7 @@ function addNewSprintHoursInDB(sprintNumber) {
   /*Создать спринты часов для сотрудников*/
   for(let i = 0; i < coefficients.length; i++) {
     let person = coefficients[i];
-    let id = person.getAttribute('asp-route-id')
+    let id = person.getAttribute('asp-route-id');
     fetch('/Person/AddSprintHours/' + id, {
       method: 'POST',
       headers: {
@@ -123,9 +122,12 @@ function addNewHoursInTable(sprintNumber) {
     let temp = hoursCell.cloneNode(true);
     let tempInput = temp.firstChild;
     changeClassColumn(temp, sprintNumber);
+
     temp.setAttribute('id', 'Hours_td-' + sprintNumber + '-' + i);
     tempInput.setAttribute('id', 'Hours-' + sprintNumber + '-' + i);
-    tempInput.setAttribute('value', 0);
+    tempInput.setAttribute('asp-route-id', coefficients[i].getAttribute('asp-route-id'));
+    tempInput.setAttribute('placeholder', '0');
+    tempInput.value = 0;
     document.querySelector('#sumHours-' + i).before(temp);
   }
 }
@@ -207,8 +209,8 @@ function getDesiredFormat(data) {
   return desiredFormat;
 }
 
-function editHours(sprints) {
-  for(let sprint = 1; sprint <= sprints; sprint++) {
+function editHours(sprints, defaultSprint) {
+  for(let sprint = defaultSprint; sprint <= sprints; sprint++) {
     console.log('Спринт = ' + sprint);
     for(let person = 0; person < coefficients.length; person++) {
       console.log('Человек: ' + person);
@@ -221,8 +223,6 @@ function editHours(sprints) {
       let id = hourInput.getAttribute('asp-route-id');
       console.log('id = ' + id);
       hourInput.addEventListener('change', () => {
-        hourInput.remove();
-        document.querySelector('#Hours_td-' + sprint + '-' + person).appendChild(load);
         console.log(hourInput.value);
         let data  = {
           Hours: Number(hourInput.value),
@@ -230,19 +230,25 @@ function editHours(sprints) {
         }
         console.log(data);
         data = JSON.stringify(data);
-        fetch('/Person/EditHour/' + id, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-          },
-          body: JSON.stringify(data)
-        }).then(response => response.text())
-          .then(answer => {
-            loading(person, hourInput, answer, '#Hours_td-' + sprint);
-            hourInput.classList.remove('unvalid');
-            //Расчитать рабочие часы/
-            //Расчитать сумму рабочих часов*/
-          }).catch(() => console.log('Ошибка!'));
+        if (patternHour.test(hourInput.value)) {
+          hourInput.remove();
+          document.querySelector('#Hours_td-' + sprint + '-' + person).appendChild(load);
+          fetch('/Person/EditHour/' + id, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(data)
+          }).then(response => response.text())
+            .then(answer => {
+              loading(person, hourInput, answer, '#Hours_td-' + sprint);
+              hourInput.classList.remove('unvalid');
+              //Расчитать рабочие часы
+              //Расчитать сумму рабочих часов
+            }).catch(() => console.log('Ошибка!'));
+        } else {
+          hourInput.classList.add('unvalid');
+        }
       })
     }
   }
