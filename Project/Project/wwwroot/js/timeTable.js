@@ -176,7 +176,7 @@ function puttingDuties() {
     let tempIndex = getFormatDate(i);
     let tempDate = getFormatDate(new Date(date.getAttribute('date').replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1')));
     let vacations = document.querySelector('#vacations');
-    for(let j = 1; (j < persons + 1 && i < dateEnd); ) {
+    for(let j = 1; (j <= persons && i < dateEnd); ) {
       if (tempIndex == tempDate && temp) { //Если первый день дежурств то присваивам первого человека
         j = firstPersonInDuty;
         temp = false;
@@ -185,7 +185,7 @@ function puttingDuties() {
       let vac = vacPerson.querySelectorAll('.vacs-' + j);
       let str = document.querySelector('#str-'+j);
       vacation = false;
-      for (let l = 1; (l < dutyDuration + 1 && i < dateEnd);) {
+      for (let l = 1; (l <= dutyDuration && i < dateEnd);) {
         vacation = false;
         for(let k = 0; k < vac.length; k++) {
           let startDate = vac[k].getAttribute('startdate');

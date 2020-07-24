@@ -11,13 +11,15 @@
     <h1>Корректирующие коэффициенты</h1>
     <dl>
         <dt>Команда: <a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Id">@Model.Title</a></dt>
-        <dt>Спринты: <select id="sprintSel" currentSprints="@Model.Sprints" asp-route-id="@Model.Id">
-                        <option selected="selected" value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
+        <dt id="selDt">
+            Спринты: 
+            <select id="sprintSel" currentSprints="@Model.Sprints" asp-route-id="@Model.Id">
+                <option selected="selected" value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
         </dt>
     </dl>
     <table class="data_table">

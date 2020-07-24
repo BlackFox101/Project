@@ -228,7 +228,7 @@ namespace Project.Data.Controllers
             return RedirectToAction("ViewVacations", new { id = vac.PersonId });
         }
 
-        [HttpPost] 
+        [HttpPut] 
         public async Task<IActionResult> EditFactor(int? id, [FromBody] double Coefficient)
         {
             if (id != null)
@@ -244,17 +244,19 @@ namespace Project.Data.Controllers
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> AddSprintHours(int? id, [FromBody] int sprint, SprintHour hour)
+        public async Task<IActionResult> AddSprintHours(int? id, [FromBody] int sprint)
         {
             if (id != null)
             {
-                hour.Id = 0;
-                hour.Hours = 0;
-                hour.Sprint = sprint;
-                hour.PersonId = id;
-                db.SprintHours.Add(hour);
+                SprintHour sprinthHour = new SprintHour
+                {
+                    Hours = 0,
+                    Sprint = sprint,
+                    PersonId = id,
+                };
+                db.SprintHours.Add(sprinthHour);
                 await db.SaveChangesAsync();
-                if (hour != null)
+                if (sprinthHour != null)
                 {
                     return Ok();
                 }
@@ -272,6 +274,24 @@ namespace Project.Data.Controllers
                     db.SprintHours.Remove(sprintHour);
                     await db.SaveChangesAsync();
                     return Ok();
+                }
+            }
+            return NotFound();
+        }
+        [HttpPut]
+        public async Task<IActionResult> EditHour(int? id, [FromBody] string data)
+        {
+            if (id != null)
+            {
+                SprintHour dataJson = JsonSerializer.Deserialize<SprintHour>(data);
+                Console.WriteLine("Hours:" + dataJson.Hours);
+                Console.WriteLine("Sprint:" + dataJson.Sprint);
+                SprintHour SprintHour = await db.SprintHours.FirstOrDefaultAsync(p => (p.PersonId == id && p.Sprint == dataJson.Sprint));
+                SprintHour.Hours = dataJson.Hours;
+                await db.SaveChangesAsync();
+                if (data != null)
+                {
+                    return Ok(SprintHour.Hours);
                 }
             }
             return NotFound();

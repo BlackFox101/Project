@@ -9,6 +9,8 @@ let workHoursCell = document.querySelector('#WorkHours-1-0'); //Ячейка р�
 
 let load = document.querySelector('#load');
 let loadFinish = document.querySelector('#loadFinish');
+
+let selTd = document.querySelector('#selDt');
 {
   load.classList.remove('hidden');
   loadFinish.classList.remove('hidden');
@@ -17,16 +19,21 @@ let loadFinish = document.querySelector('#loadFinish');
 }
 
 const patternFactor = /^[0-9]*[.,]?[0-9]+$/;
-editFactor();
-initSprints();
+const patternHour = /^\d+$/;
 
 let lastSprint = Number(sprintSel.getAttribute('currentSprints'));
+
+editFactor();
+editHours(lastSprint);
+initSprints();
+
 
 function initSprints() {
   let currentSprints = sprintSel.getAttribute('currentSprints');
   sprintSel.value = currentSprints;
 }
 sprintSel.addEventListener('change', () => {
+  selTd.appendChild(load);
   let sprints = sprintSel.value;
   let id = sprintSel.getAttribute('asp-route-id');
   changeSprints(sprints, id, lastSprint);
@@ -46,14 +53,21 @@ function changeSprints(currentSprints, id, last) {
       if (last < currentSprints) {
         for(let i = last + 1 ; i < currentSprints + 1; i++) {
           addSprint(i);
+          editHours(lastSprint);
           console.log('Добавлен ' + i + ' спринт!');
         }
       } else {
         for(let i = last; i > currentSprints ;i--) {
           delSprint(i);
+          editHours(lastSprint);
           console.log('Удален ' + i + ' спринт!')
         }
       }
+      load.remove();
+      selTd.appendChild(loadFinish);
+      setTimeout(() => {
+        loadFinish.remove();
+      }, 200);
     }).catch(() => console.log('Ошибка!'));
 }
 
@@ -66,7 +80,7 @@ function addSprint(sprintNumber) {
 }
 function delSprint(sprintNumber) {
   delSprintFromTable(sprintNumber); //Удалить колоки спринта
-  delSprintFromDB(sprintNumber);//Удалить спринт из бд
+  delSprintFromDB(sprintNumber); //Удалить спринт из бд
 }
 
 function addNewHeaders(sprintNumber) {
@@ -121,7 +135,7 @@ function addNewWorkHoursInTable(sprintNumber) {
     changeClassColumn(temp, sprintNumber);
     temp.setAttribute('id', 'WorkHours-' + sprintNumber + '-' + i);
     document.querySelector('#sumHours-' + i).before(temp);
-    //console.log(temp);
+    console.log(temp);
   }
 }
 function delSprintFromTable(sprintNumber) {
@@ -165,9 +179,9 @@ function editFactor() {
       if (patternFactor.test(factor)) { //Если валидно то отправить
         person.remove();
         document.querySelector('#factor-' + i).appendChild(load);
-        let id = person.getAttribute('asp-route-id')
+        let id = person.getAttribute('asp-route-id');
         fetch('/Person/EditFactor/' + id, {
-          method: 'POST',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json;charset=utf-8'
           },
@@ -185,13 +199,6 @@ function editFactor() {
     })
   }
 }
-function loading(i, person, data, id) {
-  load.remove();
-  document.querySelector(id + '-' + i).appendChild(loadFinish);
-  loadFinish.remove();
-  document.querySelector(id + '-' + i).appendChild(person);
-  person.value = data;
-}
 function getDesiredFormat(data) {
   let desiredFormat = data.replace(',', '.');
   if (/^\d+\.$/.test(desiredFormat)) {
@@ -200,7 +207,51 @@ function getDesiredFormat(data) {
   return desiredFormat;
 }
 
-test()
-function test() {
-  
+function editHours(sprints) {
+  for(let sprint = 1; sprint <= sprints; sprint++) {
+    console.log('Спринт = ' + sprint);
+    for(let person = 0; person < coefficients.length; person++) {
+      console.log('Человек: ' + person);
+      let hourInput = document.querySelector('#Hours-' + sprint + '-' + person)
+      hourInput.addEventListener('click', () => {
+        hourInput.classList.remove('unvalid');
+      })
+      console.log(hourInput);
+      console.log('');
+      let id = hourInput.getAttribute('asp-route-id');
+      console.log('id = ' + id);
+      hourInput.addEventListener('change', () => {
+        hourInput.remove();
+        document.querySelector('#Hours_td-' + sprint + '-' + person).appendChild(load);
+        console.log(hourInput.value);
+        let data  = {
+          Hours: Number(hourInput.value),
+          Sprint: sprint
+        }
+        console.log(data);
+        data = JSON.stringify(data);
+        fetch('/Person/EditHour/' + id, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify(data)
+        }).then(response => response.text())
+          .then(answer => {
+            loading(person, hourInput, answer, '#Hours_td-' + sprint);
+            hourInput.classList.remove('unvalid');
+            //Расчитать рабочие часы/
+            //Расчитать сумму рабочих часов*/
+          }).catch(() => console.log('Ошибка!'));
+      })
+    }
+  }
+}
+
+function loading(i, input, data, id) {
+  load.remove();
+  document.querySelector(id + '-' + i).appendChild(loadFinish);
+  loadFinish.remove();
+  document.querySelector(id + '-' + i).appendChild(input);
+  input.value = data;
 }

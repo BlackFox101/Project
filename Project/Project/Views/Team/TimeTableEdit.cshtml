@@ -19,6 +19,7 @@
         <label asp-for="DutyDuration" class="control-label">Длительность дежурства(в днях):</label>
         @Html.DropDownList("DutyDuration", new SelectList(new int[] { 1, 2, 3, 4, 5 }, @Model.DutyDuration), new { @class = "select-control" })
     </div>
+    <input type="hidden" asp-for="Sprints" readonly />
     <div class="form-group">
         <input type="submit" value="Сохранить" class="btn btn-light" />
     </div>
