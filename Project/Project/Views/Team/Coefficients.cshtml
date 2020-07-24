@@ -56,7 +56,7 @@
                     {
                         @foreach (SprintHour SprintHour in person.SprintHours.Where(p => (p.PersonId == person.Id && p.Sprint == sprint)))
                         {
-                            <td id="Hours_td-@sprint-@k" class="center cell_hour column-@sprint"><input id="Hours-@sprint-@k" class="edit center hour_input-@sprint" asp-route-id="@person.Id" placeholder="@SprintHour.Hours" value="@SprintHour.Hours"/></td>
+                            <td id="Hours_td-@sprint-@k" class="center cell_hour column-@sprint"><input id="Hours-@sprint-@k" class="edit center hour_input-@sprint" asp-route-id="@person.Id" placeholder="@SprintHour.Hours" value="@SprintHour.Hours" autocomplete="off"/></td>
                             <td id="WorkHours-@sprint-@k" class="center cell_work_hour column-@sprint"></td>
                         }
 

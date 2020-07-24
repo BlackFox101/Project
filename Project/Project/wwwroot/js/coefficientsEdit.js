@@ -7,16 +7,14 @@ let workHoursHeader = document.querySelector('.cell_work_hour'); //Заголо�
 let hoursCell = document.querySelector('#Hours_td-1-0'); //Ячейка часов
 let workHoursCell = document.querySelector('#WorkHours-1-0'); //Ячейка рабочих часов
 
+let selTd = document.querySelector('#selDt'); // Ячейка селектора
+
 let load = document.querySelector('#load');
 let loadFinish = document.querySelector('#loadFinish');
-
-let selTd = document.querySelector('#selDt');
-{
-  load.classList.remove('hidden');
-  loadFinish.classList.remove('hidden');
-  load.remove();
-  loadFinish.remove();
-}
+load.classList.remove('hidden');
+loadFinish.classList.remove('hidden');
+load.remove();
+loadFinish.remove();
 
 const patternFactor = /^[0-9]*[.,]?[0-9]+$/;
 const patternHour = /^\d+$/;
@@ -25,6 +23,7 @@ let lastSprint = Number(sprintSel.getAttribute('currentSprints'));
 
 editFactor();
 editHours(lastSprint, 1);
+printWorkHours(1,1);
 initSprints();
 
 
@@ -32,6 +31,7 @@ function initSprints() {
   let currentSprints = sprintSel.getAttribute('currentSprints');
   sprintSel.value = currentSprints;
 }
+
 sprintSel.addEventListener('change', () => {
   selTd.appendChild(load);
   let sprints = sprintSel.value;
@@ -62,6 +62,7 @@ function changeSprints(currentSprints, id, last) {
         }
       }
       editHours(currentSprints, last + 1);
+      //getWorkHours();
       load.remove();
       selTd.appendChild(loadFinish);
       setTimeout(() => {
@@ -162,11 +163,6 @@ function delSprintFromDB(sprintNumber) {
   }
 }
 
-function changeClassColumn(node, id) {
-  node.classList.remove('column-1');
-  node.classList.add('column-' + id);
-}
-
 function editFactor() {
   for(let i = 0; i < coefficients.length; i++) {
     /*Расчитать рабочие часы*/
@@ -201,14 +197,6 @@ function editFactor() {
     })
   }
 }
-function getDesiredFormat(data) {
-  let desiredFormat = data.replace(',', '.');
-  if (/^\d+\.$/.test(desiredFormat)) {
-    desiredFormat = desiredFormat.replace('.', '');
-  }
-  return desiredFormat;
-}
-
 function editHours(sprints, defaultSprint) {
   for(let sprint = defaultSprint; sprint <= sprints; sprint++) {
     console.log('Спринт = ' + sprint);
@@ -260,4 +248,29 @@ function loading(i, input, data, id) {
   loadFinish.remove();
   document.querySelector(id + '-' + i).appendChild(input);
   input.value = data;
+}
+function getDesiredFormat(data) {
+  let desiredFormat = data.replace(',', '.');
+  if (/^\d+\.$/.test(desiredFormat)) {
+    desiredFormat = desiredFormat.replace('.', '');
+  }
+  return desiredFormat;
+}
+function changeClassColumn(node, id) {
+  node.classList.remove('column-1');
+  node.classList.add('column-' + id);
+}
+
+function printWorkHours(sprint, person) {
+  let factorTd = document.querySelector('#factor-' + person);
+  let factor = factorTd.firstChild.value;
+  let hours = document.querySelector('#Hours-' + sprint + '-' + person).value;
+  console.log('factor: ' + factor);
+  console.log('hours: ' + hours);
+}
+
+function getWorkHours(factor, hours, id) {
+  const correctionFactor = 10;
+  let workHours = (factor * correctionFactor) * (hours * correctionFactor) / (correctionFactor * correctionFactor);
+  document.querySelector(id).innerHTML = workHours;
 }
