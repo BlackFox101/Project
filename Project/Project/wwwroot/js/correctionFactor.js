@@ -263,7 +263,6 @@ function getWorkHours(sprints, defaultSprint, defaultPerson) {
     }
   }
 }
-
 function printWorkHours(sprint, person) {
   let factorTd = document.querySelector('#factor-' + person);
   let factor = factorTd.firstChild;
@@ -272,7 +271,6 @@ function printWorkHours(sprint, person) {
   let id = '#WorkHours-' + sprint + '-' + person;
   workHours(factor, hours, id);
 }
-
 function workHours(factor, hours, id) {
   const correctionFactor = 10;
   let workHours = (factor * correctionFactor) * (hours * correctionFactor) / (correctionFactor * correctionFactor);
@@ -284,19 +282,16 @@ function getSum() {
     getSumFromPerson(person);
   }
 }
-
 function getSumFromPerson(person) {
   let sumHours = sum(person, '#Hours-');
   let sumWorkHours = sum(person, '#WorkHours-');
   document.querySelector('#sumHours-' + person).innerHTML = sumHours.toString();
   document.querySelector('#sumWorkHours-' + person).innerHTML = sumWorkHours.toString();
 }
-
 function getSumWorkHours(person) {
   let sumWorkHours = sum(person, '#WorkHours-');
   document.querySelector('#sumWorkHours-' + person).innerHTML = sumWorkHours.toString();
 }
-
 function sum(person, id) {
   const correctionFactor = 10;
   let sum = 0;
