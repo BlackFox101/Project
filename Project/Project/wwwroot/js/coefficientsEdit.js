@@ -23,13 +23,14 @@ let lastSprint = Number(sprintSel.getAttribute('currentSprints'));
 
 editFactor();
 editHours(lastSprint, 1);
-printWorkHours(1,1);
 initSprints();
 
 
 function initSprints() {
   let currentSprints = sprintSel.getAttribute('currentSprints');
   sprintSel.value = currentSprints;
+  getWorkHours(sprintSel.value, 1, 0);
+  getSum();
 }
 
 sprintSel.addEventListener('change', () => {
@@ -62,7 +63,7 @@ function changeSprints(currentSprints, id, last) {
         }
       }
       editHours(currentSprints, last + 1);
-      //getWorkHours();
+      getSum();
       load.remove();
       selTd.appendChild(loadFinish);
       setTimeout(() => {
@@ -138,6 +139,7 @@ function addNewWorkHoursInTable(sprintNumber) {
     changeClassColumn(temp, sprintNumber);
     temp.setAttribute('id', 'WorkHours-' + sprintNumber + '-' + i);
     document.querySelector('#sumHours-' + i).before(temp);
+    temp.innerHTML = 0;
     console.log(temp);
   }
 }
@@ -164,20 +166,19 @@ function delSprintFromDB(sprintNumber) {
 }
 
 function editFactor() {
-  for(let i = 0; i < coefficients.length; i++) {
+  for(let person = 0; person < coefficients.length; person++) {
     /*Расчитать рабочие часы*/
-    coefficients[i].addEventListener('change', () => {
-      let person = coefficients[i];
-      person.addEventListener('click', () => {
-        person.classList.remove('unvalid');
+    coefficients[person].addEventListener('change', () => {
+      let inputFactor = coefficients[person];
+      inputFactor.addEventListener('click', () => {
+        inputFactor.classList.remove('unvalid');
       })
-      let factor = person.value;
-      console.log(factor);
+      let factor = inputFactor.value;
       factor = getDesiredFormat(factor);
       if (patternFactor.test(factor)) { //Если валидно то отправить
-        person.remove();
-        document.querySelector('#factor-' + i).appendChild(load);
-        let id = person.getAttribute('asp-route-id');
+        inputFactor.remove();
+        document.querySelector('#factor-' + person).appendChild(load);
+        let id = inputFactor.getAttribute('asp-route-id');
         fetch('/Person/EditFactor/' + id, {
           method: 'PUT',
           headers: {
@@ -186,37 +187,31 @@ function editFactor() {
           body: factor
         }).then(response => response.text())
           .then(answer => {
-            loading(i, person, answer, '#factor');
-            person.classList.remove('unvalid');
-            /*Расчитать рабочие часы*/
+            loading(person, inputFactor, answer, '#factor');
+            inputFactor.classList.remove('unvalid');
+            getWorkHours(sprintSel.value, 1, person);
+            getSumWorkHours(person);
             /*Расчитать сумму рабочих часов*/
           }).catch(() => console.log('Ошибка!'));
       } else {
-        person.classList.add('unvalid');
+        inputFactor.classList.add('unvalid');
       }
     })
   }
 }
 function editHours(sprints, defaultSprint) {
   for(let sprint = defaultSprint; sprint <= sprints; sprint++) {
-    console.log('Спринт = ' + sprint);
     for(let person = 0; person < coefficients.length; person++) {
-      console.log('Человек: ' + person);
       let hourInput = document.querySelector('#Hours-' + sprint + '-' + person)
       hourInput.addEventListener('click', () => {
         hourInput.classList.remove('unvalid');
       })
-      console.log(hourInput);
-      console.log('');
       let id = hourInput.getAttribute('asp-route-id');
-      console.log('id = ' + id);
       hourInput.addEventListener('change', () => {
-        console.log(hourInput.value);
         let data  = {
           Hours: Number(hourInput.value),
           Sprint: sprint
         }
-        console.log(data);
         data = JSON.stringify(data);
         if (patternHour.test(hourInput.value)) {
           hourInput.remove();
@@ -231,8 +226,8 @@ function editHours(sprints, defaultSprint) {
             .then(answer => {
               loading(person, hourInput, answer, '#Hours_td-' + sprint);
               hourInput.classList.remove('unvalid');
-              //Расчитать рабочие часы
-              //Расчитать сумму рабочих часов
+              getWorkHours(sprint, sprint, person);
+              getSumFromPerson(person);
             }).catch(() => console.log('Ошибка!'));
         } else {
           hourInput.classList.add('unvalid');
@@ -261,16 +256,56 @@ function changeClassColumn(node, id) {
   node.classList.add('column-' + id);
 }
 
-function printWorkHours(sprint, person) {
-  let factorTd = document.querySelector('#factor-' + person);
-  let factor = factorTd.firstChild.value;
-  let hours = document.querySelector('#Hours-' + sprint + '-' + person).value;
-  console.log('factor: ' + factor);
-  console.log('hours: ' + hours);
+function getWorkHours(sprints, defaultSprint, defaultPerson) {
+  for(let sprint = defaultSprint; sprint <= sprints; sprint++) {
+    for(let person = defaultPerson; person < coefficients.length; person++) {
+      printWorkHours(sprint, person);
+    }
+  }
 }
 
-function getWorkHours(factor, hours, id) {
+function printWorkHours(sprint, person) {
+  let factorTd = document.querySelector('#factor-' + person);
+  let factor = factorTd.firstChild;
+  factor = factor.value;
+  let hours = document.querySelector('#Hours-' + sprint + '-' + person).value;
+  let id = '#WorkHours-' + sprint + '-' + person;
+  workHours(factor, hours, id);
+}
+
+function workHours(factor, hours, id) {
   const correctionFactor = 10;
   let workHours = (factor * correctionFactor) * (hours * correctionFactor) / (correctionFactor * correctionFactor);
   document.querySelector(id).innerHTML = workHours;
+}
+
+function getSum() {
+  for(let person = 0; person < coefficients.length; person++) {
+    getSumFromPerson(person);
+  }
+}
+
+function getSumFromPerson(person) {
+  let sumHours = sum(person, '#Hours-');
+  let sumWorkHours = sum(person, '#WorkHours-');
+  document.querySelector('#sumHours-' + person).innerHTML = sumHours.toString();
+  document.querySelector('#sumWorkHours-' + person).innerHTML = sumWorkHours.toString();
+}
+
+function getSumWorkHours(person) {
+  let sumWorkHours = sum(person, '#WorkHours-');
+  document.querySelector('#sumWorkHours-' + person).innerHTML = sumWorkHours.toString();
+}
+
+function sum(person, id) {
+  const correctionFactor = 10;
+  let sum = 0;
+  for(let sprint = 1; sprint <= sprintSel.value; sprint++) {
+    if (id === '#Hours-') {
+      sum = (sum * correctionFactor + Number(document.querySelector(id + sprint + '-' + person).value) * correctionFactor) / correctionFactor;
+    } else {
+      sum = (sum * correctionFactor + Number(document.querySelector(id + sprint + '-' + person).innerHTML) * correctionFactor) / correctionFactor;
+    }
+  }
+  return sum;
 }

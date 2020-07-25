@@ -129,11 +129,11 @@ function editHours(hours, number) {
   return desiredFormat;
 }*/
 
-function printWorkHours(factor, hours, id) {
+/*function printWorkHours(factor, hours, id) {
   const correctionFactor = 10;
   let workHours = (factor * correctionFactor) * (hours * correctionFactor) / (correctionFactor * correctionFactor);
   document.querySelector(id).innerHTML = workHours;
-}
+}*/
 
 function printSumHours(colHour, str) {
   const correctionFactor = 10;

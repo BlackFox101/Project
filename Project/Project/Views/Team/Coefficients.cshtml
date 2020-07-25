@@ -51,7 +51,7 @@
                 <tr>
                     <td class="center td_index">@i.</td>
                     <td class="pad_td name"><a class="name" asp-action="Details" asp-controller="Person" asp-route-id="@person.Id">@person.Name</a></td>
-                    <td id="factor-@k" class="cell_factor center"><input  class="edit factor center" asp-route-id="@person.Id" pattern="\d+(.\d{0,})?" placeholder="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" value="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" /></td>
+                    <td id="factor-@k" class="cell_factor center"><input id="factor_input-@k" class="edit factor center" asp-route-id="@person.Id" pattern="\d+(.\d{0,})?" placeholder="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" value="@person.Coefficient.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"))" /></td>
                     @for(int sprint = 1; sprint <= @Model.Sprints; sprint++)
                     {
                         @foreach (SprintHour SprintHour in person.SprintHours.Where(p => (p.PersonId == person.Id && p.Sprint == sprint)))
