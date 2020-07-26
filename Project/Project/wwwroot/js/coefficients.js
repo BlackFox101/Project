@@ -174,7 +174,8 @@ function editFactor() {
         inputFactor.classList.remove('unvalid');
       })
       let factor = inputFactor.value;
-      factor = getDesiredFormat(factor);
+      //console.log(Number(factor));
+      factor = Number(getDesiredFormat(factor));
       if (patternFactor.test(factor)) { //Если валидно то отправить
         inputFactor.remove();
         document.querySelector('#factor-' + person).appendChild(load);
