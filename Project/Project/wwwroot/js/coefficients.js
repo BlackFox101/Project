@@ -54,12 +54,10 @@ function changeSprints(currentSprints, id, last) {
       if (last < currentSprints) {
         for(let i = last + 1 ; i < currentSprints + 1; i++) {
           addSprint(i);
-          console.log('Добавлен ' + i + ' спринт!');
         }
       } else {
         for(let i = last; i > currentSprints ;i--) {
           delSprint(i);
-          console.log('Удален ' + i + ' спринт!')
         }
       }
       editHours(currentSprints, last + 1);
@@ -140,7 +138,6 @@ function addNewWorkHoursInTable(sprintNumber) {
     temp.setAttribute('id', 'WorkHours-' + sprintNumber + '-' + i);
     document.querySelector('#sumHours-' + i).before(temp);
     temp.innerHTML = 0;
-    console.log(temp);
   }
 }
 function delSprintFromTable(sprintNumber) {

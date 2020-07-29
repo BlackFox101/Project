@@ -1,5 +1,4 @@
 let vacations = document.querySelectorAll('.vacations');
-let addVacation = document.querySelector('#btn-AddVacation');
 let tbody = document.querySelector('#team_det');
 
 let vacDt = document.querySelector('#vacDt');
