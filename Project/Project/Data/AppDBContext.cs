@@ -37,8 +37,8 @@ namespace Project.Data
             new Team[]
             {
                 new Team { Id=1, Title="Google", DutyDuration=1, FirstPersonInDutyId=1, DutyStartDate=new DateTime(2020, 05, 04), Sprints=3},
-                new Team { Id=2, Title="Microsoft", DutyDuration=2, FirstPersonInDutyId=1, DutyStartDate=new DateTime(2020, 05, 04), Sprints=3},
-                new Team { Id=3, Title="CD Project RED", DutyDuration=5, FirstPersonInDutyId=1, DutyStartDate=new DateTime(2020, 05, 04), Sprints=1}
+                new Team { Id=2, Title="Microsoft", DutyDuration=2, FirstPersonInDutyId=6, DutyStartDate=new DateTime(2020, 05, 04), Sprints=3},
+                new Team { Id=3, Title="CD Project RED", DutyDuration=5, FirstPersonInDutyId=8, DutyStartDate=new DateTime(2020, 05, 04), Sprints=1}
             });
 
             modelBuilder.Entity<Person>().HasData(
@@ -49,9 +49,9 @@ namespace Project.Data
                 new Person { Id=3, Name="Иванов Иван Иванович", Position="Разработчик", Duty=true, TeamId=1, Coefficient=0.6},
                 new Person { Id=4, Name="Янович Руслан Савелиевич", Position="Тестировщик", Duty=false, TeamId=1, Coefficient=0.8},
                 new Person { Id=5, Name="Циркунов Руслан Олегович", Position="Тестировщик", Duty=true, TeamId=1, Coefficient=1},
-                new Person { Id=6, Name="Арефьев Захар Пахомович", Position="Тестировщик", Duty=false, TeamId=2, Coefficient=1},
+                new Person { Id=6, Name="Арефьев Захар Пахомович", Position="Тестировщик", Duty=true, TeamId=2, Coefficient=1},
                 new Person { Id=7, Name="Яробкин Феликс Куприянович", Position="Разработчик", Duty=false, TeamId=2, Coefficient=1},
-                new Person { Id=8, Name="Ковалев Мстислав Маркович", Position="Тестировщик", Duty=false, TeamId=3, Coefficient=1}
+                new Person { Id=8, Name="Ковалев Мстислав Маркович", Position="Тестировщик", Duty=true, TeamId=3, Coefficient=1}
             });
 
             modelBuilder.Entity<SprintHour>().HasData(

@@ -127,6 +127,10 @@ namespace Project.Data.Controllers
                     {
                         db.SprintHours.Remove(sprinthour);
                     }
+                    foreach (Vacation vacation in db.Vacations.Where(p => p.PersonId == person.Id))
+                    {
+                        db.Vacations.Remove(vacation);
+                    }
                     db.Persons.Remove(person);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
