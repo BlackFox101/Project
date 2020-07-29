@@ -11,16 +11,16 @@
     <table class="vacations_table">
         <thead>
             <tr class="title_tr">
-                <td class="pad_td"><label asp-for="Reason">Причина:</label></td>
-                <td class="pad_td"><label asp-for="StartDate">Начало:</label></td>
-                <td class="pad_td"><label asp-for="EndDate">Конец:</label></td>
+                <th class="pad_th center">Причина</th>
+                <th class="pad_th center">Начало</th>
+                <th class="pad_th center">Конец</th>
             </tr>
         </thead>
         <tbody id="team_det">
-            <tr class="title_tr">
-                <td><input type="text" asp-for="Reason" class="form-reason" required /></td>
-                <td><input type="date" asp-for="StartDate"  class="form-date" required /></td>
-                <td><input type="date" asp-for="EndDate"  class="form-date" required /></td>
+            <tr>
+                <td><input type="text" asp-for="Reason" class="edit pad_td center input_reason" placeholder="Причина" autocomplete="off" required /></td>
+                <td><input type="date" asp-for="StartDate"  class="edit pad_td" required /></td>
+                <td><input type="date" asp-for="EndDate"  class="edit pad_td" required /></td>
             </tr>
         </tbody>
     </table>

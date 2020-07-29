@@ -85,6 +85,13 @@ namespace Project.Data
                 new SprintHour { Id=21, Hours=3, Sprint=3, PersonId=7},
                 new SprintHour { Id=22, Hours=1, Sprint=1, PersonId=8}
             });
+
+            modelBuilder.Entity<Vacation>().HasData(
+            new Vacation[]
+            {
+                new Vacation { Id=1, Reason="Отпуск", StartDate=new DateTime(2020, 07, 16), EndDate=new DateTime(2020, 07, 25), PersonId=1},
+                new Vacation { Id=2, Reason="Отпуск", StartDate=new DateTime(2020, 08, 15), EndDate=new DateTime(2020, 08, 24), PersonId=1}
+            });
         }
     }
 }

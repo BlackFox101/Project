@@ -1,29 +1,45 @@
-let dels = document.querySelectorAll('.del_vacation');
-// на каждый элемент повесить обработчик
-let tbody = document.querySelector('#team_det')
-for(let i = 0; i < dels.length; i++) {
-  dels[i].addEventListener('click', () =>{
-    let person = dels[i];
-    let idStr = person.getAttribute('id');
-    let idVacation = person.getAttribute('asp-route-id')
-    fetch('/Person/DelVacation/' + idVacation, {
-      method: 'PUT'
-    }).then(response => response.text())
-      .then(data => {
-        console.log(JSON.parse(data));
-        let tr = document.querySelector('#vac-' + idStr);
-        tr.remove();
-        dels = document.querySelectorAll('.del_vacation');
-        console.log(dels);
-        if(dels.length == 0) {
-          let trEmpty = document.createElement("tr");
-          let tdEmpty = document.createElement("td");
-          tbody.appendChild(trEmpty);
-          trEmpty.appendChild(tdEmpty);
-          tdEmpty.innerHTML = 'Отсутствуют';
-          tdEmpty.classList.add('center');
-          tdEmpty.setAttribute('colspan', 6);
-        }
-      }).catch(() => console.log('ошибка'));
-  })
+let vacations = document.querySelectorAll('.vacations');
+let addVacation = document.querySelector('#btn-AddVacation');
+let tbody = document.querySelector('#team_det');
+
+let vacDt = document.querySelector('#vacDt');
+let load = document.querySelector('#load');
+let loadFinish = document.querySelector('#loadFinish');
+load.classList.remove('hidden');
+loadFinish.classList.remove('hidden');
+load.remove();
+loadFinish.remove();
+
+editVacation()
+function editVacation() {
+  for (let vacation = 0; vacation < vacations.length; vacation++) {
+    let vac = vacations[vacation];
+    vac.addEventListener('change', () => {
+      vacDt.appendChild(load);
+      let reason = document.querySelector('#reason-' + (vacation+1)).value;
+      let startDate = document.querySelector('#startDate-' + (vacation+1)).value;
+      let endDate = document.querySelector('#endDate-' + (vacation+1)).value;
+      let idVacation = vac.getAttribute('asp-route-id');
+      let data = {
+        Reason: reason,
+        StartDate: startDate,
+        EndDate: endDate
+      }
+      data = JSON.stringify(data);
+      fetch('/Person/EditVacation/' + idVacation, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(data)
+      }).then(response => response.text())
+        .then(answer => {
+          load.remove();
+          vacDt.appendChild(loadFinish);
+          setTimeout(() => {
+            loadFinish.remove();
+          }, 200);
+        }).catch(() => console.log('ошибка'));
+    })
+  }
 }

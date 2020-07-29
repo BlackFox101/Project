@@ -173,9 +173,9 @@ namespace Project.Data.Controllers
         {
             db.Vacations.Add(vac);
             await db.SaveChangesAsync();
-            return RedirectToAction("ViewVacations", new { id = vac.PersonId });
+            return RedirectToAction("Vacations", new { id = vac.PersonId });
         }
-        public async Task<IActionResult> ViewVacations(int? id)
+        public async Task<IActionResult> Vacations(int? id)
         {
             if (id != null)
             {
@@ -190,41 +190,34 @@ namespace Project.Data.Controllers
             }
             return NotFound();
         }
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> DelVacation(int? id)
         {
             if (id != null)
             {
                 Vacation vac = await db.Vacations.FirstOrDefaultAsync(p => p.Id == id);
-                int? PersonId = vac.PersonId;
                 db.Vacations.Remove(vac);
                 await db.SaveChangesAsync();
-                return Ok(PersonId);
+                return RedirectToAction("Vacations", new { id = vac.PersonId });
             }
             return NotFound();
         }
 
-        public async Task<IActionResult> EditVacation(int? id)
+        [HttpPut]
+        public async Task<IActionResult> EditVacation(int? id, [FromBody] string data)
         {
             if (id != null)
             {
-                var person = db.Vacations
-                       .Include(c => c.Person) // добавляем данные по отпускам
-                       .ToList();
-                Vacation vac = await db.Vacations.FirstOrDefaultAsync(p => p.Id == id);
-                if (vac != null)
-                {
-                    return View(vac);
-                }
+                Vacation vacJson = JsonSerializer.Deserialize<Vacation>(data);
+                Vacation vacation = await db.Vacations.FirstOrDefaultAsync(p => p.Id == id);
+                vacation.Reason = vacJson.Reason;
+                vacation.StartDate = vacJson.StartDate;
+                vacation.EndDate = vacJson.EndDate;
+                db.Vacations.Update(vacation);
+                await db.SaveChangesAsync();
+                return Ok();
             }
             return NotFound();
-        }
-        [HttpPost]
-        public async Task<IActionResult> EditVacation(Vacation vac)
-        {
-            db.Vacations.Update(vac);
-            await db.SaveChangesAsync();
-            return RedirectToAction("ViewVacations", new { id = vac.PersonId });
         }
 
         [HttpPut] 

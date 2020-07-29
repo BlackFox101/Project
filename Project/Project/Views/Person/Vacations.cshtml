@@ -1,0 +1,50 @@
+﻿@using Project.Data.Models
+@model Person
+@{
+    ViewBag.Title = Model.Name;
+    int i = 0;
+}
+<h2><a asp-action="Details" asp-controller="Person" asp-route-id="@Model.Id">@Model.Name</a></h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt id="vacDt">Отпуска:</dt>
+    </dl>
+    <table class="vacations_table">
+        <thead>
+            <tr class="title_tr">
+                <th class="th_item center">№</th>
+                <th class="pad_th center">Причина</th>
+                <th class="pad_th center">Начало</th>
+                <th class="pad_th center">Конец</th>
+                <th class="th_item">Удалить</th>
+            </tr>
+        </thead>
+        <tbody id="team_det">
+            @foreach (Vacation vacation in Model.Vacations)
+            {
+                i++;
+                <tr id="vac-@i" class="vacations" asp-route-id="@vacation.Id">
+                    <td class="center">@i.</td>
+                    <td class="pad_td"><input id="reason-@i" class="edit" value="@vacation.Reason" placeholder="Причина" required /></td>
+                    <td class="pad_td"><input id="startDate-@i" type="date" class="edit" value="@vacation.StartDate.ToString("yyyy-MM-dd")" asp-route-id="@vacation.Id" required /></td>
+                    <td class="pad_td"><input id="endDate-@i" type="date" class="edit" value="@vacation.EndDate.ToString("yyyy-MM-dd")" asp-route-id="@vacation.Id" required /></td>
+                    <td class="pad_td center">
+                        <form asp-action="DelVacation" asp-controller="Person" asp-route-id="@vacation.Id">
+                            <button class="button_del"><img src="~/images/del_check.png" class="del" alt="del_check" /></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            @if (i == 0)
+            {
+                <tr id="absent">
+                    <td class="center" colspan="6">Отсутствуют</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <img id="load" src="~/images/loading.gif" class="icon_width hidden" />
+    <img id="loadFinish" src="~/images/load_finish.png" class="icon_width hidden" />
+    <a asp-action="AddVacation" asp-controller="Person" asp-route-id="@Model.Id" class="btn btn-light">Добавить</a>
+    <script src="~/js/vacation.js"></script>
+</div>

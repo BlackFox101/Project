@@ -25,7 +25,7 @@
     box-sizing: border-box;
 }
 
-td.pad_td {
+.pad_td {
     padding: 0 10px 0 10px;
 }
 
@@ -282,7 +282,7 @@ select {
     max-width: 100px;
 }
 
-.icon_width { /*Если добавлю ожидарние ответа сервера при изменении часов и коэфов*/
+.icon_width {
     width: 13px;
     height: 13px;
 }
@@ -328,4 +328,8 @@ input.unvalid {
 
 [class*="hour_input"] {
     max-width: 70px;
+}
+
+.input_reason {
+    max-width: 150px;
 }
