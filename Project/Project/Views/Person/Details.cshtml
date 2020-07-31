@@ -23,6 +23,6 @@
         {
             <dd><a asp-action="Details" asp-controller="Team" asp-route-id="@Model.Team.Id">@Model.Team?.Title</a></dd>
         }
-        <dt><a asp-action="Vacations" asp-controller="Person" asp-route-id="@Model.Id" >Отпуска</a></dt>
+        <dt><a asp-action="List" asp-controller="Vacation" asp-route-id="@Model.Id" >Отпуска</a></dt>
     </dl>
 </div>

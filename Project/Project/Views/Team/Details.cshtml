@@ -74,11 +74,11 @@
             }
         </tbody>
     </table>
-    <a asp-action="TimeTable" asp-controller="Team" asp-route-id="@Model.Id">График</a>
-    <a asp-action="TimeTableEdit" asp-controller="Team" asp-route-id="@Model.Id">
+    <a asp-action="List" asp-controller="TimeTable" asp-route-id="@Model.Id">График</a>
+    <a asp-action="Edit" asp-controller="TimeTable" asp-route-id="@Model.Id">
         <img asp-route-id="@Model.Id" src="~/images/settings.png" class="settings" alt="settings" />
     </a>
-    <a asp-action="Coefficients" asp-controller="Team" asp-route-id="@Model.Id" class="pad_left">Коэффициенты сотрудников</a>
+    <a asp-action="List" asp-controller="Coefficients" asp-route-id="@Model.Id" class="pad_left">Коэффициенты сотрудников</a>
     <span class="hidden" id="persons">@i</span>
     <script src="~/js/dutyCheck.js"></script>
 </div>

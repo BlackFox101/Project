@@ -29,7 +29,7 @@
                     <td class="pad_td"><input id="startDate-@i" type="date" class="edit" value="@vacation.StartDate.ToString("yyyy-MM-dd")" asp-route-id="@vacation.Id" required /></td>
                     <td class="pad_td"><input id="endDate-@i" type="date" class="edit" value="@vacation.EndDate.ToString("yyyy-MM-dd")" asp-route-id="@vacation.Id" required /></td>
                     <td class="pad_td center">
-                        <form asp-action="DelVacation" asp-controller="Person" asp-route-id="@vacation.Id">
+                        <form asp-action="Delete" asp-controller="Vacation" asp-route-id="@vacation.Id">
                             <button class="button_del"><img src="~/images/del_check.png" class="del" alt="del_check" /></button>
                         </form>
                     </td>
@@ -45,6 +45,6 @@
     </table>
     <img id="load" src="~/images/loading.gif" class="icon_width hidden" />
     <img id="loadFinish" src="~/images/load_finish.png" class="icon_width hidden" />
-    <a asp-action="AddVacation" asp-controller="Person" asp-route-id="@Model.Id" class="btn btn-light">Добавить</a>
+    <a asp-action="Add" asp-controller="Vacation" asp-route-id="@Model.Id" class="btn btn-light">Добавить</a>
     <script src="~/js/vacation.js"></script>
 </div>

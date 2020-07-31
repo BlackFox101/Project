@@ -42,7 +42,7 @@ sprintSel.addEventListener('change', () => {
 })
 function changeSprints(currentSprints, id, last) {
   currentSprints = Number(currentSprints);
-  fetch('/Team/ChangeSprints/' + id, {
+  fetch('/Coefficients/ChangeSprints/' + id, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
@@ -107,7 +107,7 @@ function addNewSprintHoursInDB(sprintNumber) {
   for(let i = 0; i < coefficients.length; i++) {
     let person = coefficients[i];
     let id = person.getAttribute('asp-route-id');
-    fetch('/Person/AddSprintHours/' + id, {
+    fetch('/Coefficients/AddSprintHours/' + id, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -151,7 +151,7 @@ function delSprintFromDB(sprintNumber) {
   for(let i = 0; i < coefficients.length; i++) {
     let person = coefficients[i];
     let id = person.getAttribute('asp-route-id')
-    fetch('/Person/DelSprintHours/' + id, {
+    fetch('/Coefficients/DelSprintHours/' + id, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -177,7 +177,7 @@ function editFactor() {
         inputFactor.remove();
         document.querySelector('#factor-' + person).appendChild(load);
         let id = inputFactor.getAttribute('asp-route-id');
-        fetch('/Person/EditFactor/' + id, {
+        fetch('/Coefficients/EditFactor/' + id, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json;charset=utf-8'
@@ -214,7 +214,7 @@ function editHours(sprints, defaultSprint) {
         if (patternHour.test(hourInput.value)) {
           hourInput.remove();
           document.querySelector('#Hours_td-' + sprint + '-' + person).appendChild(load);
-          fetch('/Person/EditHour/' + id, {
+          fetch('/Coefficients/EditHour/' + id, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json;charset=utf-8'

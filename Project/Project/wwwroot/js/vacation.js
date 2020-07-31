@@ -25,7 +25,7 @@ function editVacation() {
         EndDate: endDate
       }
       data = JSON.stringify(data);
-      fetch('/Person/EditVacation/' + idVacation, {
+      fetch('/Vacation/Edit/' + idVacation, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
