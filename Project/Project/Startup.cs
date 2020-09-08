@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Project.Data;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 namespace Project
 {
@@ -24,27 +21,43 @@ namespace Project
  
         public void ConfigureServices(IServiceCollection services)
         {
-            // ïîëó÷àåì ñòğîêó ïîäêëş÷åíèÿ èç ôàéëà êîíôèãóğàöèè
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            // äîáàâëÿåì êîíòåêñò MobileContext â êà÷åñòâå ñåğâèñà â ïğèëîæåíèå
             services.AddDbContext<AppDBContext>(options =>
                 options.UseSqlServer(connection));
+
             services.AddControllersWithViews();
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
+
             services.AddMvc();
         }
  
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseRouting();
-            app.UseAuthorization();
+
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+            app.UseRouting();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Person}/{action=Index}/{id?}");
             });
-        }
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
+        }
     }
 }
