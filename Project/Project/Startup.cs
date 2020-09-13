@@ -42,12 +42,12 @@ namespace Project
             app.UseSpaStaticFiles();
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Person}/{action=Index}/{id?}");
-            });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Person}/{action=Index}/{id?}");
+            });
 
             app.UseSpa(spa =>
             {
