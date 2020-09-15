@@ -13,13 +13,13 @@ const NavMenu = () => (
       <Container>
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu">
-            <img className={s.icon} src="./favicon.png" alt={"favicon"}/>
+            <img className={s.icon} src="favicon.png" alt={"favicon"}/>
           </IconButton>
           <Typography variant="h6" className={s.title}>Agile Master</Typography>
           <Box mr={10}>
             <Link Url="/People" Title="People"/>
             <Link Url="/Team" Title="Team"/>
-
+            <Link Url="/Fetch-data" Title="FetchData"/>
           </Box>
         </Toolbar>
       </Container>

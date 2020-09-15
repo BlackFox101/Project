@@ -1,27 +1,32 @@
-import React from "react";
+import React from 'react';
 import NavMenu from "./components/Nav/NavMenu";
-import People from "./components/People/People";
+import People from "./components/People/People.jsx";
 import Team from "./components/Team/Team";
+import {Route} from "react-router";
 import {Container} from "@material-ui/core";
-import {Route} from "react-router"
-import {BrowserRouter} from "react-router-dom";
+import { FetchData } from "./components/FetchData";
+import { Counter } from "./components/Counter";
+import "./App.css"
 
 const App = () => {
-  let people = [
-    {Id: 1, Name: 'Alexei'},
-    {Id: 2, Name: 'Ivan'},
-    {Id: 3, Name: 'Andrey'},
-    {Id: 4, Name: 'Sasha'}
-  ]
+  const delPerson = (id) => {
+    console.log('По кнопке кликнули' + id);
+    fetch("api/People/" + id, {
+      method: 'DELETE'
+    }).then(response => response.text())
+      .catch(() => console.log('ошибка'));
+  }
 
   return (
-    <BrowserRouter>
+    <div>
       <NavMenu/>
       <Container>
-        <Route path='/People' render={ () => <People people={people}/>}/>
+        <Route path='/People' render={ () => <People delPerson={delPerson}/>}/>
         <Route path='/Team' render={ () => <Team />} />
+        <Route path='/Counter' render={ () => <Counter />} />
+        <Route path='/Fetch-data' render={ () => <FetchData />} />
       </Container>
-    </BrowserRouter>
+    </div>
   );
 }
 

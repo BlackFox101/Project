@@ -23,9 +23,9 @@ namespace TempWebApi.Controllers
 
         // GET: api/People
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Person>>> GetPersons()
+        public async Task<ActionResult<IEnumerable<Person>>> GetPeople()
         {
-            return await db.Persons.ToListAsync();
+            return await db.Persons.Include(person => person.Team).ToListAsync();
         }
 
         // GET: api/People/5
@@ -88,7 +88,7 @@ namespace TempWebApi.Controllers
 
         // DELETE: api/People/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Person>> DeletePerson(int id)
+        public async Task<ActionResult<IEnumerable<Person>>> DeletePerson(int id)
         {
             var person = await db.Persons.FindAsync(id);
             if (person == null)
@@ -99,7 +99,7 @@ namespace TempWebApi.Controllers
             db.Persons.Remove(person);
             await db.SaveChangesAsync();
 
-            return person;
+            return await db.Persons.Include(person => person.Team).ToListAsync();
         }
 
         private bool PersonExists(int id)

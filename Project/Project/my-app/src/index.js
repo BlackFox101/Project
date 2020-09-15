@@ -1,14 +1,17 @@
 import React from 'react';
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import ReactDOM from "react-dom";
-import App from "./App";
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+
+const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter basename={baseUrl}>
     <App />
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
-serviceWorker.unregister();
+registerServiceWorker();
+

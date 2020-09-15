@@ -1,0 +1,415 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+}
+
+select.select-control {
+    cursor: pointer;
+    display: block;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.data_table {
+    margin: 10px 0px 10px 10px;
+    padding: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.data_table td {
+    border: 1px solid #333;
+    min-width: 25px;
+    display: table-cell;
+    box-sizing: border-box;
+}
+
+.pad_td {
+    padding: 0 10px 0 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+.icon_duty {
+    width: 20px;
+    height: 20px;
+    margin: 0 0 -3px 2px;
+}
+
+.duty {
+    width: 20px;
+    height: 20px;
+    margin: 0 0 3px 2px;
+}
+
+.del {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-bottom: -4px;
+}
+
+.duty_example {
+    width: 13px;
+    height: 13px;
+    margin: 0;
+}
+
+.settings {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+}
+
+.big_setting {
+    width: 18px;
+    height: 18px;
+    margin: 0 0 -1px -5px;
+}
+
+
+.duty {
+    cursor: pointer;
+}
+
+#duties {
+    text-align: center;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.vacations_table {
+    margin: 10px 0px 10px 10px;
+    padding: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.vacations_table td {
+    border: 1px solid #333;
+    min-width: 25px;
+    display: table-cell;
+    box-sizing: border-box;
+}
+
+.list_table {
+    margin: 10px 0px 10px 10px;
+    padding: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.list_table td {
+    border: 1px solid #333;
+    min-width: 25px;
+    display: table-cell;
+    box-sizing: border-box;
+}
+
+.form-reason {
+    display: block;
+    width: 180px;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-date {
+    cursor: pointer;
+    padding: 0 5px;
+    display: block;
+    width: 140px;
+    height: 38px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+a.vac-link {
+    display: block;
+    margin-bottom: 10px;
+    color: #343a40;
+    font-size: 16px;
+    font-family: "Segoe UI";
+}
+
+a.vac-link:hover {
+    color: #212529;
+}
+
+.del_vacation {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+
+.person-link {
+    display: block;
+    color: rgba(0,0,0,.9);
+    font-size: 18px;
+    font-family: "Segoe UI";
+}
+
+a.person-link:hover {
+    color: rgba(0,0,0,.8);
+}
+
+.pad_th {
+    border: 1px solid #333;
+    padding: 0 32px 0 32px;
+}
+
+.th {
+    border: 1px solid #333;
+}
+
+.th_item {
+    border: 1px solid #333;
+    padding: 0 5px 0 5px;
+}
+
+.td_index {
+    font-weight: bold;
+}
+
+.btn-edit {
+    -webkit-appearance: none;
+    text-decoration: none;
+    display: block;
+    border: none;
+    color: #007bff;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: transparent;
+    margin-bottom: -3px;
+}
+
+.btn-edit:hover {
+    color: #0054AD;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.button_del {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+button:focus {
+    outline: none;
+}
+
+select {
+    cursor: pointer;
+}
+
+.form-start-date {
+    cursor: pointer;
+    padding: 0 5px;
+    display: block;
+    height: calc(1.5em + .75rem + 2px);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s;
+}
+
+.form-control_readonly {
+    display: block;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.vacation_settings{
+    width: 19px;
+    height: 19px;
+    margin-bottom: 3px;
+}
+
+.pad_left {
+    padding-left: 10px;
+}
+
+.edit {
+    border: none;
+    outline: none;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.edit:focus {
+    outline: none;
+    cursor: text;
+}
+
+.small_input {
+    max-width: 60px !important;
+}
+
+[id*="factor-"] {
+    max-width: 100px;
+}
+
+.icon_width {
+    width: 13px;
+    height: 13px;
+}
+
+.name {
+    display: block;
+    min-width: 228px;
+}
+
+.td_factor {
+    padding: 0;
+    margin: 0;
+}
+
+input.unvalid {
+    border: 1.5px solid red;
+}
+
+[class*="hour"], .cell_hour {
+    background-color: yellow;
+}
+
+[id*="workHours"], .cell_work_hour {
+    background-color: #465eff;
+}
+
+.cell_sum {
+    background-color: #00ff21;
+}
+
+#sprintSel {
+    margin-top: 5px;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid #495057;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 2px;
+}
+
+[class*="hour_input"] {
+    max-width: 70px;
+}
+
+.input_reason {
+    max-width: 150px;
+}
+
+.timeTable {
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 10px 0px 5px 0;
+}
+
+.hol {
+    background-color: #FFEA06;
+}
+
+.dej {
+    background-color: #DE1A1A;
+}
+
+#yearSel, #monthSel {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid #495057;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 5px;
+}
+
+#yearSel, #monthSel option{
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid #495057;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 5px;
+}
+
+#days, #wd td {
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: inherit;
+}
+
+.timeTable td {
+    border: 1px solid #333;
+    min-width: 25px;
+    display: table-cell;
+}
+
+.timeTable tr[id*="str"] {
+    height: 25px;
+    text-align: left;
+    padding: 0 5px;
+}
+
+[id*="str"] td {
+    padding: 0 5px;
+}
+
+.yearOpt {
+    margin-top: 15px;
+}
+
+#vacations {
+    display: none;
+}
+
+.vac {
+    background-color: #909090;
+}
+
