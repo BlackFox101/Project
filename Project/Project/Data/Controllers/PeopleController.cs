@@ -78,12 +78,34 @@ namespace TempWebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Person>> PostPerson(Person person)
+        public async Task<ActionResult<Person>> PostPerson([FromForm]Person per)
         {
+            Console.WriteLine(per);
+            /*Person person = new Person 
+            {
+                Name = per.Name,
+                Position = per.Position,
+                Duty = false,
+                TeamId = per.TeamId,
+                Coefficient = per.Coefficient
+            };
             db.Persons.Add(person);
             await db.SaveChangesAsync();
+            Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == person.TeamId);
+            int sprints = team.Sprints;
+            for (int i = 1; i <= sprints; i++)
+            {
+                SprintHour sprint = new SprintHour
+                {
+                    Hours = 0,
+                    Sprint = i,
+                    PersonId = person.Id,
+                };
+                db.SprintHours.Add(sprint);
+            }*/
+            await db.SaveChangesAsync();
 
-            return CreatedAtAction("GetPerson", new { id = person.Id }, person);
+            return Ok();
         }
 
         // DELETE: api/People/5

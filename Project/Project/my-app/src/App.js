@@ -1,14 +1,13 @@
 import React from 'react';
 import NavMenu from "./components/Nav/NavMenu";
-import People from "./components/People/People.jsx";
+import People from "./components/People/People";
+import CreatePerson from "./components/People/Create";
 import Team from "./components/Team/Team";
 import {Route} from "react-router";
 import {Container} from "@material-ui/core";
-import { FetchData } from "./components/FetchData";
-import { Counter } from "./components/Counter";
 import "./App.css"
 
-const App = () => {
+const App = (props) => {
   const delPerson = (id) => {
     console.log('По кнопке кликнули' + id);
     fetch("api/People/" + id, {
@@ -21,10 +20,10 @@ const App = () => {
     <div>
       <NavMenu/>
       <Container>
-        <Route path='/People' render={ () => <People delPerson={delPerson}/>}/>
-        <Route path='/Team' render={ () => <Team />} />
-        <Route path='/Counter' render={ () => <Counter />} />
-        <Route path='/Fetch-data' render={ () => <FetchData />} />
+        <Route exact path='/People' history={props.history} render={ () => <People delPerson={delPerson}/>}/>
+        <Route path='/People/Create' render={ () => <CreatePerson />} />
+
+        <Route exact path='/Team' render={ () => <Team />} />
       </Container>
     </div>
   );

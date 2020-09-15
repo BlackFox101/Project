@@ -32,7 +32,7 @@ const TeamList = () => {
   if (error) {
     return <tr><td>Ошибка: {error.message}</td></tr>;
   } else if (!isLoaded) {
-    return <tr><td> </td></tr>;
+    return <tr><td>Загрузка..</td></tr>;
   } else if (items.length === 0) {
     return (
       <tr>

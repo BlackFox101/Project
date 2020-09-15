@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from "react";
+import {Button} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
 
 const PeopleList = () => {
   const [error, setError] = useState(null);
@@ -6,7 +8,6 @@ const PeopleList = () => {
   const [items, setItems] = useState([]);
 
   const delPerson = (id) => {
-    console.log('По кнопке кликнули ' + id);
     fetch("api/People/" + id, {
       method: 'DELETE'
     }).then(res => res.json())
@@ -29,16 +30,20 @@ const PeopleList = () => {
   }, [])
 
   if (error) {
-    return <tr><td>Ошибка: {error.message}</td></tr>;
+    return <tr>
+      <td>Ошибка: {error.message}</td>
+    </tr>;
   } else if (!isLoaded) {
-    return <tr><td> </td></tr>;
+    return <tr>
+      <td>Загрузка..</td>
+    </tr>;
   } else if (items.length === 0) {
     return <tr>
       <td className="center" colSpan="5">Отсутствуют</td>
     </tr>
   } else {
     return (items.map((p, i) => (
-        <Person delPerson={delPerson} key={p.id} i={i+1} data={p}/>
+        <Person delPerson={delPerson} key={p.id} i={i + 1} data={p}/>
       ))
     );
   }
@@ -69,7 +74,10 @@ const Person = (props) => {
 }
 
 const People = () => {
-  return(
+  let history = useHistory();
+  const addPerson = () => history.push("/People/Create");
+
+  return (
     <div>
       <h2>Все сотрудники:</h2>
       <table className="list_table">
@@ -83,10 +91,12 @@ const People = () => {
         </tr>
         </thead>
         <tbody>
-          <PeopleList />
+        <PeopleList/>
         </tbody>
       </table>
+      <Button variant="contained" onClick={addPerson}>Добавить</Button>
     </div>
   )
 }
+
 export default People;
