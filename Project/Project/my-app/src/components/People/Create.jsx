@@ -38,43 +38,46 @@ const CreatePerson = () => {
       .then(result => setTeams(result))
   }, [])
 
-  const addPerson = (event) => {
-    const formData = new FormData(document.getElementById('form'));
+  let history = useHistory();
+
+  const addPerson = () => {
+    let form = document.getElementById("form");
+    const formData = new FormData(form);
     fetch('api/People', {
       method: 'POST',
       body: formData
     }).then(response => response.text())
-      .then(data => {
-        let out = JSON.parse(data);
-      }).catch(() => console.log('ошибка'));
+      .catch(() => console.log('ошибка'));
+    history.push("/People");
   }
-
-  let history = useHistory();
-  //const addPerson = () => history.push("/Person/Create");
 
   return (
     <div>
-      <form id="form" className={classes.root} noValidate autoComplete="off">
+      <form id="form"  className={classes.root} noValidate autoComplete="off">
         <Box width="35%"><TextField
-          id="outlined-full-width"
+          id="name"
           label="Имя"
           style={{margin: 8}}
           placeholder="ФИО"
           helperText=""
           fullWidth
+          name="name"
           margin="normal"
+          required
           InputLabelProps={{
             shrink: true,
           }}
           variant="outlined"
         /></Box>
         <TextField
-          id="outlined-full-width"
+          id="pos"
           label="Должность"
           style={{margin: 8}}
           placeholder="Разработчик"
           helperText=""
           margin="normal"
+          name="position"
+          required
           InputLabelProps={{
             shrink: true,
           }}
@@ -85,9 +88,10 @@ const CreatePerson = () => {
             <InputLabel id="demo-simple-select-outlined-label">Команда</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
+              id="team"
               value={person}
               onChange={handleChange}
+              name="teamid"
               label="Team"
             >
               <MenuItem value="">

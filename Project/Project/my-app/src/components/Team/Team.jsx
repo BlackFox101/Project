@@ -7,7 +7,6 @@ const TeamList = () => {
   const [items, setItems] = useState([]);
 
   const delTeam = (id) => {
-    console.log('По кнопке кликнули ' + id);
     fetch("api/Team/" + id, {
       method: 'DELETE'
     }).then(res => res.json())
@@ -32,7 +31,7 @@ const TeamList = () => {
   if (error) {
     return <tr><td>Ошибка: {error.message}</td></tr>;
   } else if (!isLoaded) {
-    return <tr><td>Загрузка..</td></tr>;
+    return <tr><td colSpan="3" className="center">Загрузка..</td></tr>;
   } else if (items.length === 0) {
     return (
       <tr>

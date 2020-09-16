@@ -32,7 +32,7 @@ namespace TempWebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPerson(int id)
         {
-            var person = await db.Persons.FindAsync(id);
+            var person = await db.Persons.Include(person => person.Team).FirstOrDefaultAsync(p => p.Id == id); ;
 
             if (person == null)
             {
@@ -80,8 +80,7 @@ namespace TempWebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson([FromForm]Person per)
         {
-            Console.WriteLine(per);
-            /*Person person = new Person 
+            Person person = new Person 
             {
                 Name = per.Name,
                 Position = per.Position,
@@ -92,17 +91,19 @@ namespace TempWebApi.Controllers
             db.Persons.Add(person);
             await db.SaveChangesAsync();
             Team team = await db.Teams.FirstOrDefaultAsync(p => p.Id == person.TeamId);
-            int sprints = team.Sprints;
-            for (int i = 1; i <= sprints; i++)
-            {
-                SprintHour sprint = new SprintHour
+            if (team != null) {
+                int sprints = team.Sprints;
+                for (int i = 1; i <= sprints; i++)
                 {
-                    Hours = 0,
-                    Sprint = i,
-                    PersonId = person.Id,
-                };
-                db.SprintHours.Add(sprint);
-            }*/
+                    SprintHour sprint = new SprintHour
+                    {
+                        Hours = 0,
+                        Sprint = i,
+                        PersonId = person.Id,
+                    };
+                    db.SprintHours.Add(sprint);
+                }
+            }
             await db.SaveChangesAsync();
 
             return Ok();
@@ -117,6 +118,15 @@ namespace TempWebApi.Controllers
             {
                 return NotFound();
             }
+            foreach (SprintHour sprinthour in db.SprintHours.Where(p => p.PersonId == person.Id))
+            {
+                db.SprintHours.Remove(sprinthour);
+            }
+            foreach (Vacation vacation in db.Vacations.Where(p => p.PersonId == person.Id))
+            {
+                db.Vacations.Remove(vacation);
+            }
+            db.Persons.Remove(person);
 
             db.Persons.Remove(person);
             await db.SaveChangesAsync();

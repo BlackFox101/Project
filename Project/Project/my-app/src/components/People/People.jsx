@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Button} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 const PeopleList = () => {
   const [error, setError] = useState(null);
@@ -13,6 +14,17 @@ const PeopleList = () => {
     }).then(res => res.json())
       .then(result => setItems(result))
   }
+
+  /*const addPerson = () => {
+    let form = document.getElementById("form");
+    const formData = new FormData(form);
+    fetch('api/People', {
+      method: 'POST',
+      body: formData
+    }).then(response => response.text())
+      .catch(() => console.log('ошибка'));
+    history.push("/People");
+  }*/
 
   useEffect(() => {
     fetch("api/People")
@@ -35,7 +47,7 @@ const PeopleList = () => {
     </tr>;
   } else if (!isLoaded) {
     return <tr>
-      <td>Загрузка..</td>
+      <td className="center" colSpan="5">Загрузка..</td>
     </tr>;
   } else if (items.length === 0) {
     return <tr>
@@ -59,7 +71,7 @@ const Person = (props) => {
   return (
     <tr>
       <td className="td_index center">{props.i}.</td>
-      <td className="pad_td">{props.data.name}</td>
+      <td className="pad_td"><NavLink to={`/People/Details/${props.data.id}`} >{props.data.name}</NavLink></td>
       <td className="pad_td center">{props.data.position}</td>
       <td className="pad_td center">{title}</td>
       <td className="pad_td center">

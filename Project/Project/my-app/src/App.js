@@ -6,22 +6,16 @@ import Team from "./components/Team/Team";
 import {Route} from "react-router";
 import {Container} from "@material-ui/core";
 import "./App.css"
+import PersonDetails from "./components/People/Person";
 
-const App = (props) => {
-  const delPerson = (id) => {
-    console.log('По кнопке кликнули' + id);
-    fetch("api/People/" + id, {
-      method: 'DELETE'
-    }).then(response => response.text())
-      .catch(() => console.log('ошибка'));
-  }
-
+const App = () => {
   return (
     <div>
       <NavMenu/>
       <Container>
-        <Route exact path='/People' history={props.history} render={ () => <People delPerson={delPerson}/>}/>
+        <Route exact path='/People' render={ () => <People />}/>
         <Route path='/People/Create' render={ () => <CreatePerson />} />
+        <Route path='/People/Details' render={ () => <PersonDetails  />} />
 
         <Route exact path='/Team' render={ () => <Team />} />
       </Container>
