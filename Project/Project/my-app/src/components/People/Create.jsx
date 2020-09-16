@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, TextField, FormControl, Select, MenuItem, InputLabel, Box} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
-import {useHistory} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  link: {
+  }
 }));
 
 const CreatePerson = () => {
@@ -38,8 +40,6 @@ const CreatePerson = () => {
       .then(result => setTeams(result))
   }, [])
 
-  let history = useHistory();
-
   const addPerson = () => {
     let form = document.getElementById("form");
     const formData = new FormData(form);
@@ -48,7 +48,6 @@ const CreatePerson = () => {
       body: formData
     }).then(response => response.text())
       .catch(() => console.log('ошибка'));
-    history.push("/People");
   }
 
   return (
@@ -103,7 +102,7 @@ const CreatePerson = () => {
             </Select>
           </FormControl>
         </Box>
-        <Button onClick={addPerson} variant="contained" >Добавить</Button>
+        <Button component={NavLink} to="/People" onClick={addPerson} variant="contained" >Добавить</Button>
       </form>
     </div>
   )

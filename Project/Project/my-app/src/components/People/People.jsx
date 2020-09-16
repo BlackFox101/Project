@@ -15,17 +15,6 @@ const PeopleList = () => {
       .then(result => setItems(result))
   }
 
-  /*const addPerson = () => {
-    let form = document.getElementById("form");
-    const formData = new FormData(form);
-    fetch('api/People', {
-      method: 'POST',
-      body: formData
-    }).then(response => response.text())
-      .catch(() => console.log('ошибка'));
-    history.push("/People");
-  }*/
-
   useEffect(() => {
     fetch("api/People")
       .then(res => res.json())
