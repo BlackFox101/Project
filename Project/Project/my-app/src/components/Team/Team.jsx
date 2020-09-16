@@ -66,7 +66,7 @@ const TeamItem = (props) => {
 const Team = () => {
   return (
     <div>
-      <h2>Все команды</h2>
+      <h2>Все команды:</h2>
       <table className="list_table">
         <thead>
           <tr className="title_tr">

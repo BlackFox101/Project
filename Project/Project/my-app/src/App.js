@@ -6,7 +6,7 @@ import Team from "./components/Team/Team";
 import {Route} from "react-router";
 import {Container} from "@material-ui/core";
 import "./App.css"
-import PersonDetails from "./components/People/Person";
+import PersonDetails from "./components/People/Details";
 
 const App = () => {
   return (

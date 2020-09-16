@@ -1,18 +1,17 @@
 import React, {useState, useEffect} from "react";
 import {Button} from "@material-ui/core";
-import {useHistory} from "react-router-dom";
 import {NavLink} from "react-router-dom";
 
 const PeopleList = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+  const [people, setPeople] = useState([]);
 
   const delPerson = (id) => {
     fetch("api/People/" + id, {
       method: 'DELETE'
     }).then(res => res.json())
-      .then(result => setItems(result))
+      .then(result => setPeople(result))
   }
 
   useEffect(() => {
@@ -21,7 +20,7 @@ const PeopleList = () => {
       .then(
         (result) => {
           setIsLoaded(true);
-          setItems(result);
+          setPeople(result);
         },
         (error) => {
           setIsLoaded(true);
@@ -38,12 +37,12 @@ const PeopleList = () => {
     return <tr>
       <td className="center" colSpan="5">Загрузка..</td>
     </tr>;
-  } else if (items.length === 0) {
+  } else if (people.length === 0) {
     return <tr>
       <td className="center" colSpan="5">Отсутствуют</td>
     </tr>
   } else {
-    return (items.map((p, i) => (
+    return (people.map((p, i) => (
         <Person delPerson={delPerson} key={p.id} i={i + 1} data={p}/>
       ))
     );
@@ -75,27 +74,24 @@ const Person = (props) => {
 }
 
 const People = () => {
-  let history = useHistory();
-  const addPerson = () => history.push("/People/Create");
-
   return (
     <div>
       <h2>Все сотрудники:</h2>
       <table className="list_table">
         <thead>
-        <tr className="title_tr">
-          <th className="th_item center">№</th>
-          <th className="pad_th">ФИО</th>
-          <th className="pad_th">Должность</th>
-          <th className="pad_th">Команда</th>
-          <th className="th_item">Удалить</th>
-        </tr>
+          <tr className="title_tr">
+            <th className="th_item center">№</th>
+            <th className="pad_th">ФИО</th>
+            <th className="pad_th">Должность</th>
+            <th className="pad_th">Команда</th>
+            <th className="th_item">Удалить</th>
+          </tr>
         </thead>
         <tbody>
-        <PeopleList/>
+          <PeopleList/>
         </tbody>
       </table>
-      <Button variant="contained" onClick={addPerson}>Добавить</Button>
+      <Button component={NavLink} to="/People/Create" variant="contained">Добавить</Button>
     </div>
   )
 }
